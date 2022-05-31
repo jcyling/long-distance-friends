@@ -1,29 +1,45 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-const LoginForm = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  }
+const LoginForm = ({ handleLogin }) => {
+  const [ username, setUsername ] = useState("");
+  const [ password, setPassword ] = useState("");
+
+  LoginForm.propTypes = {
+    handleLogin: PropTypes.func.isRequired
+  };
 
   return (
-    <div class="flex flex-col content-center">
+    <div className="flex flex-col content-center">
       <h2>Login</h2>
-      <div class="w-2/5 m-auto content-center">
-        <form onSubmit={handleSubmit}>
+      <div className="w-2/5 m-auto content-center">
+        <form onSubmit={() => handleLogin(event, username, password)}>
 
-          <div class="mb-6">
-            <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
-            <input type="username" id="username" className="fld-txt" placeholder="name@flowbite.com" required />
+          <div className="mb-6">
+            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
+            <input
+              type="username"
+              id="username"
+              value={username}
+              className="fld-txt"
+              placeholder="Username"
+              onChange={({ target }) => setUsername(target.value)} required />
           </div>
-          <div class="mb-6">
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
-            <input type="password" id="password" className="fld-txt" required />
+          <div className="mb-6">
+            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              className="fld-txt"
+              placeholder="Password"
+              onChange={({ target }) => setPassword(target.value)} required />
           </div>
           <button type="submit" className="btn">Submit</button>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LoginForm;

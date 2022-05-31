@@ -1,30 +1,37 @@
+import React from "react";
 import {
   BrowserRouter as Router,
-  Routes, Route
-} from 'react-router-dom';
-import NavPublic from './components/NavPublic';
-import LoginForm from './components/LoginForm';
-import Index from './components/Index';
+  Routes, Route, useNavigate
+} from "react-router-dom";
+import Index from "./components/Index";
+import NavPublic from "./components/NavPublic";
+import Home from "./components/Home";
+import LoginForm from "./components/LoginForm";
+import NoRoute from "./components/NoRoute";
+
 import { useState } from "react";
-
-const Home = () => {
-  return (
-    <div>
-      <h2>Home</h2>
-      <h2>Your Friend Groups</h2>
-    </div>
-  )
-}
-
-const NoMatch = () => {
-  return (
-    <div>
-      <h1>Looks like something went wrong.</h1>
-    </div>
-  )
-}
+import loginService from "./services/loginService";
 
 const App = () => {
+  const [user, setUser] = useState(null);
+
+  const handleLogin = async (event, username, password) => {
+    event.preventDefault();
+
+    // Send to login service
+    try {
+      const userToken = await loginService.login({ username, password });
+      window.localStorage.setItem(
+        "user", JSON.stringify(userToken)
+      );
+    }
+    catch (error) {
+      console.log(error);
+    }
+    
+    useNavigate("/home");
+  };
+
   return (
     <div className="App">
       <Router>
@@ -32,14 +39,15 @@ const App = () => {
           <NavPublic />
         </div>
         <Routes>
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
+          <Route path="/home" element={
+            user ? <Home /> : <NoRoute />} />
           <Route path="/" element={<Index />} />
-          <Route path="*" element={<NoMatch />} />
+          <Route path="*" element={<NoRoute />} />
         </Routes>
       </Router>
     </div>
   );
-}
+};
 
 export default App;

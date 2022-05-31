@@ -7,7 +7,7 @@ const NavPublic = () => {
       <Link className="link index" to="/">Long Distance Friends</Link>
       <Link className="link login" to="/login">Login</Link>
     </div>
-  )
-}
+  );
+};
 
-export default NavPublic
+export default NavPublic;
