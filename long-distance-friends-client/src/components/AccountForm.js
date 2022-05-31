@@ -1,49 +1,45 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
-const LoginForm = ({ handleLogin }) => {
-  const [ username, setUsername ] = useState("");
-  const [ password, setPassword ] = useState("");
-
-  LoginForm.propTypes = {
-    handleLogin: PropTypes.func.isRequired
+const AccountForm = ({ handleUserCreation }) => {
+  const [ newUsername, setNewUsername ] = useState("");
+  const [ newPassword, setNewPassword ] = useState("");
+  
+  AccountForm.propTypes = {
+    handleUserCreation: PropTypes.func.isRequired
   };
-
+  
   return (
     <div className="flex flex-col content-center">
-      <h2>Login</h2>
+      <h2>Create Account</h2>
       <div className="w-2/5 m-auto content-center">
-        <form onSubmit={() => handleLogin(event, username, password)}>
+        <form onSubmit={() => handleUserCreation(event, newUsername, newPassword)}>
 
           <div className="mb-6">
             <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
             <input
               type="username"
               id="username"
-              value={username}
+              value={newUsername}
               className="fld-txt"
               placeholder="Username"
-              onChange={({ target }) => setUsername(target.value)} required />
+              onChange={({ target }) => setNewUsername(target.value)} required />
           </div>
           <div className="mb-6">
             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
             <input
               type="password"
               id="password"
-              value={password}
+              value={newPassword}
               className="fld-txt"
               placeholder="Password"
-              onChange={({ target }) => setPassword(target.value)} required />
+              onChange={({ target }) => setNewPassword(target.value)} required />
           </div>
-          <button type="submit" className="btn">Submit</button>
-
+          <button href="/createAccount" className="btn">Make</button>
         </form>
-        <Link to="/createAccount" className="text-orange-400">Make New Account</Link>
-
       </div>
     </div>
   );
 };
 
-export default LoginForm;
+export default AccountForm;

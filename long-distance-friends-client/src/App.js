@@ -1,19 +1,35 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
-  Routes, Route, useNavigate
+  Routes, Route, Navigate, useNavigate
 } from "react-router-dom";
 import Index from "./components/Index";
 import NavPublic from "./components/NavPublic";
 import Home from "./components/Home";
 import LoginForm from "./components/LoginForm";
+import AccountForm from "./components/AccountForm";
 import NoRoute from "./components/NoRoute";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import loginService from "./services/loginService";
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const useNav = useNavigate();
+
+  useEffect(() => {
+    const userJSON = window.localStorage.getItem("user");
+    if (userJSON) {
+      const user = JSON.parse(userJSON);
+      setUser(user);
+    }
+  }, []);
+
+  const ProtectedRoute = ({ user, children }) => {
+    if (!user) {
+      return <Navigate to="/" replace />;
+    }
+    return children;
+  };
 
   const handleLogin = async (event, username, password) => {
     event.preventDefault();
@@ -24,28 +40,53 @@ const App = () => {
       window.localStorage.setItem(
         "user", JSON.stringify(userToken)
       );
+
+      setUser(userToken);
+
     }
     catch (error) {
       console.log(error);
     }
-    
-    useNavigate("/home");
+    useNav("/home");
+  };
+
+  const handleLogout = () => {
+    window.localStorage.clear();
+    setUser(null);
+  };
+
+  const handleUserCreation = async (event, username, password) => {
+    event.preventDefault();
+    // TODO: Handle user creation
+    console.log(username, password);
   };
 
   return (
     <div className="App">
-      <Router>
-        <div className="header">
-          <NavPublic />
-        </div>
-        <Routes>
-          <Route path="/login" element={<LoginForm handleLogin={handleLogin} />} />
-          <Route path="/home" element={
-            user ? <Home /> : <NoRoute />} />
-          <Route path="/" element={<Index />} />
-          <Route path="*" element={<NoRoute />} />
-        </Routes>
-      </Router>
+      <div className="header">
+        <NavPublic user={user} handleLogin={handleLogin} handleLogout={handleLogout} />
+      </div>
+      <Routes>
+        <Route
+          path="/login"
+          element={<LoginForm handleLogin={handleLogin} />} />
+        <Route
+          path="/createAccount"
+          element={<AccountForm handleUserCreation={handleUserCreation} />} />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute user={user}>
+              <Home />
+            </ProtectedRoute>
+          } />
+        <Route
+          path="/"
+          element={<Index />} />
+        <Route
+          path="*"
+          element={<NoRoute />} />
+      </Routes>
     </div>
   );
 };
