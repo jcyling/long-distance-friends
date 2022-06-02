@@ -3,11 +3,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cors = require("cors");
+
+const config = require("./utils/config");
+const middleware = require("./utils/middleware");
 const usersRouter = require("./controllers/usersRouter");
 const loginRouter = require("./controllers/loginRouter");
 const groupsRouter = require("./controllers/groupsRouter");
-
-const middleware = require("./utils/middleware");
 
 // Start express app
 const app = express();
@@ -16,7 +17,8 @@ app.use(morgan("tiny"));
 app.use(express.json());
 
 const port = 3001;
-mongoose.connect(process.env.MONGODB_URI)
+
+mongoose.connect(config.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
   })

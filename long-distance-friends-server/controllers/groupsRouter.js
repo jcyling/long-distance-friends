@@ -6,7 +6,7 @@ const auth = require("../utils/auth.js");
 
 groupRouter.get("/", async (req, res, next) => {
   try {
-    const groups = await Group.find({}).populate("admin");
+    const groups = await Group.find({}).populate("admin", {"username": 1, "name": 1, "timezone": 1});
     return res.json(groups);
   }
   catch (error) {
