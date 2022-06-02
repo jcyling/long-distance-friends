@@ -9,6 +9,13 @@ usersRouter.get("/", async (req, res) => {
   return res.json(users);
 });
 
+// Specific user
+usersRouter.get("/:id", async (req, res) => {
+  const users = await User.findById(req.params.id).populate("groups");
+  return res.json(users);
+});
+
+
 // Account creation
 usersRouter.post("/", async (req, res) => {
   const { username, password, name } = req.body;
@@ -49,6 +56,35 @@ usersRouter.post("/", async (req, res) => {
   return res
     .status(201)
     .send({ token, username: user.username, name: user.name });
+});
+
+usersRouter.put("/:id", async (req, res, next) => {
+
+  // TODO: Restrict changes to user only
+  const body = req.body;
+  const user = {
+    lat: body.lat,
+    lng: body.lng,
+    timezone: body.timezone
+  };
+
+  try {
+    const updatedUser = User.findByIdAndUpdate(req.params.id, user, { new: true });
+    return res.json(updatedUser);
+  }
+  catch (error) {
+    next(error);
+  }
+});
+
+usersRouter.delete("/:id", async (req, res, next) => {
+  try {
+    await User.findByIdAndRemove(req.params.id);
+    return res.status(204).end();  
+  }
+  catch (error) {
+    next(error);
+  }
 });
 
 module.exports = usersRouter;
