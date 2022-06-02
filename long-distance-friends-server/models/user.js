@@ -1,16 +1,26 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  username: String,
-  name: String,
-  passwordHash: String,
+  username: {
+    type: String,
+    minlength: 4,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  passwordHash: {
+    type: String,
+    required: true
+  },
   timezone: String,
   groups: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Group"
     }
-  ],
+  ]
 });
 
 userSchema.set("toJson", {

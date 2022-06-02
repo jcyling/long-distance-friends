@@ -5,7 +5,7 @@ const usersRouter = require("express").Router();
 
 // List of users
 usersRouter.get("/", async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({}).populate("groups");
   return res.json(users);
 });
 
