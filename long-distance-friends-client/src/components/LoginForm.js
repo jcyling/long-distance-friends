@@ -1,14 +1,33 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import loginService from "../services/loginService";
 
-const LoginForm = ({ handleLogin }) => {
+const LoginForm = ({ user, setUser, useNav }) => {
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
 
-  LoginForm.propTypes = {
-    handleLogin: PropTypes.func.isRequired
+  const handleLogin = async (event, username, password) => {
+    event.preventDefault();
+
+    // Send to login service
+    try {
+      const userToken = await loginService.login({ username, password });
+      window.localStorage.setItem(
+        "user", JSON.stringify(userToken)
+      );
+
+      setUser(userToken);
+      useNav("/home");
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
+
+  // If logged in, redirect to /home
+  if (user) {
+    useNav("/home");
+  }
 
   return (
     <div className="flex flex-col content-center">

@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const NavPublic = ({
+const Navbar = ({
   user,
   handleLogout
 }) => {
 
-  NavPublic.propTypes = {
+  Navbar.propTypes = {
     handleLogout: PropTypes.func.isRequired,
   };
 
@@ -34,4 +34,4 @@ const NavPublic = ({
   );
 };
 
-export default NavPublic;
+export default Navbar;

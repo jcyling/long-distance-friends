@@ -2,19 +2,22 @@ import React from "react";
 import {
   Routes, Route, Navigate, useNavigate
 } from "react-router-dom";
-import Index from "./components/Index";
-import NavPublic from "./components/NavPublic";
-import Home from "./components/Home";
+
+import Landing from "./views/Landing";
+import Home from "./views/Home";
+import NoRoute from "./views/NoRoute";
+
+import Navbar from "./components/Navbar";
 import LoginForm from "./components/LoginForm";
 import AccountForm from "./components/AccountForm";
-import NoRoute from "./components/NoRoute";
+import Notification from "./components/Notification";
 
 import { useState, useEffect } from "react";
-import loginService from "./services/loginService";
 
 const App = () => {
-  const [user, setUser] = useState(null);
   const useNav = useNavigate();
+  const [user, setUser] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const userJSON = window.localStorage.getItem("user");
@@ -24,30 +27,8 @@ const App = () => {
     }
   }, []);
 
-  const ProtectedRoute = ({ user, children }) => {
-    if (!user) {
-      return <Navigate to="/" replace />;
-    }
-    return children;
-  };
-
-  const handleLogin = async (event, username, password) => {
-    event.preventDefault();
-
-    // Send to login service
-    try {
-      const userToken = await loginService.login({ username, password });
-      window.localStorage.setItem(
-        "user", JSON.stringify(userToken)
-      );
-
-      setUser(userToken);
-
-    }
-    catch (error) {
-      console.log(error);
-    }
-    useNav("/home");
+  const RequireAuth = ({ children }) => {
+    return user ? children : <Navigate to="/" />;
   };
 
   const handleLogout = () => {
@@ -55,34 +36,44 @@ const App = () => {
     setUser(null);
   };
 
-  const handleUserCreation = async (event, username, password) => {
-    event.preventDefault();
-    // TODO: Handle user creation
-    console.log(username, password);
-  };
-
   return (
     <div className="App">
       <div className="header">
-        <NavPublic user={user} handleLogin={handleLogin} handleLogout={handleLogout} />
+        <Navbar
+          user={user}
+          handleLogout={handleLogout}
+        />
+        <Notification errorMessage={errorMessage} />
       </div>
       <Routes>
         <Route
           path="/login"
-          element={<LoginForm handleLogin={handleLogin} />} />
+          element={<LoginForm
+            user={user}
+            setUser={setUser}
+            useNav={useNav}
+            setErrorMessage={setErrorMessage}
+          />}
+        />
         <Route
           path="/createAccount"
-          element={<AccountForm handleUserCreation={handleUserCreation} />} />
+          element={<AccountForm
+            user={user}
+            setUser={setUser}
+            useNav={useNav}
+            setErrorMessage={setErrorMessage}
+          />}
+        />
         <Route
           path="/home"
           element={
-            <ProtectedRoute user={user}>
-              <Home />
-            </ProtectedRoute>
+            <RequireAuth>
+              <Home user={user} />
+            </RequireAuth>
           } />
         <Route
           path="/"
-          element={<Index />} />
+          element={<Landing />} />
         <Route
           path="*"
           element={<NoRoute />} />
