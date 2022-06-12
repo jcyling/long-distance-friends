@@ -1,2 +1,2 @@
 ### Long Distance Friends
-A tool to make hanging out with friends in different timezones easier.
+A scheduling web app to make hanging out with friends in different timezones easier.
