@@ -23,7 +23,7 @@ const AccountForm = ({ user, setUser, useNav, setErrorMessage }) => {
       try {
         // Send post request to server through userService
         const newUserToken = usersService.createUser({ username, password, name });
-        console.log(newUserToken)
+        console.log(newUserToken);
 
         // Log user in 
         window.localStorage.setItem(

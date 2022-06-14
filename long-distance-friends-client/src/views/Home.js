@@ -16,7 +16,7 @@ const Home = ({ user }) => {
       <h2>Home</h2>
       <h2>{user.name} Friend Groups</h2>
       <div className="content">
-        <div className="group-bar flex w-9/12 bg-sky-200">
+        <div className="group-bar flex w-9/12">
           {user.groups && groups.map(group => {
             <GroupButton group={group} />;
           })}
