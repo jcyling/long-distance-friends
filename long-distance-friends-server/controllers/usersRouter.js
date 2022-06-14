@@ -15,7 +15,6 @@ usersRouter.get("/:id", async (req, res) => {
   return res.json(users);
 });
 
-
 // Account creation
 usersRouter.post("/", async (req, res) => {
   const { username, password, name } = req.body;
@@ -80,7 +79,7 @@ usersRouter.put("/:id", async (req, res, next) => {
 usersRouter.delete("/:id", async (req, res, next) => {
   try {
     await User.findByIdAndRemove(req.params.id);
-    return res.status(204).end();  
+    return res.status(204).end();
   }
   catch (error) {
     next(error);
