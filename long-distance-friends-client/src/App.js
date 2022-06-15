@@ -7,10 +7,10 @@ import Landing from "./views/Landing";
 import Home from "./views/Home";
 import NoRoute from "./views/NoRoute";
 
-import Navbar from "./components/Navbar";
-import LoginForm from "./components/LoginForm";
-import AccountForm from "./components/AccountForm";
-import Notification from "./components/Notification";
+import Navbar from "./components/common/Navbar";
+import AccountLoginForm from "./components/landing/AccountLoginForm";
+import AccountCreateForm from "./components/landing/AccountCreateForm";
+import Notification from "./components/common/Notification";
 
 import { useState, useEffect } from "react";
 
@@ -48,7 +48,7 @@ const App = () => {
       <Routes>
         <Route
           path="/login"
-          element={<LoginForm
+          element={<AccountLoginForm
             user={user}
             setUser={setUser}
             useNav={useNav}
@@ -57,7 +57,7 @@ const App = () => {
         />
         <Route
           path="/createAccount"
-          element={<AccountForm
+          element={<AccountCreateForm
             user={user}
             setUser={setUser}
             useNav={useNav}

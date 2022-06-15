@@ -1,9 +1,9 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001/api/users";
+const baseUrl = "http://localhost:3001/api";
 
-const getGroups = async(user) => {
+const getGroups = async(id) => {
   try {
-    const res = await axios.get(`${baseUrl}/${user.id}`);
+    const res = await axios.get(`${baseUrl}/users/${id}`);
     return res.data;
   }
   catch (error) {

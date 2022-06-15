@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import usersService from "../services/usersService";
+import usersService from "../../services/usersService";
 
-const AccountForm = ({ user, setUser, useNav, setErrorMessage }) => {
+const AccountCreateForm = ({ user, setUser, useNav, setErrorMessage }) => {
   const [username, setNewUsername] = useState("");
   const [password, setNewPassword] = useState("");
   const [name, setNewName] = useState("");
@@ -84,4 +84,4 @@ const AccountForm = ({ user, setUser, useNav, setErrorMessage }) => {
   );
 };
 
-export default AccountForm;
+export default AccountCreateForm;

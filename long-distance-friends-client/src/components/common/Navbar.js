@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import logo from "../static/images/logo.png";
+import logo from "../../static/images/logo.png";
 
 const Navbar = ({
   user,
@@ -26,7 +26,7 @@ const Navbar = ({
     return (
       <div>
         <Link className="link font-medium text-gray-700 hover:text-orange-600" to="/home">Home</Link>
-        <button className="link font-medium text-gray-700 hover:text-orange-600" onClick="">Settings</button>
+        <button className="link font-medium text-gray-700 hover:text-orange-600">Settings</button>
         <button className="link font-medium text-gray-700 hover:text-orange-600" onClick={handleLogout}>Logout</button>
       </div>
     );

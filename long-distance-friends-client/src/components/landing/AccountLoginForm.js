@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import loginService from "../services/loginService";
+import loginService from "../../services/loginService";
 
-const LoginForm = ({ user, setUser, useNav }) => {
+const AccountLoginForm = ({ user, setUser, useNav }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -55,7 +55,7 @@ const LoginForm = ({ user, setUser, useNav }) => {
               placeholder="Password"
               onChange={({ target }) => setPassword(target.value)} required />
           </div>
-          <button type="submit" className="btn">Submit</button>
+          <button type="submit" className="btn">Login</button>
 
         </form>
         <div className="text-amber-500 py-5">
@@ -67,4 +67,4 @@ const LoginForm = ({ user, setUser, useNav }) => {
   );
 };
 
-export default LoginForm;
+export default AccountLoginForm;
