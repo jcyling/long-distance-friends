@@ -26,7 +26,7 @@ const Navbar = ({
     return (
       <div>
         <Link className="link font-medium text-gray-700 hover:text-orange-600" to="/home">Home</Link>
-        <button className="link font-medium text-gray-700 hover:text-orange-600">Settings</button>
+        <Link className="link font-medium text-gray-700 hover:text-orange-600" to="/settings">Settings</Link>
         <button className="link font-medium text-gray-700 hover:text-orange-600" onClick={handleLogout}>Logout</button>
       </div>
     );

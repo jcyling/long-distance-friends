@@ -15,7 +15,7 @@ const Home = ({ user }) => {
       await usersService
         .getGroups(user.id)
         .then(res => {
-          if (res.groups) {
+          if (res.groups.length > 0) {
             setGroups(res.groups);
             setActiveGroupId(res.groups[0].id);
           }

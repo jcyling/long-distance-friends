@@ -6,6 +6,7 @@ import {
 import Landing from "./views/Landing";
 import Home from "./views/Home";
 import NoRoute from "./views/NoRoute";
+import Settings from "./views/Settings";
 
 import Navbar from "./components/common/Navbar";
 import AccountLoginForm from "./components/landing/AccountLoginForm";
@@ -47,6 +48,20 @@ const App = () => {
       </div>
       <Routes>
         <Route
+          path="/home"
+          element={
+            <RequireAuth>
+              <Home user={user} />
+            </RequireAuth>
+          } />
+        <Route
+          path="/settings"
+          element={
+            <RequireAuth>
+              <Settings user={user} />
+            </RequireAuth>
+          } />
+        <Route
           path="/login"
           element={<AccountLoginForm
             user={user}
@@ -64,13 +79,6 @@ const App = () => {
             setErrorMessage={setErrorMessage}
           />}
         />
-        <Route
-          path="/home"
-          element={
-            <RequireAuth>
-              <Home user={user} />
-            </RequireAuth>
-          } />
         <Route
           path="/"
           element={<Landing />} />

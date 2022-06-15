@@ -11,7 +11,7 @@ const GroupForm = ({ user }) => {
     // Send to group service
     try {
       const res = await groupService.createGroup(groupName);
-
+      console.log(res);
     }
     catch (error) {
       console.log(error);
