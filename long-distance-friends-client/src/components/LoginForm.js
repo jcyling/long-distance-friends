@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import loginService from "../services/loginService";
 
 const LoginForm = ({ user, setUser, useNav }) => {
-  const [ username, setUsername ] = useState("");
-  const [ password, setPassword ] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (event, username, password) => {
     event.preventDefault();
@@ -58,7 +58,9 @@ const LoginForm = ({ user, setUser, useNav }) => {
           <button type="submit" className="btn">Submit</button>
 
         </form>
-        <Link to="/createAccount" className="text-orange-400">Make New Account</Link>
+        <div className="text-amber-500 py-5">
+          <Link to="/createAccount">Make New Account</Link>
+        </div>
 
       </div>
     </div>

@@ -77,8 +77,7 @@ const AccountForm = ({ user, setUser, useNav, setErrorMessage }) => {
               placeholder="Password"
               onChange={({ target }) => setNewPassword(target.value)} required />
           </div>
-
-          <button href="/createAccount" className="btn">Make</button>
+          <button href="/createAccount" className="btn">Sign Up</button>
         </form>
       </div>
     </div>

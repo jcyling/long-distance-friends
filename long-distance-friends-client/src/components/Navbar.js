@@ -33,7 +33,7 @@ const Navbar = ({
   };
 
   return (
-    <nav className="relative w-full flex flex-wrap items-center justify-between link navbar navbar-expand-lg navbar-light">
+    <nav className="relative w-full px-10 flex flex-wrap items-center justify-between link navbar navbar-expand-lg navbar-light">
       <Link className="" to="/">
         <img src={logo} className="img-logo" alt="Long Distance Friends" style={{ maxHeight: 40 }} />
       </Link>

@@ -35,7 +35,7 @@ const Index = () => {
         <h2>
           Make plans easily for multiple people.
         </h2>
-        <div className="py-10 flex flex-wrap flex-row justify-evenly text-4xl tracking-tighter w-1/2">
+        <div className="py-10 flex flex-nowrap flex-row justify-evenly text-4xl tracking-tighter w-1/2">
           <span className="bg-amber-300 px-5 py-2 rounded-full">Get a Link</span>
           <span className="">➔</span>
           <span className="bg-amber-300 px-5 py-2 rounded-full">Find Time</span>
