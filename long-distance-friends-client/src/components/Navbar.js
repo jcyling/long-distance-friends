@@ -12,9 +12,13 @@ const Navbar = ({
     handleLogout: PropTypes.func.isRequired,
   };
 
-  const LoginButton = () => {
+  const LoggedOutNav = () => {
     return (
-      <Link className="link login" to="/login">Login</Link>
+      <div>
+        <Link className="link login" to="/login">Login</Link>
+        <Link className="link login" to="/createAccount">Sign Up</Link>
+      </div>
+
     );
   };
 
@@ -29,11 +33,11 @@ const Navbar = ({
   };
 
   return (
-    <nav className="relative w-full flex flex-wrap items-center justify-between shadow-lg link navbar navbar-expand-lg navbar-light">
+    <nav className="relative w-full flex flex-wrap items-center justify-between link navbar navbar-expand-lg navbar-light">
       <Link className="" to="/">
-        <img src={logo} className="img-logo" alt="Long Distance Friends" style={{ maxHeight: 40 }}/>
+        <img src={logo} className="img-logo" alt="Long Distance Friends" style={{ maxHeight: 40 }} />
       </Link>
-      {!user ? LoginButton() : LoggedInNav()}
+      {!user ? LoggedOutNav() : LoggedInNav()}
     </nav>
   );
 };
