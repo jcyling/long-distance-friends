@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from "react";
-import GroupButton from "../components/home/GroupButton";
+import React, { useState, useEffect, useRef } from "react";
+import GroupForm from "../components/home/GroupForm";
 import Group from "../components/home/Group";
+import GroupButton from "../components/home/GroupButton";
+import Togglable from "../components/common/Togglable";
 import usersService from "../services/usersService";
 
 const Home = ({ user }) => {
   const [groups, setGroups] = useState([]);
   const [activeGroupId, setActiveGroupId] = useState(null);
+  const toggleRef = useRef();
 
   useEffect(() => {
     const fetchData = async () => {
       await usersService
         .getGroups(user.id)
         .then(res => {
-          setGroups(res.groups);
-          setActiveGroupId(res.groups[0].id);
+          if (res.groups) {
+            setGroups(res.groups);
+            setActiveGroupId(res.groups[0].id);
+          }
         });
     };
 
@@ -36,18 +41,21 @@ const Home = ({ user }) => {
 
   return (
     <main className="px-10">
-      <div className="py-5 px-10 flex flex-col bg-gray-100 rounded-[1rem]">
+      <div className="relative py-5 px-10 flex flex-col bg-gray-100 rounded-[1rem]">
         <div className="w-9/12 flex flex-wrap items-center gap-5">
           <span className="text-xl font-bold">Groups</span>
           {groups.map(group =>
             <GroupButton key={group.id} group={group} setActiveGroupId={setActiveGroupId} />
           )}
-          <button className="btn bg-purple-300 hover:bg-purple-400 font-normal">Make A Group</button>
+          <Togglable buttonLabel='Make A Group' ref={toggleRef}>
+            <GroupForm />
+          </Togglable>
         </div>
       </div>
       <div>
         <ActiveGroup />
       </div>
+
     </main>
   );
 };
