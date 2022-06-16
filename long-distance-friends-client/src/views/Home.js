@@ -9,6 +9,7 @@ import groupService from "../services/groupService";
 
 const Home = ({ user }) => {
   const [groups, setGroups] = useState([]);
+  const [makeInvite, setMakeInvite] = useState(false);
   const [activeGroupId, setActiveGroupId] = useState(null);
   const toggleRef = useRef();
 
@@ -53,19 +54,26 @@ const Home = ({ user }) => {
     }
   };
 
-  const ActiveGroupHandler = () => {
-    if (activeGroupId) {
+  const GroupInterface = () => {
+    if (makeInvite) {
+      return (
+        <div>
+          <h1>Make your invitation</h1>
+        </div>
+      );
+    }
+    else if (activeGroupId) {
       const activeGroup = groups.find(group => group.id == activeGroupId);
       return (
         <div>
-          <Group key={activeGroup.id} user={user} group={activeGroup} deleteGroup={deleteGroup} />
+          <Group key={activeGroup.id} user={user} group={activeGroup} deleteGroup={deleteGroup} makeInvite={makeInvite} setMakeInvite={setMakeInvite} />
         </div>
       );
     }
     else {
       return (
         <div>
-          Looks like you need a group.
+          Looks like you need to select a group.
         </div>
       );
     }
@@ -88,7 +96,7 @@ const Home = ({ user }) => {
         </div>
       </div>
       <div>
-        <ActiveGroupHandler />
+        <GroupInterface />
       </div>
 
     </main>
