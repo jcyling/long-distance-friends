@@ -15,8 +15,10 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   timezone: String,
-  lat: String,
-  lng: String,
+  city: {
+    type: String,
+    required: true
+  },
   groups: [
     {
       type: mongoose.Schema.Types.ObjectId,

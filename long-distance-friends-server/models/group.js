@@ -10,8 +10,7 @@ const groupSchema = new mongoose.Schema({
     {
       name: String,
       timezone: String,
-      lat: String,
-      lng: String,
+      city: String
     }
   ],
 });

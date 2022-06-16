@@ -7,6 +7,7 @@ const loginRouter = require("express").Router();
 loginRouter.post("/", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
+
   const passwordCorrect = user === null
     ? false
     : await bcrypt.compare(password, user.passwordHash);
@@ -23,13 +24,15 @@ loginRouter.post("/", async (req, res) => {
     id: user._id
   };
 
+  console.log(userForToken);
+
   // Generate token for such user
   const token = jwt.sign(userForToken, process.env.SECRET);
 
   // Send token to browser
   return res
     .status(200)
-    .send({ token, username: user.username, name: user.name });
+    .send({ token, username: user.username, name: user.name, id:user._id });
 });
 
 module.exports = loginRouter;
