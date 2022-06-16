@@ -3,6 +3,7 @@ const Group = require("../models/group");
 const User = require("../models/user");
 const groupRouter = require("express").Router();
 const auth = require("../utils/auth.js");
+const helpers = require("../utils/helpers.js");
 
 // Get all groups
 groupRouter.get("/", async (req, res, next) => {
@@ -45,22 +46,37 @@ groupRouter.post("/", async (req, res, next) => {
 
 // Edit group
 groupRouter.patch("/:id", async (req, res, next) => {
+  if (!req.body || !req.params.id) {
+    return res.status(400).json({ message: "Incorrect request content" });
+  }
+
+  const body = req.body;
+
   // TODO: Constraint to only user's group
 
   try {
-    if (!req.body || !req.params.id) {
-      return res.status(400).json({ message: "Incorrect request content" });
-    }
+    // Calculate all friends' timezones
+    const newFriendsList = await Promise.all(body.friends.map(async(friend) => {
+      let updatedFriendInfo = {
+        ...friend,
+        timezone: await helpers.convertLocationToTimezone(friend.city)
+      };
+      return updatedFriendInfo;
+    }));
 
-    const body = req.body;
+    const groupInfo = {
+      ...body,
+      friends: newFriendsList
+    };
 
-    const updatedGroup = await Group.findByIdAndUpdate(req.params.id, body, { new: true });
+    const updatedGroup = await Group.findByIdAndUpdate(req.params.id, groupInfo, { new: true });
 
     return res.status(200).json(updatedGroup);
   }
   catch (error) {
     next(error);
   }
+  
 });
 
 // Delete group

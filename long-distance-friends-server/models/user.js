@@ -17,7 +17,6 @@ const userSchema = new mongoose.Schema({
   timezone: String,
   city: {
     type: String,
-    required: true
   },
   groups: [
     {
