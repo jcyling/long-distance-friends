@@ -10,7 +10,7 @@ const FriendIcon = ({ friend }) => {
         <h4 className="font-bold">
           {friend.name}
         </h4>
-        <span className="block">Location: { } </span>
+        <span className="block">Location: {friend.city} </span>
         <span className="block">Timezone: {friend.timezone}</span>
       </div>
     </div>

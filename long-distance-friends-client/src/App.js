@@ -1,7 +1,8 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import {
   Routes, Route, Navigate, useNavigate
 } from "react-router-dom";
+
 
 import Landing from "./views/Landing";
 import Home from "./views/Home";
@@ -13,7 +14,8 @@ import AccountLoginForm from "./components/landing/AccountLoginForm";
 import AccountCreateForm from "./components/landing/AccountCreateForm";
 import Notification from "./components/common/Notification";
 
-import { useState, useEffect } from "react";
+import groupService from "./services/groupService";
+
 
 const App = () => {
   const useNav = useNavigate();
@@ -25,6 +27,7 @@ const App = () => {
     if (userJSON) {
       const user = JSON.parse(userJSON);
       setUser(user);
+      groupService.setToken(user.token);
     }
   }, []);
 

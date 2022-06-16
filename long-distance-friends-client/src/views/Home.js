@@ -3,7 +3,9 @@ import GroupForm from "../components/home/GroupForm";
 import Group from "../components/home/Group";
 import GroupButton from "../components/home/GroupButton";
 import Togglable from "../components/common/Togglable";
+
 import usersService from "../services/usersService";
+import groupService from "../services/groupService";
 
 const Home = ({ user }) => {
   const [groups, setGroups] = useState([]);
@@ -24,6 +26,20 @@ const Home = ({ user }) => {
 
     fetchData();
   }, []);
+
+  const addGroup = async (newGroup) => {
+    toggleRef.current.toggleVisibility();
+
+    // Send to group service
+    try {
+      const res = await groupService.createGroup(newGroup);
+      console.log(res);
+      setGroups(groups.concat(res));
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 
   const ActiveGroup = () => {
     if (activeGroupId) {
@@ -47,9 +63,11 @@ const Home = ({ user }) => {
           {groups.map(group =>
             <GroupButton key={group.id} group={group} setActiveGroupId={setActiveGroupId} />
           )}
-          <Togglable buttonLabel='Make A Group' ref={toggleRef}>
-            <GroupForm />
-          </Togglable>
+          <div className="place-self-end">
+            <Togglable buttonLabel='Make A Group' ref={toggleRef}>
+              <GroupForm addGroup={addGroup} />
+            </Togglable>
+          </div>
         </div>
       </div>
       <div>

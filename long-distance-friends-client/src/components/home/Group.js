@@ -14,7 +14,7 @@ const Group = ({ group }) => {
       </div>
       <div className="flex gap-5 justify-end">
         <button className="btn font-normal">New Friend</button>
-        <button className="btn bg-purple-300">Make Hangout</button>
+        <button className="btn bg-purple-300 hover:bg-purple-400">Make Hangout</button>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import loginService from "../../services/loginService";
+import groupService from "../../services/groupService";
 
 const AccountLoginForm = ({ user, setUser, useNav }) => {
   const [username, setUsername] = useState("");
@@ -11,12 +12,15 @@ const AccountLoginForm = ({ user, setUser, useNav }) => {
 
     // Send to login service
     try {
-      const userToken = await loginService.login({ username, password });
+      const user = await loginService.login({ username, password });
       window.localStorage.setItem(
-        "user", JSON.stringify(userToken)
+        "user", JSON.stringify(user)
       );
 
-      setUser(userToken);
+      groupService.setToken(user.token);
+      setUser(user);
+      setUsername("");
+      setPassword("");
       useNav("/home");
     }
     catch (error) {
