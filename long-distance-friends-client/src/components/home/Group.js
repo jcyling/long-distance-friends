@@ -4,7 +4,7 @@ import FriendForm from "./FriendForm";
 import FriendIcon from "../common/FriendIcon";
 import groupService from "../../services/groupService";
 
-const Group = ({ user, group }) => {
+const Group = ({ user, group, deleteGroup }) => {
   const [friends, setFriends] = useState([]);
 
   const toggleRef = useRef();
@@ -23,7 +23,8 @@ const Group = ({ user, group }) => {
     // Send new friend
     try {
       const res = await groupService.addFriend(group.id, updatedFriendsList, user.token);
-      setFriends(friends.concat(res));
+      const newFriend = res.friends[res.friends.length -1];
+      setFriends(friends.concat(newFriend));
     }
     catch (error) {
       console.log(error);
@@ -45,12 +46,12 @@ const Group = ({ user, group }) => {
 
       <div className="flex flex-wrap mb-6 gap-12">
         {friends.map(friend =>
-          <FriendIcon key={friend.id} friend={friend} />
+          <FriendIcon key={friend._id} friend={friend} />
         )}
       </div>
 
       <div className="flex gap-5 justify-start">
-        <button className="btn bg-white font-normal">Delete Group</button>
+        <button className="btn bg-white font-normal" onClick={() => deleteGroup()}>Delete Group</button>
         <button className="btn bg-purple-300 ml-auto hover:bg-purple-400">Make Hangout</button>
       </div>
     </div>

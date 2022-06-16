@@ -33,8 +33,20 @@ const Home = ({ user }) => {
     // Send to group service
     try {
       const res = await groupService.createGroup(newGroup, user.token);
-      console.log(res);
       setGroups(groups.concat(res));
+      setActiveGroupId(groups[groups.length - 1].id);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteGroup = async () => {
+    try {
+      const activeGroup = groups.find(group => group.id == activeGroupId);
+      await groupService.deleteGroup(activeGroup.id, user.token);
+      setGroups(groups.filter(group => group !== activeGroup));
+      setActiveGroupId(groups[0].id);
     }
     catch (error) {
       console.log(error);
@@ -46,19 +58,23 @@ const Home = ({ user }) => {
       const activeGroup = groups.find(group => group.id == activeGroupId);
       return (
         <div>
-          <Group user={user} group={activeGroup} />
+          <Group key={activeGroup.id} user={user} group={activeGroup} deleteGroup={deleteGroup} />
         </div>
       );
     }
     else {
-      return null;
+      return (
+        <div>
+          Looks like you need a group.
+        </div>
+      );
     }
   };
 
   return (
     <main className="px-10">
       <div className="relative py-5 px-10 flex flex-col bg-gray-100 rounded-[1rem]">
-        <div className="w-full w-9/12 flex flex-wrap flex-start items-center gap-5">
+        <div className="w-full flex flex-wrap flex-start items-center gap-5">
           <span className="text-xl font-bold">Groups</span>
           {groups.map(group =>
             <GroupButton key={group.id} group={group} setActiveGroupId={setActiveGroupId} />

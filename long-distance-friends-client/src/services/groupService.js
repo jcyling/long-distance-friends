@@ -39,8 +39,13 @@ const addFriend = async (id, friends, token) => {
   }
 };
 
-const deleteGroup = async () => {
-  
+const deleteGroup = async (id, token) => {
+  const config = {
+    headers: { Authorization: `bearer ${token}` }
+  };
+
+  const res = await axios.delete(`${baseUrl}/groups/${id}`, config);
+  return res.data;
 };
 
 export default { getGroupInfo, createGroup, deleteGroup, addFriend };
