@@ -12,8 +12,8 @@ const GroupForm = ({ addGroup }) => {
   };
 
   return (
-    <div className="absolute top-0 right-0 w-80 py-6 px-8 bg-amber-300 rounded-[1rem] flex flex-col text-left">
-      <h3 className="font-bold pb-2">Make a Group</h3>
+    <div className="absolute z-10 top-20 right-0 w-80 py-6 px-8 bg-amber-300 rounded-[1rem] flex flex-col text-left">
+      <h3 className="font-bold pb-2">What&apos;s it called?</h3>
       <div className="w-full m-auto content-center">
         <form onSubmit={handleAddGroup}>
 

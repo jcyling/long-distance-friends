@@ -9,7 +9,6 @@ const AccountCreateForm = ({ user, setUser, useNav, setErrorMessage }) => {
   const handleUserCreation = async (event, username, password, name) => {
     event.preventDefault();
 
-    // TODO: Handle user creation
     // If user is already logged in
     if (user) {
       useNav("/home");

@@ -1,15 +1,19 @@
 import axios from "axios";
 const baseUrl = "http://localhost:3001/api";
 
-let token = null;
-
-const setToken = newToken => {
-  token = `bearer ${newToken}`;
+const getGroupInfo = async (id) => {
+  try {
+    const res = await axios.post(`${baseUrl}/groups/${id}`);
+    return res.data;
+  }
+  catch (error) {
+    console.log(error);
+  }
 };
 
-const createGroup = async (newGroup) => {
+const createGroup = async (newGroup, token) => {
   const config = {
-    headers: { Authorization: token },
+    headers: { Authorization: `bearer ${token}` },
   };
   
   try {
@@ -21,8 +25,22 @@ const createGroup = async (newGroup) => {
   }
 };
 
+const addFriend = async (id, friends, token) => {
+  const config = {
+    headers: { Authorization: `bearer ${token}` },
+  };
+
+  try {
+    const res = await axios.patch(`${baseUrl}/groups/${id}`, friends, config);
+    return res.data;
+  }
+  catch (error) {
+    console.log(error);
+  }
+};
+
 const deleteGroup = async () => {
   
 };
 
-export default { createGroup, deleteGroup, setToken };
+export default { getGroupInfo, createGroup, deleteGroup, addFriend };

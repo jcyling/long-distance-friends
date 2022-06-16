@@ -32,21 +32,21 @@ const Home = ({ user }) => {
 
     // Send to group service
     try {
-      const res = await groupService.createGroup(newGroup);
+      const res = await groupService.createGroup(newGroup, user.token);
       console.log(res);
       setGroups(groups.concat(res));
     }
     catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  const ActiveGroup = () => {
+  const ActiveGroupHandler = () => {
     if (activeGroupId) {
       const activeGroup = groups.find(group => group.id == activeGroupId);
       return (
         <div>
-          <Group group={activeGroup} />
+          <Group user={user} group={activeGroup} />
         </div>
       );
     }
@@ -58,20 +58,21 @@ const Home = ({ user }) => {
   return (
     <main className="px-10">
       <div className="relative py-5 px-10 flex flex-col bg-gray-100 rounded-[1rem]">
-        <div className="w-9/12 flex flex-wrap items-center gap-5">
+        <div className="w-full w-9/12 flex flex-wrap flex-start items-center gap-5">
           <span className="text-xl font-bold">Groups</span>
           {groups.map(group =>
             <GroupButton key={group.id} group={group} setActiveGroupId={setActiveGroupId} />
           )}
-          <div className="place-self-end">
+          <div className="ml-auto">
             <Togglable buttonLabel='Make A Group' ref={toggleRef}>
               <GroupForm addGroup={addGroup} />
             </Togglable>
           </div>
+
         </div>
       </div>
       <div>
-        <ActiveGroup />
+        <ActiveGroupHandler />
       </div>
 
     </main>

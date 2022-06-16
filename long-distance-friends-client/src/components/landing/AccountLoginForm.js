@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import loginService from "../../services/loginService";
-import groupService from "../../services/groupService";
 
 const AccountLoginForm = ({ user, setUser, useNav }) => {
   const [username, setUsername] = useState("");
@@ -17,7 +16,6 @@ const AccountLoginForm = ({ user, setUser, useNav }) => {
         "user", JSON.stringify(user)
       );
 
-      groupService.setToken(user.token);
       setUser(user);
       setUsername("");
       setPassword("");

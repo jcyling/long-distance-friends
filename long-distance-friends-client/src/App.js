@@ -14,9 +14,6 @@ import AccountLoginForm from "./components/landing/AccountLoginForm";
 import AccountCreateForm from "./components/landing/AccountCreateForm";
 import Notification from "./components/common/Notification";
 
-import groupService from "./services/groupService";
-
-
 const App = () => {
   const useNav = useNavigate();
   const [user, setUser] = useState(null);
@@ -27,7 +24,6 @@ const App = () => {
     if (userJSON) {
       const user = JSON.parse(userJSON);
       setUser(user);
-      groupService.setToken(user.token);
     }
   }, []);
 
