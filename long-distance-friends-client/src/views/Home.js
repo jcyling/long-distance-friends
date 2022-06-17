@@ -3,6 +3,7 @@ import GroupForm from "../components/home/GroupForm";
 import Group from "../components/home/Group";
 import GroupButton from "../components/home/GroupButton";
 import Togglable from "../components/common/Togglable";
+import GroupMakeHangoutForm from "../components/home/GroupMakeHangoutForm";
 
 import usersService from "../services/usersService";
 import groupService from "../services/groupService";
@@ -55,10 +56,11 @@ const Home = ({ user }) => {
   };
 
   const GroupInterface = () => {
+    // Conditional routes - make invite / see group
     if (makeInvite) {
       return (
         <div>
-          <h1>Make your invitation</h1>
+          <GroupMakeHangoutForm setMakeInvite={setMakeInvite} />
         </div>
       );
     }
