@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const usersRouter = require("express").Router();
+const helpers = require("../utils/helpers");
 
 // List of users
 usersRouter.get("/", async (req, res) => {
@@ -11,8 +12,8 @@ usersRouter.get("/", async (req, res) => {
 
 // Specific user
 usersRouter.get("/:id", async (req, res) => {
-  const users = await User.findById(req.params.id).populate("groups");
-  return res.json(users);
+  const user = await User.findById(req.params.id).populate("groups");
+  return res.json(user);
 });
 
 // Account creation
@@ -57,18 +58,15 @@ usersRouter.post("/", async (req, res) => {
     .send({ token, username: user.username, name: user.name });
 });
 
-usersRouter.put("/:id", async (req, res, next) => {
+usersRouter.patch("/:id", async (req, res, next) => {
 
   // TODO: Restrict changes to user only
   const body = req.body;
-  const user = {
-    lat: body.lat,
-    lng: body.lng,
-    timezone: body.timezone
-  };
+  
+  body.timezone = await helpers.convertLocationToTimezone(body.city);
 
   try {
-    const updatedUser = User.findByIdAndUpdate(req.params.id, user, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, body, { new: true });
     return res.json(updatedUser);
   }
   catch (error) {

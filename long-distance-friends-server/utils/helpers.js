@@ -34,12 +34,14 @@ const convertLatLongToTimezone = async ({ lat, lng }) => {
     const timezoneName = res.data.timeZoneName;
     const dstHour = res.data.dstOffset / 3600;
     const hours = res.data.rawOffset / 3600;
-    return hours + dstHour;
+    const total = hours + dstHour;
+    // Add + if hours are ahead of GMT
+    return (total > 0 ? "+" + total : total);
   }
   catch (error) {
     console.log(error);
   }
-}
+};
 
 module.exports = { 
   convertLocationToTimezone,
