@@ -1,15 +1,23 @@
 import React, { useState } from "react";
+import DateRangePicker from "../common/DateRangePicker";
+import SlotPicker from "../common/DateSlotPicker";
 
 const GroupMakeHangoutForm = ({ setMakeInvite }) => {
-  const [value, setValue] = React.useState([null, null]);
-  // const [hangoutWindowEnd, setHangoutWindowEnd] = useState("");
+  const [weeksBool, setWeeksBool] = useState(false);
+
+  const handleHangoutSubmit = (event) => {
+    event.preventDefault();
+  };
 
   return (
-    <div className="bg-gray-200 rounded-[1rem] p-6">
+    <div className="bg-gray-200 rounded-[1rem]">
       <form className="flex flex-col">
 
+        <DateRangePicker weeks={weeksBool} setWeeks={setWeeksBool} />
+        <SlotPicker />
+
         <div>
-          <button className="btn">
+          <button className="btn" onClick={() => handleHangoutSubmit()}>
             Schedule
           </button>
           <button
@@ -19,6 +27,7 @@ const GroupMakeHangoutForm = ({ setMakeInvite }) => {
           </button>
         </div>
       </form>
+
 
     </div>
   );
