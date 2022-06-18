@@ -8,7 +8,18 @@ const helpers = require("../utils/helpers.js");
 // Get all groups
 groupRouter.get("/", async (req, res, next) => {
   try {
-    const groups = await Group.find({}).populate("admin", { "username": 1, "name": 1, "timezone": 1 });
+    const groups = await Group.find({}).populate("admin", { "username": 1, "name": 1, "city": 1, "timezone": 1 });
+    return res.json(groups);
+  }
+  catch (error) {
+    next(error);
+  }
+});
+
+// Get a single group
+groupRouter.get("/:id", async (req, res, next) => {
+  try {
+    const groups = await Group.findById(req.params.id).populate("admin", { "username": 1, "name": 1, "city": 1, "timezone": 1 });
     return res.json(groups);
   }
   catch (error) {
