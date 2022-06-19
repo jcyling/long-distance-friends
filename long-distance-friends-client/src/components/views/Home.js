@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import GroupForm from "../components/home/GroupForm";
-import Group from "../components/home/Group";
-import GroupButton from "../components/home/GroupButton";
-import Togglable from "../components/common/Togglable";
-import GroupMakeHangoutForm from "../components/home/GroupMakeHangoutForm";
+import GroupForm from "../home/GroupForm";
+import Group from "../home/Group";
+import GroupButton from "../home/GroupButton";
+import Togglable from "../common/Togglable";
+import GroupMakeHangoutForm from "../home/GroupMakeHangoutForm";
 
-import usersService from "../services/usersService";
-import groupService from "../services/groupService";
+import usersService from "../../services/usersService";
+import groupService from "../../services/groupService";
 
 const Home = ({ user }) => {
   const [groups, setGroups] = useState([]);

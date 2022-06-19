@@ -3,15 +3,14 @@ import {
   Routes, Route, Navigate, useNavigate
 } from "react-router-dom";
 
-
-import Landing from "./views/Landing";
-import Home from "./views/Home";
-import NoRoute from "./views/NoRoute";
-import Settings from "./views/Settings";
+import Landing from "./components/views/Landing";
+import Home from "./components/views/Home";
+import NoRoute from "./components/views/NoRoute";
+import Settings from "./components/views/Settings";
+import AccountLoginForm from "./components/views/LoginAccount";
+import AccountCreateForm from "./components/views/CreateAccount";
 
 import Navbar from "./components/common/Navbar";
-import AccountLoginForm from "./components/landing/AccountLoginForm";
-import AccountCreateForm from "./components/landing/AccountCreateForm";
 import Notification from "./components/common/Notification";
 
 const App = () => {

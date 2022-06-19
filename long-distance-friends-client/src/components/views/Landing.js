@@ -18,13 +18,13 @@ const Index = () => {
         </button>
         <div className="flex flex-nowrap flex-row place-content-around clear-both h-max w-full">
           <img
-            src={require("../static/images/illustrations/034.png")}
+            src={require("../../static/images/illustrations/034.png")}
             style={{
               height: "30rem",
             }}
           />
           <img
-            src={require("../static/images/illustrations/026.png")}
+            src={require("../../static/images/illustrations/026.png")}
             style={{
               height: "30rem",
             }}
@@ -43,7 +43,7 @@ const Index = () => {
           <span className="bg-amber-300 px-5 py-2 rounded-full">Hangout</span>
         </div>
         <img
-          src={require("../static/images/illustrations/024.png")}
+          src={require("../../static/images/illustrations/024.png")}
           style={{
             height: "30rem",
           }}
