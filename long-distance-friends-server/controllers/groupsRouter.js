@@ -8,7 +8,16 @@ const helpers = require("../utils/helpers.js");
 // Get all groups
 groupRouter.get("/", async (req, res, next) => {
   try {
-    const groups = await Group.find({}).populate("admin", { "username": 1, "name": 1, "city": 1, "timezone": 1 });
+    const groups = await Group.find({})
+      .populate("admin",
+        {
+          "username": 1,
+          "name": 1,
+          "city": 1,
+          "timezone": 1,
+        })
+      .populate("meetings")
+      .exec();
     return res.json(groups);
   }
   catch (error) {
@@ -63,11 +72,11 @@ groupRouter.patch("/:id", async (req, res, next) => {
 
   const body = req.body;
 
-  // TODO: Constraint to only user's group
+  // TODO: Constrain to only user's group
 
   try {
     // Calculate all friends' timezones
-    const newFriendsList = await Promise.all(body.friends.map(async(friend) => {
+    const newFriendsList = await Promise.all(body.friends.map(async (friend) => {
       let updatedFriendInfo = {
         ...friend,
         timezone: await helpers.convertLocationToTimezone(friend.city)
@@ -87,11 +96,18 @@ groupRouter.patch("/:id", async (req, res, next) => {
   catch (error) {
     next(error);
   }
-  
+
 });
 
 // Delete group
 groupRouter.delete("/:id", async (req, res) => {
+  const targetGroup = await Group.findById(req.params.id);
+
+  if (!targetGroup) {
+    return res.status(404).json({
+      error: "group not found"
+    });
+  }
   // TODO: Constraint to only user's group
   await Group.findByIdAndRemove(req.params.id);
   return res.status(204).end();

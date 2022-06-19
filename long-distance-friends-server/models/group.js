@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
 const groupSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+  },
   admin: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
@@ -13,6 +15,12 @@ const groupSchema = new mongoose.Schema({
       city: String
     }
   ],
+  meetings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Meeting"
+    }
+  ]
 });
 
 groupSchema.set("toJSON", {

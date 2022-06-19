@@ -9,6 +9,7 @@ const middleware = require("./utils/middleware");
 const usersRouter = require("./controllers/usersRouter");
 const loginRouter = require("./controllers/loginRouter");
 const groupsRouter = require("./controllers/groupsRouter");
+const meetingsRouter = require("./controllers/meetingsRouter");
 
 // Start express app
 const app = express();
@@ -30,6 +31,7 @@ mongoose.connect(config.MONGODB_URI)
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/groups", groupsRouter);
+app.use("/api/meetings", meetingsRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
