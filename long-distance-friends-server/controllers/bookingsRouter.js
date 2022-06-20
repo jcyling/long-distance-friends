@@ -73,16 +73,20 @@ bookingsRouter.post("/", async (req, res, next) => {
   const window = meeting.window;
 
   // Validate date is within meeting window
-  body.availability.map(day => {
+  const dateCheck = body.availability.map(day => {
 
     // Construct the same date format
     let dateToCheck = new Date(day.date);
-    if (dateToCheck < window.startDate || dateToCheck > window.endDate) {
-      return res.status(400).json({
-        error: "booking is outside window of availability for meeting"
-      });
+    if (dateToCheck < window.startDate - 1 || dateToCheck > window.endDate + 1) {
+      return true;
     }
   });
+
+  if (dateCheck) {
+    return res.status(400).json({
+      error: "booking is outside window of availability for meeting"
+    });
+  }
 
   const booking = new Booking({
     group: body.groupId,
