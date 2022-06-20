@@ -10,6 +10,7 @@ const usersRouter = require("./controllers/usersRouter");
 const loginRouter = require("./controllers/loginRouter");
 const groupsRouter = require("./controllers/groupsRouter");
 const meetingsRouter = require("./controllers/meetingsRouter");
+const bookingsRouter = require("./controllers/bookingsRouter");
 
 // Start express app
 const app = express();
@@ -32,6 +33,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/groups", groupsRouter);
 app.use("/api/meetings", meetingsRouter);
+app.use("/api/bookings", bookingsRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

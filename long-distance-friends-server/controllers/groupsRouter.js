@@ -1,7 +1,8 @@
+const groupRouter = require("express").Router();
 const jwt = require("jsonwebtoken");
+
 const Group = require("../models/group");
 const User = require("../models/user");
-const groupRouter = require("express").Router();
 const auth = require("../utils/auth.js");
 const helpers = require("../utils/helpers.js");
 
@@ -108,6 +109,7 @@ groupRouter.delete("/:id", async (req, res) => {
       error: "group not found"
     });
   }
+  
   // TODO: Constraint to only user's group
   await Group.findByIdAndRemove(req.params.id);
   return res.status(204).end();

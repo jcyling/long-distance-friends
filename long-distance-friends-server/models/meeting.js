@@ -11,7 +11,9 @@ const windowSchema = new mongoose.Schema({
     min: Date.now,
     required: true
   },
-
+  timezone: {
+    type: String
+  }
 });
 
 const meetingSchema = new mongoose.Schema(
@@ -24,11 +26,13 @@ const meetingSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
-    window: [windowSchema],
-    bookings: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "booking"
-    },
+    window: windowSchema,
+    bookings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "booking"
+      }
+    ],
   },
   {
     timestamps: true

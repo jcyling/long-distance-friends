@@ -5,7 +5,11 @@ const availabilitySchema = new mongoose.Schema({
     type: Date,
     min: Date.now
   },
-  hours: [String]
+  hours: [
+    {
+      type: String
+    }
+  ]
 });
 
 const bookingSchema = new mongoose.Schema(
@@ -19,9 +23,13 @@ const bookingSchema = new mongoose.Schema(
       ref: "Meeting"
     },
     booker: {
-      type: mongoose.Schema.Types.ObjectId
+      type: mongoose.Schema.Types.ObjectId,
+      // Add friend reference from group
     },
-    availability: [availabilitySchema],
+    timezone: {
+      type: String
+    },
+    availability: [[availabilitySchema]],
   },
   {
     timestamps: true
