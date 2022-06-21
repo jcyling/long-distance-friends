@@ -39,11 +39,6 @@ const meetingSchema = new mongoose.Schema(
   }
 );
 
-// meetingSchema.pre("deleteMany", function(next) {
-//   const meeting = this;
-//   meeting.model("Group").deleteOne({ meetings: meeting._id }, next);
-// });
-
 meetingSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
