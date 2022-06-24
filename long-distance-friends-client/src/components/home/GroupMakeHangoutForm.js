@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import DateRangePicker from "../common/DateRangePicker";
-import SlotPicker from "../common/DateSlotPicker";
+
 
 const GroupMakeHangoutForm = ({ setMakeInvite }) => {
-  const [weeksBool, setWeeksBool] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [rangeSelect, setRangeSelect] = useState(false);
+
+  const handleDateSet = (date) => {
+    console.log(date);
+    
+  };
 
   const handleHangoutSubmit = (event) => {
     event.preventDefault();
@@ -11,24 +16,40 @@ const GroupMakeHangoutForm = ({ setMakeInvite }) => {
 
   return (
     <div className="bg-gray-200 rounded-[1rem]">
-      <form className="flex flex-col">
+      <form className="flex flex-col" onSubmit={() => handleHangoutSubmit()}>
 
-        <DateRangePicker weeks={weeksBool} setWeeks={setWeeksBool} />
-        <SlotPicker />
+        <div className="flex">
+          <p className="flex flex-row">
+            Your Timezone:
+            <span>
+              {Intl.DateTimeFormat().resolvedOptions().timeZone}
+            </span>
+            <span >
+              UTC {(new Date().getTimezoneOffset() / 60) * -1}
+            </span>
+          </p>
 
+          <div>
+            <span>Start Date:</span>
+
+          </div>
+
+          {rangeSelect && <timeSelect />}
+
+        </div>
         <div>
-          <button className="btn" onClick={() => handleHangoutSubmit()}>
+          <button className="btn">
             Schedule
           </button>
           <button
             className="btn ml-auto"
+            type="button"
             onClick={() => setMakeInvite(false)}>
             Cancel
           </button>
         </div>
+
       </form>
-
-
     </div>
   );
 };
