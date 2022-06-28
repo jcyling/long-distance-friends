@@ -28,7 +28,7 @@ describe(("User api tests"), () => {
       username: "j",
       name: "jane ling",
       password: "ab",
-    }
+    };
 
     const result = await api
       .post("/api/users")
