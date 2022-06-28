@@ -38,6 +38,10 @@
 @tailwind components;
 
 @layer components {
+  .invisible {
+    display: none;
+  }
+  
   .link {
     @apply p-2;
   }

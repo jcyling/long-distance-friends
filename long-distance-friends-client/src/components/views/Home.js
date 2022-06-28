@@ -60,7 +60,7 @@ const Home = ({ user }) => {
     if (makeInvite) {
       return (
         <div>
-          <GroupMakeHangoutForm setMakeInvite={setMakeInvite} />
+          <GroupMakeHangoutForm user={user} setMakeInvite={setMakeInvite} />
         </div>
       );
     }
