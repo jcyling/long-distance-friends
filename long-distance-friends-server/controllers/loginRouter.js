@@ -24,15 +24,13 @@ loginRouter.post("/", async (req, res) => {
     id: user._id
   };
 
-  console.log(userForToken);
-
   // Generate token for such user
   const token = jwt.sign(userForToken, process.env.SECRET);
 
   // Send token to browser
   return res
     .status(200)
-    .send({ token, username: user.username, name: user.name, id:user._id });
+    .send({ token, username: user.username, name: user.name, id: user._id, timezone: user.timezone });
 });
 
 module.exports = loginRouter;
