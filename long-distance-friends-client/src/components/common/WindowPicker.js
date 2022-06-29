@@ -2,7 +2,7 @@ import React from "react";
 import Flatpickr from "react-flatpickr";
 import { convertDateRangeToUtc } from "./TimeUtils";
 
-const DatePicker = ({ user, setRange, setRangeSelected }) => {
+const WindowPicker = ({ user, setRange, setRangeSelected }) => {
 
   let userIana = user.timezone;
 
@@ -20,6 +20,7 @@ const DatePicker = ({ user, setRange, setRangeSelected }) => {
     // Convert to UTC with user-specified timezone
     const utcDatetimeRange = convertDateRangeToUtc(newDateRange, userIana);
 
+    // Bug: Range on server is different to range in client due to MongoDB conversion 
     setRange(prevState => {
       return { ...prevState, ...utcDatetimeRange };
     });
@@ -41,6 +42,7 @@ const DatePicker = ({ user, setRange, setRangeSelected }) => {
 
   return (
     <Flatpickr
+      className="fld-txt"
       onChange={(browserDates, dateStr) => handleRangeSubmit(browserDates, dateStr)}
       options={{
         mode: "range",
@@ -49,10 +51,10 @@ const DatePicker = ({ user, setRange, setRangeSelected }) => {
           "Y-m-d ZZ"],
         ariaDateFormat: "cccc d, y",
         allowInput: true,
-        minDate: Date.now()
+        minDate: Date.now(),
       }}
     />
   );
 };
 
-export default DatePicker;
+export default WindowPicker;

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "flatpickr/dist/themes/airbnb.css";
-import DatePicker from "../common/Datepicker";
-import Timepicker from "../common/Timepicker";
+import WindowPicker from "../common/WindowPicker";
+import AvailabilityPicker from "../common/AvailabilityPicker";
 
 const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
   const [range, setRange] = useState({});
   const [rangeSelected, setRangeSelected] = useState(false);
+  // const [availability, setAvailability] = useState({});
 
   const handleHangoutSubmit = (event) => {
     event.preventDefault();
@@ -29,24 +30,21 @@ const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
             <span >
               UTC
             </span>
-            <DatePicker
+            <WindowPicker
               user={user}
               setRange={setRange}
               setRangeSelected={setRangeSelected}
             />
           </div>
 
-          <div className="w-full p-12 bg-amber-100 rounded-[1rem]">
-            <h4>
-              Select availability:
-            </h4>
-            {
-              rangeSelected &&
-              <Timepicker
-                range={range}
-              />
-            }
-          </div>
+          {
+            rangeSelected &&
+            <AvailabilityPicker
+              range={range}
+              // availability={availability}
+              // setAvailability={setAvailability}
+            />
+          }
 
         </div>
         <div>
