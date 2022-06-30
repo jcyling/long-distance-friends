@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Togglable from "../common/Togglable";
-import FriendForm from "./FriendForm";
+import GroupCreateFriendForm from "./GroupFriendCreateForm";
 import FriendIcon from "../common/FriendIcon";
 import groupService from "../../services/groupService";
 
@@ -39,7 +39,7 @@ const Group = ({ user, group, deleteGroup, makeInvite, setMakeInvite }) => {
         </h3>
         <div className="ml-auto">
           <Togglable buttonLabel="Add Friend" ref={toggleRef}>
-            <FriendForm addFriend={addFriend} />
+            <GroupCreateFriendForm addFriend={addFriend} />
           </Togglable>
         </div>
       </div>

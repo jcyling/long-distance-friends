@@ -6,12 +6,18 @@ const WindowPicker = ({ user, setRange, setRangeSelected }) => {
 
   let userIana = user.timezone;
 
-  const handleRangeSubmit = (dates, dateStr) => {
+  const handleRangePick = (browserDates, dateStr) => {
     // Receive dates as strings, convert to object
     let splitDates = "";
-    if (dateStr.length > 10) {
+
+    if (browserDates.length === 2) {
       splitDates = dateStr.split(" to ");
     }
+    else {
+      setRangeSelected(false);
+      return null;
+    }
+
     const newDateRange = {
       startDate: splitDates[0],
       endDate: splitDates[1]
@@ -42,7 +48,7 @@ const WindowPicker = ({ user, setRange, setRangeSelected }) => {
   return (
     <Flatpickr
       className="fld-txt"
-      onChange={(browserDates, dateStr) => handleRangeSubmit(browserDates, dateStr)}
+      onChange={(browserDates, dateStr) => handleRangePick(browserDates, dateStr)}
       options={{
         mode: "range",
         dateFormat: "Y-m-d",

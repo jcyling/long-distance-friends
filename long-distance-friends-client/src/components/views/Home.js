@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import GroupForm from "../home/GroupForm";
+import GroupCreateForm from "../home/GroupForm";
 import Group from "../home/Group";
 import GroupButton from "../home/GroupButton";
 import Togglable from "../common/Togglable";
@@ -91,7 +91,7 @@ const Home = ({ user }) => {
           )}
           <div className="ml-auto">
             <Togglable buttonLabel='Make A Group' ref={toggleRef}>
-              <GroupForm addGroup={addGroup} />
+              <GroupCreateForm addGroup={addGroup} />
             </Togglable>
           </div>
 

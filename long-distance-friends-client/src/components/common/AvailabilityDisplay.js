@@ -1,23 +1,56 @@
 import React from "react";
 import { FiPlus } from "react-icons/fi";
 
-const AvailabilityDisplay = ({ availability, setAvailability }) => {
+const AvailabilityDisplay = ({ availability, setAvailability, setPickerStatus }) => {
   return (
-    <div className="bg-gray-100 rounded-[1rem] w-full p-6">
+    <div className="rounded-[1rem] w-full p-6 text-left">
       <h4>
         Your Availability
       </h4>
-      <h4>Dates</h4>
-      <p>
-        {availability.map( (item, index) => {
-          return Object.values(item).map((arr, index) => {
-            console.log(arr)
-          });
-        }
-          
-        )}
-      </p>
-      <div className="btn flex justify-center">
+      <div className="flex flex-row">
+        <div className="flex flex-col w-full mb-6">
+          {availability.map((entry, index) => {
+            return (
+              <div className="p-3 w-full bg-white rounded-md border" key={index}>
+                <div>
+                  <div>
+                    <span className="pr-2">Dates</span>
+                    {entry.date.map(date =>
+                      <span
+                        key={date}
+                        className="py-1 px-1 font-light text-sm"
+                      >
+                        {date}
+                      </span>
+                    )}
+                  </div>
+                  <span className="pr-2">Times</span>
+                  {entry.time.map(time =>
+                    <span
+                      key={time}
+                      className="py-1 px-1 font-light text-sm"
+                    >
+                      {time}
+                    </span>
+                  )}
+
+                </div>
+                <button
+                  className="float-right text-sm"
+                  onClick={() => setAvailability(availability.filter((item, i) => i !== index))}
+                >
+                  Remove
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div
+        className="btn flex justify-center"
+        onClick={() => setPickerStatus(true)}
+      >
         <FiPlus /> <span> Add</span>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const FriendForm = ({ addFriend }) => {
+const GroupCreateFriendForm = ({ addFriend }) => {
   const [friendName, setFriendName] = useState("");
   const [friendCity, setFriendCity] = useState("");
 
@@ -50,4 +50,4 @@ const FriendForm = ({ addFriend }) => {
   );
 };
 
-export default FriendForm;
+export default GroupCreateFriendForm;

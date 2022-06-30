@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const GroupForm = ({ addGroup }) => {
+const GroupCreateForm = ({ addGroup }) => {
   const [groupName, setGroupName] = useState("");
 
   const handleAddGroup = async (event) => {
@@ -36,4 +36,4 @@ const GroupForm = ({ addGroup }) => {
   );
 };
 
-export default GroupForm;
+export default GroupCreateForm;

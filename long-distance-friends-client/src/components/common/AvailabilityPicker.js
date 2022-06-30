@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import Flatpickr from "react-flatpickr";
 import TimePicker from "./TimePicker";
 
-const AvailabilityPicker = ({ range, availability, setAvailability }) => {
+const AvailabilityPicker = ({ range, availability, setAvailability, setPickerStatus }) => {
   const [availableDates, setAvailableDates] = useState([]);
   const [availableTimes, setAvailableTimes] = useState([]);
 
-  const handleDatePick = (date) => {
-    setAvailableDates(availableDates.concat(date));
+  const handleDatePick = (dateList) => {
+    let dateArr = dateList.split(", ").sort();
+    setAvailableDates(dateArr);
   };
 
   const handleSlotSubmit = () => {
@@ -17,7 +18,7 @@ const AvailabilityPicker = ({ range, availability, setAvailability }) => {
         time: availableTimes
       };
       setAvailability(availability.concat(newSlot));
-
+      setPickerStatus(false);
     }
     else {
       // Return message that date or time must be selected
@@ -25,11 +26,11 @@ const AvailabilityPicker = ({ range, availability, setAvailability }) => {
   };
 
   return (
-    <div className="w-full p-6 bg-amber-100 rounded-[1rem]">
-      <div className="flex">
+    <div className="w-full p-6 mb-6 border rounded-[1rem]">
+      <div className="flex text-left gap-3">
         <div>
           <h4>
-            Select availability
+            Select dates
           </h4>
           {/* Date picker corresponding to time picked */}
           <Flatpickr
