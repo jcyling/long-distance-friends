@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import "flatpickr/dist/themes/airbnb.css";
 import WindowPicker from "../common/WindowPicker";
 import AvailabilityPicker from "../common/AvailabilityPicker";
+import AvailabilityDisplay from "../common/AvailabilityDisplay";
 
 const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
   const [range, setRange] = useState({});
   const [rangeSelected, setRangeSelected] = useState(false);
-  // const [availability, setAvailability] = useState({});
+  const [availability, setAvailability] = useState([]);
 
   const handleHangoutSubmit = (event) => {
     event.preventDefault();
   };
 
   return (
-    <div className="bg-gray-200 rounded-[1rem] p-6">
-      <form className="flex flex-col" onSubmit={() => handleHangoutSubmit()}>
+    <div className="rounded-[1rem] p-6">
+      <form className="flex flex-col" onSubmit={handleHangoutSubmit}>
 
         <div className="flex flex-col justify-items-center items-center">
           <div className="flex flex-col p-6">
@@ -38,18 +39,25 @@ const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
           </div>
 
           {
-            rangeSelected &&
+            (rangeSelected && availability.length === 0) &&
             <AvailabilityPicker
               range={range}
-              // availability={availability}
-              // setAvailability={setAvailability}
+              availability={availability}
+              setAvailability={setAvailability}
+            />
+          }
+          {
+            (rangeSelected && availability.length > 0) &&
+            <AvailabilityDisplay 
+              availability={availability}
+              setAvailability={setAvailability}
             />
           }
 
         </div>
         <div>
-          <button className="btn">
-            Schedule
+          <button className="btn" disabled={true}>
+            Make Hangout
           </button>
           <button
             className="btn ml-auto"

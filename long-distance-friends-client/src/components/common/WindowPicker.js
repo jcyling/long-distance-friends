@@ -20,7 +20,6 @@ const WindowPicker = ({ user, setRange, setRangeSelected }) => {
     // Convert to UTC with user-specified timezone
     const utcDatetimeRange = convertDateRangeToUtc(newDateRange, userIana);
 
-    // Bug: Range on server is different to range in client due to MongoDB conversion 
     setRange(prevState => {
       return { ...prevState, ...utcDatetimeRange };
     });

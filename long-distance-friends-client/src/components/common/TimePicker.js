@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { createTimeIntevals } from "./TimeUtils";
 
 const TimePicker = ({ availableTimes, setAvailableTimes }) => {
-  const [activeButtons, setActiveButtons] = React.useState([]);
+  const [activeButtons, setActiveButtons] = useState([]);
 
   const startTime = "00:00";
   const endTime = "23:59";
@@ -10,7 +10,7 @@ const TimePicker = ({ availableTimes, setAvailableTimes }) => {
 
   const timeslotList = createTimeIntevals(startTime, endTime, inteval);
 
-  const handleSlotPick = (slot, index) => {
+  const handleSlotPick = (event, slot, index) => {
     event.preventDefault();
     if (!activeButtons.includes(index)) {
       // Add button to active buttons
@@ -24,16 +24,13 @@ const TimePicker = ({ availableTimes, setAvailableTimes }) => {
     }
   };
 
-  const handleSlotSubmit = () => {
-    event.preventDefault();
-  };
-
   const TimeSlotButton = ({slot, index}) => {
     return (
       <div
+        value={availableTimes}
         className="p-2 font-light rounded-md shadow-md bg-white hover:bg-amber-300 grow-0"
         style={activeButtons.includes(index) ? activeButtonStyle : inactiveButtonStyle}
-        onClick={() => handleSlotPick(slot, index)}
+        onClick={() => handleSlotPick(event, slot, index)}
         key={index}>
         {slot}
       </div>
@@ -41,7 +38,8 @@ const TimePicker = ({ availableTimes, setAvailableTimes }) => {
   };
 
   const activeButtonStyle = {
-    backgroundColor: "orange"
+    backgroundColor: "#4f99ff",
+    color: "white"
   };
 
   const inactiveButtonStyle = {
@@ -51,40 +49,34 @@ const TimePicker = ({ availableTimes, setAvailableTimes }) => {
   return (
     <div className="flex flex-col px-2">
       <h4 className="w-full">
-        Select times:
+        Select available time:
       </h4>
       <div className="flex gap-3 flex-wrap flex-auto">
-        <div className="p-2 rounded-md shadow-md basis-full">Early Morning</div>
+        <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Early Morning</div>
         {timeslotList.map((slot, index) => {
           if (slot < "06:00") {
             return <TimeSlotButton key={index} slot={slot} index={index} />;
           }
         })}
-        <div className="p-2 rounded-md shadow-md basis-full">Morning</div>
+        <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Morning</div>
         {timeslotList.map((slot, index) => {
-          if (slot > "06:00" && slot < "12:00") {
+          if (slot > "06:00" && slot <= "12:00") {
             return <TimeSlotButton key={index} slot={slot} index={index} />;
           }
         })}
-        <div className="p-2 rounded-md shadow-md basis-full">Afternoon</div>
+        <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Afternoon</div>
         {timeslotList.map((slot, index) => {
-          if (slot > "12:00" && slot < "18:00") {
+          if (slot > "12:00" && slot <= "18:00") {
             return <TimeSlotButton key={index} slot={slot} index={index} />;
           }
         })}
-        <div className="p-2 rounded-md shadow-md basis-full">Evening</div>
+        <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Evening</div>
         {timeslotList.map((slot, index) => {
-          if (slot > "18:00" && slot < "23:59") {
+          if (slot > "18:00" && slot <= "24:00") {
             return <TimeSlotButton key={index} slot={slot} index={index} />;
           }
         })}
       </div>
-      <button
-        className="btn mt-2"
-        onClick={() => handleSlotSubmit}>
-        Add Availability
-      </button>
-
     </div>
   );
 };

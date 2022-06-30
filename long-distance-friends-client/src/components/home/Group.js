@@ -32,7 +32,7 @@ const Group = ({ user, group, deleteGroup, makeInvite, setMakeInvite }) => {
   };
 
   return (
-    <div className="relative py-5 px-10 bg-gray-200 rounded-[1rem]">
+    <div className="relative py-5 px-10 rounded-[1rem]">
       <div className="flex flex-row flex-auto">
         <h3 className="pb-5 font-bold text-left">
           {group.name}
