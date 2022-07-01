@@ -11,6 +11,7 @@ const loginRouter = require("./controllers/loginRouter");
 const groupsRouter = require("./controllers/groupsRouter");
 const meetingsRouter = require("./controllers/meetingsRouter");
 const bookingsRouter = require("./controllers/bookingsRouter");
+const friendsRouter = require("./controllers/friendsRouter");
 
 // Start express app
 const app = express();
@@ -32,6 +33,7 @@ mongoose.connect(config.MONGODB_URI)
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/groups", groupsRouter);
+app.use("/api/friends", friendsRouter);
 app.use("/api/meetings", meetingsRouter);
 app.use("/api/bookings", bookingsRouter);
 

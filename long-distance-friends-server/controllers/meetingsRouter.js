@@ -10,9 +10,7 @@ meetingsRouter.get("/", async (req, res, next) => {
   try {
     const meetings = await Meeting
       .find({})
-      .populate("bookings",
-        { "booker": 1, "availability": 1, "timestamps": 1 }
-      )
+      .populate("bookings")
       .populate("creator",
         { "username": 1 }
       )
