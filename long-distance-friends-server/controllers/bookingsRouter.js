@@ -8,11 +8,10 @@ bookingsRouter.get("/", async (req, res, next) => {
   try {
     const booking = await Booking
       .find({})
-      .populate("group",
-        { "name": 1, "admin": 1, "friends": 1 }
-      )
+      .populate("booker",
+        { "name": 1, "timezone": 1 })
       .populate("meeting",
-        { "window": 1, "bookings": 1 }
+        { "window": 1 }
       )
       .exec();
     return res.json(booking);
@@ -27,11 +26,10 @@ bookingsRouter.get("/:id", async (req, res, next) => {
   try {
     const booking = await Booking
       .findById(req.params.id)
-      .populate("group",
-        { "name": 1, "admin": 1, "friends": 1 }
-      )
+      .populate("booker",
+        { "name": 1, "timezone": 1 })
       .populate("meeting",
-        { "window": 1, "bookings": 1 }
+        { "window": 1 }
       )
       .exec();
     return res.json(booking);
@@ -101,7 +99,7 @@ bookingsRouter.delete("/:id", async (req, res) => {
 
   if (!targetBooking) {
     return res.status(404).json({
-      error: "group not found"
+      error: "booking not found"
     });
   }
 
