@@ -32,9 +32,6 @@ meetingsRouter.get("/:id", async (req, res, next) => {
       .populate("group",
         { "name": 1, "admin": 1, "friends": 1 }
       )
-      .populate("bookings",
-        { "booker": 1, "availability": 1, "timestamps": 1 }
-      )
       .populate("creator",
         { "username": 1 }
       )

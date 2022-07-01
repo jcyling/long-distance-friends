@@ -16,9 +16,7 @@ groupRouter.get("/", async (req, res, next) => {
           "name": 1,
           "city": 1,
           "timezone": 1,
-        })
-      .populate("meetings")
-      .exec();
+        });
     return res.json(groups);
   }
   catch (error) {

@@ -1,5 +1,4 @@
 const bookingsRouter = require("express").Router();
-
 const Booking = require("../models/booking");
 const Group = require("../models/group");
 const Meeting = require("../models/meeting");
@@ -53,14 +52,7 @@ bookingsRouter.post("/", async (req, res, next) => {
     });
   }
 
-  // Validate friend in group
-  const friend = group.friends.find(friend => friend._id.toString() === body.friendId);
-
-  if (!friend) {
-    return res.status(404).json({
-      error: "friend not found"
-    });
-  }
+  // TODO: Validate friend in group
 
   // Validate meeting 
   const meeting = await Meeting.findById(body.meetingId);
@@ -73,13 +65,10 @@ bookingsRouter.post("/", async (req, res, next) => {
   const window = meeting.window;
 
   // Validate date is within meeting window
-  const dateCheck = body.availability.map(day => {
-
-    // Construct the same date format
-    let dateToCheck = new Date(day.date);
-    if (dateToCheck < window.startDate - 1 || dateToCheck > window.endDate + 1) {
-      return true;
-    }
+  const dateCheck = body.availability.every((item) => {
+    // Format date
+    let dateToCheck = new Date(item.datetime);
+    return (dateToCheck < window.startDate || dateToCheck > window.endDate) ? true : false;
   });
 
   if (dateCheck) {
@@ -91,8 +80,9 @@ bookingsRouter.post("/", async (req, res, next) => {
   const booking = new Booking({
     group: body.groupId,
     meeting: body.meetingId,
-    booker: friend.id,
-    availability: body.availability
+    availability: body.availability,
+    booker: body.booker,
+    bookerModel: body.bookerModel
   });
 
   try {
@@ -106,8 +96,8 @@ bookingsRouter.post("/", async (req, res, next) => {
   }
 });
 
-bookingsRouter.delete("/", async (req, res) => {
-  const targetBooking = await Meeting.findById(req.params.id);
+bookingsRouter.delete("/:id", async (req, res) => {
+  const targetBooking = await Booking.findById(req.params.id);
 
   if (!targetBooking) {
     return res.status(404).json({

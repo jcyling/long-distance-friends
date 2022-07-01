@@ -1,19 +1,25 @@
 const mongoose = require("mongoose");
 
-const availabilitySchema = new mongoose.Schema({
-  date: {
-    type: Date,
-    min: Date.now
-  },
-  hours: [
-    {
-      type: String
-    }
-  ]
-});
-
 const bookingSchema = new mongoose.Schema(
   {
+    booker: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      refPath: "bookerModel"
+    },
+    bookerModel: {
+      type: String,
+      required: true,
+      enum: ["User", "Friend"]
+    },
+    timezone: {
+      type: String
+    },
+    availability: [{
+      datetime: {
+        type: mongoose.Schema.Types.Date
+      }
+    }],
     group: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Group"
@@ -21,15 +27,7 @@ const bookingSchema = new mongoose.Schema(
     meeting: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Meeting"
-    },
-    booker: {
-      type: mongoose.Schema.Types.ObjectId,
-      // Add friend reference from group
-    },
-    timezone: {
-      type: String
-    },
-    availability: [[availabilitySchema]],
+    }
   },
   {
     timestamps: true

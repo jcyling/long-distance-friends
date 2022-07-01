@@ -10,9 +10,8 @@ const groupSchema = new mongoose.Schema({
   },
   friends: [
     {
-      name: String,
-      timezone: String,
-      city: String
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Friend"
     }
   ],
   meetings: [
