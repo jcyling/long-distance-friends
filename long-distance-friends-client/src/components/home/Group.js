@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import Togglable from "../common/Togglable";
 import GroupCreateFriendForm from "./GroupFriendCreateForm";
 import FriendIcon from "../common/FriendIcon";
-import groupService from "../../services/groupService";
+import friendService from "../../services/friendService";
 
-const Group = ({ user, group, deleteGroup, makeInvite, setMakeInvite }) => {
+const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
   const [friends, setFriends] = useState([]);
 
   const toggleRef = useRef();
@@ -13,17 +13,13 @@ const Group = ({ user, group, deleteGroup, makeInvite, setMakeInvite }) => {
     setFriends(group.friends);
   }, []);
 
-  const addFriend = async (newFriend) => {
+  const addFriend = async (friendInfo) => {
     toggleRef.current.toggleVisibility();
-
-    const updatedFriendsList = {
-      friends: friends.concat(newFriend)
-    };
 
     // Send new friend
     try {
-      const res = await groupService.addFriend(group.id, updatedFriendsList, user.token);
-      const newFriend = res.friends[res.friends.length - 1];
+      console.log(group.id);
+      const newFriend = await friendService.addFriend(friendInfo, user.token);
       setFriends(friends.concat(newFriend));
     }
     catch (error) {
@@ -39,14 +35,14 @@ const Group = ({ user, group, deleteGroup, makeInvite, setMakeInvite }) => {
         </h3>
         <div className="ml-auto">
           <Togglable buttonLabel="Add Friend" ref={toggleRef}>
-            <GroupCreateFriendForm addFriend={addFriend} />
+            <GroupCreateFriendForm addFriend={addFriend} group={group} />
           </Togglable>
         </div>
       </div>
 
       <div className="flex flex-wrap mb-6 gap-12">
         {friends.map(friend =>
-          <FriendIcon key={friend._id} friend={friend} />
+          <FriendIcon key={friend.id} friend={friend} />
         )}
       </div>
 

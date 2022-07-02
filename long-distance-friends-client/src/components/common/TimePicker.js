@@ -49,7 +49,7 @@ const TimePicker = ({ availableTimes, setAvailableTimes }) => {
   return (
     <div className="flex flex-col px-2">
       <h4 className="w-full">
-        Select available time:
+        Select available time on those dates
       </h4>
       <div className="flex gap-3 flex-wrap flex-auto">
         <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Early Morning</div>

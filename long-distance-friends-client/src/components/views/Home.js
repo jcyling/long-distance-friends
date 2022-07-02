@@ -56,7 +56,6 @@ const Home = ({ user }) => {
   };
 
   const GroupInterface = () => {
-    // Conditional routes - make invite / see group
     if (makeInvite) {
       return (
         <div>
@@ -68,7 +67,7 @@ const Home = ({ user }) => {
       const activeGroup = groups.find(group => group.id == activeGroupId);
       return (
         <div>
-          <Group key={activeGroup.id} user={user} group={activeGroup} deleteGroup={deleteGroup} makeInvite={makeInvite} setMakeInvite={setMakeInvite} />
+          <Group user={user} key={activeGroup.id} group={activeGroup} deleteGroup={deleteGroup} setMakeInvite={setMakeInvite} />
         </div>
       );
     }

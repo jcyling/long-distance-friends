@@ -53,12 +53,19 @@ const AvailabilityPicker = ({ range, availability, setAvailability, setPickerSta
           />
         </div>
       </div>
+      <div className="flex mt-6 flex-row justify-center gap-6">
+        <button
+          className="btn"
+          onClick={() => handleSlotSubmit()}>
+          Add Availability
+        </button>
+        <button
+          className="btn bg-gray-200"
+          onClick={() => setPickerStatus(false)}>
+          Chosen Slots
+        </button>
 
-      <button
-        className="btn mt-2"
-        onClick={() => handleSlotSubmit()}>
-        Add Availability
-      </button>
+      </div>
     </div>
 
   );

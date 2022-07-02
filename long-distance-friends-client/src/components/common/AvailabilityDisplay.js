@@ -48,10 +48,10 @@ const AvailabilityDisplay = ({ availability, setAvailability, setPickerStatus })
       </div>
 
       <div
-        className="btn flex justify-center"
+        className="btn bg-gray-100 hover:bg-gray-300 flex justify-center"
         onClick={() => setPickerStatus(true)}
       >
-        <FiPlus /> <span> Add</span>
+        <FiPlus /> <span> Add More Availability</span>
       </div>
     </div>
   );

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import WindowPicker from "../common/WindowPicker";
 import AvailabilityPicker from "../common/AvailabilityPicker";
 import AvailabilityDisplay from "../common/AvailabilityDisplay";
-import meetingsService from "../../services/meetingsService";
+import meetingService from "../../services/meetingService";
+import bookingService from "../../services/bookingService";
 import "flatpickr/dist/themes/airbnb.css";
 
 const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
@@ -14,15 +15,19 @@ const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
   const handleHangoutSubmit = async (event) => {
     event.preventDefault();
 
-    // Format host availability in UTC in a time util function
-    // Send meeting creation and host availability to server
-    const res = meetingsService.createMeeting();
+    // Send meeting creation
+    const meeting = meetingService.createMeeting();
 
-    // Update user with meeting creation message
+    // Notify user of hangout creation
   };
 
-  const handleHostBooking = async () => {
-    
+  const handleHostAvailabilitySubmit = async () => {
+
+    // Combine dates and times from availability
+    // Format in UTCZ
+    // Send host availability to server
+    const booking = bookingService.createBooking();
+
   };
 
   return (
@@ -65,7 +70,7 @@ const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
         <div>
           <button
             className="btn"
-            disabled={availability.length > 0 ? false : true }
+            disabled={(availability.length > 0 && pickerStatus === false) ? false : true }
             onClick={() => handleHangoutSubmit()}>
             Make Hangout
           </button>

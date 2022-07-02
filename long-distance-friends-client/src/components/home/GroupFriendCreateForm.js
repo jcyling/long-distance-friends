@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-const GroupCreateFriendForm = ({ addFriend }) => {
+const GroupCreateFriendForm = ({ addFriend, group }) => {
   const [friendName, setFriendName] = useState("");
   const [friendCity, setFriendCity] = useState("");
 
   const handleAddFriend = async (event) => {
     event.preventDefault();
 
-    addFriend({ name: friendName, city: friendCity });
+    addFriend({ name: friendName, city: friendCity, groupId: group.id });
     
     // Reset state
     setFriendName("");

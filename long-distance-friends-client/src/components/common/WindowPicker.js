@@ -9,7 +9,6 @@ const WindowPicker = ({ user, setRange, setRangeSelected }) => {
   const handleRangePick = (browserDates, dateStr) => {
     // Receive dates as strings, convert to object
     let splitDates = "";
-
     if (browserDates.length === 2) {
       splitDates = dateStr.split(" to ");
     }

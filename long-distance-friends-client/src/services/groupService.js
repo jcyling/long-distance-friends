@@ -25,13 +25,13 @@ const createGroup = async (newGroup, token) => {
   }
 };
 
-const addFriend = async (id, friends, token) => {
+const editGroup = async (id, groupInfo, token) => {
   const config = {
     headers: { Authorization: `bearer ${token}` },
   };
 
   try {
-    const res = await axios.patch(`${baseUrl}/groups/${id}`, friends, config);
+    const res = await axios.patch(`${baseUrl}/groups/${id}`, groupInfo, config);
     return res.data;
   }
   catch (error) {
@@ -48,4 +48,4 @@ const deleteGroup = async (id, token) => {
   return res.data;
 };
 
-export default { getGroupInfo, createGroup, deleteGroup, addFriend };
+export default { getGroupInfo, createGroup, deleteGroup, editGroup };
