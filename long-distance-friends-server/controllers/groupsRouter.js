@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const Group = require("../models/group");
 const User = require("../models/user");
 const auth = require("../utils/auth.js");
-const helpers = require("../utils/helpers.js");
 
 // Get all groups
 groupRouter.get("/", async (req, res, next) => {

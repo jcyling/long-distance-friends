@@ -6,13 +6,24 @@ const helpers = require("../utils/helpers");
 
 // List of users
 usersRouter.get("/", async (req, res) => {
-  const users = await User.find({}).populate("groups");
+  const users = await User
+    .find({})
+    .populate("groups");
   return res.json(users);
 });
 
 // Specific user
 usersRouter.get("/:id", async (req, res) => {
-  const user = await User.findById(req.params.id).populate("groups");
+  const user = await User
+    .findById(req.params.id)
+    .populate({
+      path: "groups",
+      model: "Group",
+      populate: {
+        path: "friends",
+        model: "Friend"
+      }
+    });
   return res.json(user);
 });
 
@@ -62,7 +73,7 @@ usersRouter.patch("/:id", async (req, res, next) => {
 
   // TODO: Restrict changes to user only
   const body = req.body;
-  
+
   body.timezone = await helpers.convertLocationToTimezone(body.city);
 
   try {
