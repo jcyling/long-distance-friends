@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createTimeIntevals } from "./TimeUtils";
 
-const TimePicker = ({ availableTimes, setAvailableTimes }) => {
+const TimePicker = ({ availableTimesInput, setAvailableTimesInput }) => {
   const [activeButtons, setActiveButtons] = useState([]);
 
   const startTime = "00:00";
@@ -15,19 +15,19 @@ const TimePicker = ({ availableTimes, setAvailableTimes }) => {
     if (!activeButtons.includes(index)) {
       // Add button to active buttons
       setActiveButtons(activeButtons.concat(index));
-      setAvailableTimes(availableTimes.concat(slot));
+      setAvailableTimesInput(availableTimesInput.concat(slot));
     }
     else {
       // Remove index from active buttons
       setActiveButtons(activeButtons.filter(item => item !== index));
-      setAvailableTimes(availableTimes.filter(item => item !== slot));
+      setAvailableTimesInput(availableTimesInput.filter(item => item !== slot));
     }
   };
 
   const TimeSlotButton = ({slot, index}) => {
     return (
       <div
-        value={availableTimes}
+        value={availableTimesInput}
         className="p-2 font-light rounded-md shadow-md bg-white hover:bg-amber-300 grow-0"
         style={activeButtons.includes(index) ? activeButtonStyle : inactiveButtonStyle}
         onClick={() => handleSlotPick(event, slot, index)}

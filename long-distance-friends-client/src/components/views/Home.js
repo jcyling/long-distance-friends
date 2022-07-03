@@ -56,15 +56,15 @@ const Home = ({ user }) => {
   };
 
   const GroupInterface = () => {
+    const activeGroup = groups.find(group => group.id == activeGroupId);
     if (makeInvite) {
       return (
         <div>
-          <GroupMakeHangoutForm user={user} setMakeInvite={setMakeInvite} />
+          <GroupMakeHangoutForm user={user} group={activeGroup} setMakeInvite={setMakeInvite} />
         </div>
       );
     }
     else if (activeGroupId) {
-      const activeGroup = groups.find(group => group.id == activeGroupId);
       return (
         <div>
           <Group user={user} key={activeGroup.id} group={activeGroup} deleteGroup={deleteGroup} setMakeInvite={setMakeInvite} />

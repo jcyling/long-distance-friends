@@ -2,26 +2,28 @@ import React, { useState } from "react";
 import Flatpickr from "react-flatpickr";
 import TimePicker from "./TimePicker";
 
-const AvailabilityPicker = ({ range, availability, setAvailability, setPickerStatus }) => {
-  const [availableDates, setAvailableDates] = useState([]);
-  const [availableTimes, setAvailableTimes] = useState([]);
+const AvailabilityPicker = ({ range, setPickerStatus, setAvailableDateTime }) => {
+  const [availableDatesInput, setAvailableDatesInput] = useState([]);
+  const [availableTimesInput, setAvailableTimesInput] = useState([]);
 
   const handleDatePick = (dateList) => {
     let dateArr = dateList.split(", ").sort();
-    setAvailableDates(dateArr);
+    setAvailableDatesInput(dateArr);
   };
 
   const handleSlotSubmit = () => {
-    if (availableDates.length > 0 && availableTimes.length > 0) {
-      let newSlot = {
-        date: availableDates,
-        time: availableTimes
-      };
-      setAvailability(availability.concat(newSlot));
+    event.preventDefault();
+    if (availableDatesInput.length > 0 && availableTimesInput.length > 0) {
+
+      // TODO: Prevent same datetime slots to be picked
+      let availabilityArray = availableDatesInput.map(date => {
+        return {
+          date: date,
+          time: [...availableTimesInput]
+        };
+      });
+      setAvailableDateTime(prevInput => prevInput.concat(availabilityArray).sort());
       setPickerStatus(false);
-    }
-    else {
-      // Return message that date or time must be selected
     }
   };
 
@@ -48,8 +50,8 @@ const AvailabilityPicker = ({ range, availability, setAvailability, setPickerSta
         {/* Time picker corresponding to dates picked */}
         <div>
           <TimePicker
-            availableTimes={availableTimes}
-            setAvailableTimes={setAvailableTimes}
+            availableTimesInput={availableTimesInput}
+            setAvailableTimesInput={setAvailableTimesInput}
           />
         </div>
       </div>

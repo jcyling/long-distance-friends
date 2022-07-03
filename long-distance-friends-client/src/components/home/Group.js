@@ -18,7 +18,6 @@ const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
 
     // Send new friend
     try {
-      console.log(group.id);
       const newFriend = await friendService.addFriend(friendInfo, user.token);
       setFriends(friends.concat(newFriend));
     }

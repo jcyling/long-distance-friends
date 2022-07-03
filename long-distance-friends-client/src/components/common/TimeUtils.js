@@ -26,6 +26,10 @@ const convertIanaToOffset = () => {
   // Return iana
 };
 
+const combineReadableDateAndTime = (date, time) => {
+  return date + " " + time;
+};
+
 const createTimeIntevals = (startTime, endTime, inteval) => {
   const dtStart = DateTime.fromFormat(startTime, "HH:mm");
   const dtEnd = DateTime.fromFormat(endTime, "HH:mm");
@@ -44,5 +48,6 @@ module.exports = {
   convertDateRangeToUtc,
   convertUtcToDateRange,
   convertIanaToOffset,
+  combineReadableDateAndTime,
   createTimeIntevals
 };

@@ -6,18 +6,32 @@ import meetingService from "../../services/meetingService";
 import bookingService from "../../services/bookingService";
 import "flatpickr/dist/themes/airbnb.css";
 
-const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
+const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
   const [range, setRange] = useState({});
   const [rangeSelected, setRangeSelected] = useState(false);
-  const [availability, setAvailability] = useState([]);
   const [pickerStatus, setPickerStatus] = useState(true);
+  const [availableDateTime, setAvailableDateTime] = useState([]);
 
   const handleHangoutSubmit = async (event) => {
     event.preventDefault();
 
-    // Send meeting creation
-    const meeting = meetingService.createMeeting();
+    // Construct meeting object
+    const newMeeting = {
+      groupId: group.id,
+      window: range,
+      creator: user.id
+    };
 
+    // Send meeting creation
+    try {
+      const meetingCreated = await meetingService.createMeeting(newMeeting, user.token);
+      console.log(meetingCreated);
+    }
+    catch (error) {
+      console.log(error);
+    }
+
+    const hostRsvp = await handleHostAvailabilitySubmit();
     // Notify user of hangout creation
   };
 
@@ -52,16 +66,16 @@ const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
             (rangeSelected && pickerStatus) &&
             <AvailabilityPicker
               range={range}
-              availability={availability}
-              setAvailability={setAvailability}
+              availableDateTime={availableDateTime}
+              setAvailableDateTime={setAvailableDateTime}
               setPickerStatus={setPickerStatus}
             />
           }
           {
             (rangeSelected && !pickerStatus) &&
             <AvailabilityDisplay
-              availability={availability}
-              setAvailability={setAvailability}
+              availableDateTime={availableDateTime}
+              setAvailableDateTime={setAvailableDateTime}
               setPickerStatus={setPickerStatus}
             />
           }
@@ -70,7 +84,7 @@ const GroupMakeHangoutForm = ({ user, setMakeInvite }) => {
         <div>
           <button
             className="btn"
-            disabled={(availability.length > 0 && pickerStatus === false) ? false : true }
+            disabled={(availableDateTime.length > 0 && pickerStatus === false) ? false : true}
             onClick={() => handleHangoutSubmit()}>
             Make Hangout
           </button>
