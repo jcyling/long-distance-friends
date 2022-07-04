@@ -61,12 +61,16 @@ meetingsRouter.post("/", async (req, res, next) => {
     });
   }
 
+  // TODO: Validate if another meeting overlaps the same window
+  // if (another meeting is in the same window) {
+  // return error
+  // }
+
   const meeting = new Meeting({
     group: body.groupId,
     creator: user._id,
     window: body.window,
   });
-
 
   try {
     const savedMeeting = await meeting.save();

@@ -49,8 +49,9 @@ bookingsRouter.post("/", async (req, res, next) => {
       error: "group not found"
     });
   }
+  // TODO: Validate friend in Group or Validate user in Users
 
-  // TODO: Validate friend in group
+  // TODO: Validate if booking has already been made by same friend/user
 
   // Validate meeting 
   const meeting = await Meeting.findById(body.meetingId);

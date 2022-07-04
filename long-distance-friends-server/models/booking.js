@@ -16,9 +16,7 @@ const bookingSchema = new mongoose.Schema(
       type: String
     },
     availability: [{
-      datetime: {
-        type: mongoose.Schema.Types.Date
-      }
+      type: mongoose.Schema.Types.Date
     }],
     group: {
       type: mongoose.Schema.Types.ObjectId,
