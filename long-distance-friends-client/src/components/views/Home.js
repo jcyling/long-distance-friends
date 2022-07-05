@@ -14,10 +14,12 @@ const Home = ({ user }) => {
   const [activeGroupId, setActiveGroupId] = useState(null);
   const toggleRef = useRef();
 
+  let didInit = false;
+
   useEffect(() => {
     const fetchData = async () => {
       await usersService
-        .getGroups(user.id)
+        .getInfo(user.id)
         .then(res => {
           if (res.groups.length > 0) {
             setGroups(res.groups);
@@ -26,13 +28,15 @@ const Home = ({ user }) => {
         });
     };
 
-    fetchData();
+    if (!didInit) {
+      fetchData();
+      didInit = true;
+    }
   }, []);
 
   const addGroup = async (newGroup) => {
     toggleRef.current.toggleVisibility();
 
-    // Send to group service
     try {
       const res = await groupService.createGroup(newGroup, user.token);
       setGroups(groups.concat(res));
@@ -82,7 +86,7 @@ const Home = ({ user }) => {
 
   return (
     <main className="px-10">
-      <div className="relative py-5 px-10 flex flex-col bg-gray-100 rounded-[1rem]">
+      <div className="relative py-3 px-6 flex flex-col bg-white border rounded-[1rem]">
         <div className="w-full flex flex-wrap flex-start items-center gap-5">
           <span className="text-xl font-bold">Groups</span>
           {groups.map(group =>

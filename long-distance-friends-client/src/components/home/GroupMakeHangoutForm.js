@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import WindowPicker from "../common/WindowPicker";
 import AvailabilityPicker from "../common/AvailabilityPicker";
 import AvailabilityDisplay from "../common/AvailabilityDisplay";
 import meetingService from "../../services/meetingService";
 import bookingService from "../../services/bookingService";
 import "flatpickr/dist/themes/airbnb.css";
+import { convertDateTimeObjToUtc } from "../common/TimeUtils";
 
 const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
+  const useNav = useNavigate();
   const [range, setRange] = useState({});
   const [rangeSelected, setRangeSelected] = useState(false);
   const [pickerStatus, setPickerStatus] = useState(true);
@@ -16,7 +19,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
     event.preventDefault();
 
     // Construct meeting object
-    const newMeeting = {
+    let newMeeting = {
       groupId: group.id,
       window: range,
       creator: user.id
@@ -26,22 +29,48 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
     try {
       const meetingCreated = await meetingService.createMeeting(newMeeting, user.token);
       console.log(meetingCreated);
+
+      const hostBookingCreated = await handleHostAvailabilitySubmit(meetingCreated);
+
+      // Notify user of successful hangout creation
+      console.log(`Hangout created between ${range[0]} and ${range[1]}`);
+
+      // Give a link for friends to RSVP
+      // Redirect users to home
+      useNav("/home");
+
     }
     catch (error) {
       console.log(error);
     }
-
-    const hostRsvp = await handleHostAvailabilitySubmit();
-    // Notify user of hangout creation
   };
 
-  const handleHostAvailabilitySubmit = async () => {
+  const handleHostAvailabilitySubmit = async (meetingCreated) => {
+    let userIana = user.timezone;
 
-    // Combine dates and times from availability
-    // Format in UTCZ
-    // Send host availability to server
-    const booking = bookingService.createBooking();
+    // Format availableDateTime to ISO8061
+    let availabilityArray = [];
+    availableDateTime.forEach(item => {
+      let datetime = convertDateTimeObjToUtc(item, userIana);
+      availabilityArray = availabilityArray.concat(datetime);
+    });
 
+    let newBooking = {
+      groupId: group.id,
+      meetingId: meetingCreated.id,
+      availability: availabilityArray,
+      booker: user.id,
+      bookerModel: "User"
+    };
+
+    // Create host booking on server
+    try {
+      const bookingCreated = await bookingService.createBooking(newBooking, user.token);
+      return bookingCreated;
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -85,7 +114,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
           <button
             className="btn"
             disabled={(availableDateTime.length > 0 && pickerStatus === false) ? false : true}
-            onClick={() => handleHangoutSubmit()}>
+            onClick={() => handleHangoutSubmit(event)}>
             Make Hangout
           </button>
           <button

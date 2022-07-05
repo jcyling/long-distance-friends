@@ -1,7 +1,7 @@
 import axios from "axios";
 const baseUrl = "http://localhost:3001/api";
 
-const getGroups = async (id) => {
+const getInfo = async (id) => {
   try {
     const res = await axios.get(`${baseUrl}/users/${id}`);
     return res.data;
@@ -31,4 +31,4 @@ const editUserProfile = async (profile) => {
   }
 };
 
-export default { getGroups, createUser, editUserProfile };
+export default { getInfo, createUser, editUserProfile };

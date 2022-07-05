@@ -9,6 +9,7 @@ import NoRoute from "./components/views/NoRoute";
 import Settings from "./components/views/Settings";
 import AccountLoginForm from "./components/views/LoginAccount";
 import AccountCreateForm from "./components/views/CreateAccount";
+import RsvpForm from "./components/rsvp/RsvpForm";
 
 import Navbar from "./components/common/Navbar";
 import Notification from "./components/common/Notification";
@@ -77,6 +78,9 @@ const App = () => {
             setErrorMessage={setErrorMessage}
           />}
         />
+        <Route 
+          path="/rsvp" 
+          element={<RsvpForm />} />
         <Route
           path="/"
           element={<Landing />} />

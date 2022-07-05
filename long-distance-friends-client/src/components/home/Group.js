@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import Togglable from "../common/Togglable";
 import GroupCreateFriendForm from "./GroupFriendCreateForm";
-import FriendIcon from "../common/FriendIcon";
+import GroupMeetingsCard from "./GroupMeetingsCard";
+import FriendCard from "../common/FriendCard";
 import friendService from "../../services/friendService";
+import meetingService from "../../services/meetingService";
 
 const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
   const [friends, setFriends] = useState([]);
-
+  const [meetings, setMeetings] = useState([]);
   const toggleRef = useRef();
 
   useEffect(() => {
     setFriends(group.friends);
+    setMeetings(group.meetings);
   }, []);
 
   const addFriend = async (friendInfo) => {
@@ -20,6 +23,16 @@ const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
     try {
       const newFriend = await friendService.addFriend(friendInfo, user.token);
       setFriends(friends.concat(newFriend));
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleHangoutDelete = async (id) => {
+    try {
+      await meetingService.deleteMeeting(id, user.token);
+      setMeetings(meetings.filter(item => item.id !== id));
     }
     catch (error) {
       console.log(error);
@@ -39,9 +52,23 @@ const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
         </div>
       </div>
 
-      <div className="flex flex-wrap mb-6 gap-12">
+      <div className="flex flex-wrap mb-6 gap-3">
         {friends.map(friend =>
-          <FriendIcon key={friend.id} friend={friend} />
+          <FriendCard key={friend.id} friend={friend} />
+        )}
+      </div>
+
+      <div className="py-3">
+        <h4 className="pb-5 font-bold text-left">
+          Upcoming Hangouts
+        </h4>
+        {meetings.map(meeting =>
+          <GroupMeetingsCard
+            user={user}
+            key={meeting.id}
+            meeting={meeting}
+            handleHangoutDelete={handleHangoutDelete}
+          />
         )}
       </div>
 

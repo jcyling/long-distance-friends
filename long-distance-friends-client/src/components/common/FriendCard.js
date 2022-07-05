@@ -1,9 +1,9 @@
 import React from "react";
 import { FiX } from "react-icons/fi";
 
-const FriendIcon = ({ friend }) => {
+const FriendCard = ({ friend }) => {
   return (
-    <div className="relative flex flex-nowrap flex-row gap-5 shrink-0 basis-1/6 max-w-xs min-w-min text-sm text-left">
+    <div className="p-3 gap-3 relative flex flex-nowrap flex-row w-1/3 text-sm text-left max-w-xs shrink-0 border rounded-md">
       <div className="bg-gray-300 w-16 h-16 rounded-full">
         {/* Insert default user icon */}
       </div>
@@ -12,11 +12,11 @@ const FriendIcon = ({ friend }) => {
           {friend.name}
         </h5>
         <span className="block">{friend.city} </span>
-        <span className="block">GMT{friend.timezone}</span>
+        <span className="block">{friend.timezone}</span>
       </div>
       <FiX className="ml-auto" size={28} />
     </div>
   );
 };
 
-export default FriendIcon;
+export default FriendCard;

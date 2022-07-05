@@ -16,18 +16,33 @@ const convertDateRangeToUtc = (dates, userIana) => {
   return utcRange;
 };
 
-const convertUtcToDateRange = () => {
-  // Convert utc dates to local dates
-  // Return datetime with local timezone
+const convertDateTimeObjToUtc = (obj, userIana) => {
+  let timesList = obj.time;
+  let utcDateTime = timesList.map(time => {
+    let datetime = obj.date + "T" + time;
+    return DateTime.fromISO(datetime, { zone: userIana }).toISO();
+  });
+  console.log(utcDateTime);
+  return utcDateTime;
+};
+
+const convertUtcToDateRange = (dates, userIana) => {
+  const startDate = DateTime.fromISO(dates.startDate, { zone: userIana });
+  const endDate = DateTime.fromISO(dates.endDate, { zone: userIana });
+
+  const utcStartDate = startDate.toLocaleString(DateTime.DATE_SHORT);
+  const utcEndDate = endDate.toLocaleString(DateTime.DATE_SHORT);
+
+  const dateRange = {
+    startDate: utcStartDate,
+    endDate: utcEndDate
+  };
+  return dateRange;
 };
 
 const convertIanaToOffset = () => {
   // Convert Iana to offset from utc
   // Return iana
-};
-
-const combineReadableDateAndTime = (date, time) => {
-  return date + " " + time;
 };
 
 const createTimeIntevals = (startTime, endTime, inteval) => {
@@ -48,6 +63,6 @@ module.exports = {
   convertDateRangeToUtc,
   convertUtcToDateRange,
   convertIanaToOffset,
-  combineReadableDateAndTime,
-  createTimeIntevals
+  createTimeIntevals,
+  convertDateTimeObjToUtc
 };
