@@ -27,12 +27,21 @@ meetingsRouter.get("/:id", async (req, res, next) => {
   try {
     const meetings = await Meeting
       .findById(req.params.id)
-      .populate("group",
-        { "name": 1, "admin": 1, "friends": 1 }
-      )
+      .populate({
+        path: "group",
+        model: "Group",
+        populate: {
+          path: "friends",
+          model: "Friend"
+        }
+      })
       .populate("creator",
         { "username": 1 }
       )
+      .populate({
+        path: "bookings",
+        model: "Booking",
+      })
       .exec();
     return res.json(meetings);
   }
@@ -85,6 +94,7 @@ meetingsRouter.post("/", async (req, res, next) => {
 
 // Delete meeting
 meetingsRouter.delete("/:id", async (req, res) => {
+  // TODO: Constraint to only user's group
   const targetMeeting = await Meeting.findById(req.params.id);
 
   if (!targetMeeting) {
@@ -92,7 +102,6 @@ meetingsRouter.delete("/:id", async (req, res) => {
       error: "meeting not found"
     });
   }
-  // TODO: Constraint to only user's group
   await Meeting.findByIdAndRemove(req.params.id);
   return res.status(204).end();
 });

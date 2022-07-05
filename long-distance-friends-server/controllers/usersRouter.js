@@ -19,10 +19,14 @@ usersRouter.get("/:id", async (req, res) => {
     .populate({
       path: "groups",
       model: "Group",
-      populate: {
+      populate: [{
         path: "friends",
         model: "Friend"
-      }
+      },
+      {
+        path: "meetings",
+        model: "Meeting"
+      }]
     });
   return res.json(user);
 });
