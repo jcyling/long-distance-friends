@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const { DateTime, Duration } = require("luxon");
 
 const convertDateRangeToUtc = (dates, userIana) => {
@@ -17,11 +18,8 @@ const convertDateRangeToUtc = (dates, userIana) => {
 };
 
 const convertUtcToDateRange = (dates, userIana) => {
-  const startDate = DateTime.fromISO(dates.startDate, { zone: userIana });
-  const endDate = DateTime.fromISO(dates.endDate, { zone: userIana });
-
-  const userStartDate = startDate.toFormat("yyyy-MM-dd");
-  const userEndDate = endDate.toFormat("yyyy-MM-dd");
+  const userStartDate = DateTime.fromISO(dates.startDate).setZone(userIana).toFormat("yyyy-MM-dd");
+  const userEndDate = DateTime.fromISO(dates.endDate).setZone(userIana).toFormat("yyyy-MM-dd");
 
   const dateRange = {
     startDate: userStartDate,
@@ -30,8 +28,20 @@ const convertUtcToDateRange = (dates, userIana) => {
   return dateRange;
 };
 
-const convertUtcToDateTime = (availability, userIana) => {
+const convertUtcToDateTimeObj = (datetimeArray, userIana) => {
+  const splitDateTime = datetimeArray.map(item => {
+    let splitArray = DateTime.fromISO(item).setZone(userIana).toFormat("yyyy-MM-dd hh:mm").split(" ");
+    let splitObject = {
+      date: splitArray[0],
+      time: splitArray[1]
+    };
+    return splitObject;
+  });
+
+  // Group slots by date using object with date and array of time chosen
+  let groupedDateTime = _.mapValues(_.groupBy(splitDateTime, "date"), list => list.map(item => item.time));
   
+  return groupedDateTime;
 };
 
 const convertDateTimeObjToUtc = (obj, userIana) => {
@@ -63,5 +73,5 @@ module.exports = {
   convertUtcToDateRange,
   createTimeIntevals,
   convertDateTimeObjToUtc,
-  convertUtcToDateTime
+  convertUtcToDateTimeObj
 };
