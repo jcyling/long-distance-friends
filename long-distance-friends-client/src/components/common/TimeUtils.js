@@ -30,19 +30,14 @@ const convertUtcToDateRange = (dates, userIana) => {
   const startDate = DateTime.fromISO(dates.startDate, { zone: userIana });
   const endDate = DateTime.fromISO(dates.endDate, { zone: userIana });
 
-  const utcStartDate = startDate.toLocaleString(DateTime.DATE_SHORT);
-  const utcEndDate = endDate.toLocaleString(DateTime.DATE_SHORT);
+  const userStartDate = startDate.toFormat("yyyy-MM-dd");
+  const userEndDate = endDate.toFormat("yyyy-MM-dd");
 
   const dateRange = {
-    startDate: utcStartDate,
-    endDate: utcEndDate
+    startDate: userStartDate,
+    endDate: userEndDate
   };
   return dateRange;
-};
-
-const convertIanaToOffset = () => {
-  // Convert Iana to offset from utc
-  // Return iana
 };
 
 const createTimeIntevals = (startTime, endTime, inteval) => {
@@ -62,7 +57,6 @@ const createTimeIntevals = (startTime, endTime, inteval) => {
 module.exports = {
   convertDateRangeToUtc,
   convertUtcToDateRange,
-  convertIanaToOffset,
   createTimeIntevals,
   convertDateTimeObjToUtc
 };

@@ -1,12 +1,19 @@
-import React, { useState } from "react";
-import { createTimeIntevals } from "./TimeUtils";
+import React, { useState, useEffect } from "react";
+import { createTimeIntevals } from "../common/TimeUtils";
 
-const TimePicker = ({ availableTimesInput, setAvailableTimesInput }) => {
+const RsvpTimePicker = ({ availableTimesInput, setAvailableTimesInput, activeDate, bookings }) => {
   const [activeButtons, setActiveButtons] = useState([]);
+  const [date, setDate] = useState("");
+  const [dateBookings, setDateBookings] = useState([]);
 
   const startTime = "00:00";
   const endTime = "23:59";
   const inteval = "00:30";
+
+  useEffect(() => {
+    setActiveButtons([]);
+    setDateBookings(bookings);
+  }, [activeDate]);
 
   const timeslotList = createTimeIntevals(startTime, endTime, inteval);
 
@@ -81,4 +88,4 @@ const TimePicker = ({ availableTimesInput, setAvailableTimesInput }) => {
   );
 };
 
-export default TimePicker;
+export default RsvpTimePicker;

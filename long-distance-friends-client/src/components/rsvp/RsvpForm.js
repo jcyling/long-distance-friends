@@ -1,25 +1,37 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import meetingService from "../../services/meetingService";
 import RsvpAvailabilityPicker from "./RsvpAvailabilityPicker";
 import RsvpFriendCard from "./RsvpFriendCard";
 
 const RsvpForm = () => {
   const [meeting, setMeeting] = useState(null);
-  const [friend, setFriend] = useState(null);
+  const [activeFriend, setActiveFriend] = useState(null);
+  const [activeDate, setActiveDate] = useState([]);
+  const { id } = useParams();
 
   // Make a request to retrieve current data of the meeting
   // and its bookings to display
   useEffect(() => {
     const fetchData = async () => {
       await meetingService
-        .getMeeting("62c2ed9314a48a3841311fa3")
+        .getMeeting(id)
         .then(res => {
           setMeeting(res);
-          console.log(res)
+          // Set date array for every date in range
         });
     };
     fetchData();
   }, []);
+
+  const handleFriendPick = (friend) => {
+    setActiveFriend(friend);
+  };
+
+  const handleDatePick = (date) => {
+    console.log(date);
+    setActiveDate(date);
+  };
 
   if (meeting === undefined) {
     return (
@@ -30,17 +42,31 @@ const RsvpForm = () => {
   }
   else if (meeting) {
     return (
-      <main className="px-10 flex flex-col text-left">
+      <main className="p-10 flex flex-col">
         <div className="relative p-6 flex flex-col bg-white border rounded-[1rem]">
           <h3>{meeting.group.name} Friends</h3>
           <h4>Which friend are you?</h4>
-          <div className="flex">
-            {meeting.group.friends.map(friend => {
-              return <RsvpFriendCard key={friend.id} friend={friend} />
-            })}
+          <div className="flex justify-center">
+            {meeting.group.friends.map(friend =>
+              <RsvpFriendCard
+                key={friend.id}
+                friend={friend}
+                handleFriendPick={handleFriendPick}
+              />
+            )}
           </div>
-          <h4>When are you available?</h4>
-          <RsvpAvailabilityPicker range={meeting.window} />
+          {activeFriend &&
+            <div>
+              <h4 className="pb-4">Hi {activeFriend.name}, When are you free to hangout?</h4>
+              <RsvpAvailabilityPicker
+                range={meeting.window}
+                handleDatePick={handleDatePick}
+                bookings={meeting.bookings}
+                activeDate={activeDate}
+                userIana={activeFriend.timezone}
+              />
+            </div>
+          }
 
         </div>
       </main>

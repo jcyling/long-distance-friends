@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import {
-  Routes, Route, Navigate, useNavigate
+  Routes, Route, Navigate, useNavigate, Switch
 } from "react-router-dom";
 
 import Landing from "./components/views/Landing";
@@ -16,6 +16,7 @@ import Notification from "./components/common/Notification";
 
 const App = () => {
   const useNav = useNavigate();
+  
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -79,7 +80,7 @@ const App = () => {
           />}
         />
         <Route 
-          path="/rsvp" 
+          path="/rsvp/:id" 
           element={<RsvpForm />} />
         <Route
           path="/"
