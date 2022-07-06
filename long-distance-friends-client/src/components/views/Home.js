@@ -32,7 +32,7 @@ const Home = ({ user }) => {
       fetchData();
       didInit = true;
     }
-  }, []);
+  }, [user]);
 
   const addGroup = async (newGroup) => {
     toggleRef.current.toggleVisibility();

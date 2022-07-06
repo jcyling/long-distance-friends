@@ -3,12 +3,22 @@ import { createTimeIntevals } from "../common/TimeUtils";
 
 const RsvpTimePicker = ({ availableTimesInput, setAvailableTimesInput, activeDate, bookings }) => {
   const [activeButtons, setActiveButtons] = useState([]);
+  const [bookedButtons, setBookedButtons] = useState([]);
+  const [bookedInfo, setBookedInfo] = useState([]);
 
   const startTime = "00:00";
   const endTime = "23:59";
   const inteval = "00:30";
 
   useEffect(() => {
+    console.log(bookings)
+    const bookedTimeArray = bookings.map(booking => {
+      if (activeDate in booking.availability) {
+        return true;
+      }
+    });
+    console.log(bookedTimeArray)
+
     setActiveButtons([]);
   }, [activeDate]);
 
@@ -28,7 +38,7 @@ const RsvpTimePicker = ({ availableTimesInput, setAvailableTimesInput, activeDat
     }
   };
 
-  const TimeSlotButton = ({slot, index}) => {
+  const TimeSlotButton = ({ slot, index, style }) => {
     return (
       <div
         value={availableTimesInput}
@@ -46,7 +56,7 @@ const RsvpTimePicker = ({ availableTimesInput, setAvailableTimesInput, activeDat
     color: "white"
   };
 
-  const bookedButonStyle = {
+  const bookedButtonStyle = {
     backgroundColor: "green",
     color: "white"
   };
@@ -64,7 +74,11 @@ const RsvpTimePicker = ({ availableTimesInput, setAvailableTimesInput, activeDat
         <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Early Morning</div>
         {timeslotList.map((slot, index) => {
           if (slot < "06:00") {
-            return <TimeSlotButton key={slot} slot={slot} index={index} />;
+            return <TimeSlotButton
+              key={slot}
+              slot={slot}
+              index={index}
+            />;
           }
         })}
         <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Morning</div>

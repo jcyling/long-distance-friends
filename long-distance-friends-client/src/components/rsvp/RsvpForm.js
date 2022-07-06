@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import meetingService from "../../services/meetingService";
-import { convertUtcToDateTime } from "../common/TimeUtils";
+import { convertUtcToDateTimeObj } from "../common/TimeUtils";
 import RsvpAvailabilityPicker from "./RsvpAvailabilityPicker";
 import RsvpFriendCard from "./RsvpFriendCard";
 
@@ -13,28 +13,30 @@ const RsvpForm = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await meetingService.getMeeting(id)
-      setMeeting(res);
-    };
-    
-    const convertBookingsTimezone = () => {
-      const convertedBookings = meeting.bookings.map(booking => {
-        const utcSlots = booking.availability;
-        const userIanaSlots = utcSlots.map(slot => convertUtcToDateTime(slot));
-        
-        let converted = {
-          ...booking,
-          availability: userIanaSlots
-        };
+    meetingService
+      .getMeeting(id)
+      .then(res => {
+        setMeeting(res);
 
-        return converted;
+        let convertedBookings = convertBookingsTimezone(res);
+        setBookings(convertedBookings);
       });
-      console.log(convertedBookings);
-    };
-
-    fetchData();
   }, []);
+
+  const convertBookingsTimezone = (data) => {
+    const convertedBookings = data.bookings.map(booking => {
+      const utcSlots = booking.availability;
+      const userIanaSlots = convertUtcToDateTimeObj(utcSlots);
+
+      return {
+        name: booking.booker.name,
+        timezone: booking.booker.timezone,
+        city: booking.booker.city,
+        availability: userIanaSlots
+      };
+    });
+    return convertedBookings;
+  };
 
   const handleFriendPick = (friend) => {
     setActiveFriend(friend);
@@ -42,9 +44,6 @@ const RsvpForm = () => {
 
   const handleDatePick = (date) => {
     setActiveDate(date);
-
-    // Select availability on activeDate and set to bookings
-    
   };
 
   if (meeting === undefined) {
@@ -77,6 +76,7 @@ const RsvpForm = () => {
                 handleDatePick={handleDatePick}
                 activeDate={activeDate}
                 userIana={activeFriend.timezone}
+                bookings={bookings}
               />
             </div>
           }
