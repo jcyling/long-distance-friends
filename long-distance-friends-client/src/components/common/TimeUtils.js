@@ -16,16 +16,6 @@ const convertDateRangeToUtc = (dates, userIana) => {
   return utcRange;
 };
 
-const convertDateTimeObjToUtc = (obj, userIana) => {
-  let timesList = obj.time;
-  let utcDateTime = timesList.map(time => {
-    let datetime = obj.date + "T" + time;
-    return DateTime.fromISO(datetime, { zone: userIana }).toISO();
-  });
-  console.log(utcDateTime);
-  return utcDateTime;
-};
-
 const convertUtcToDateRange = (dates, userIana) => {
   const startDate = DateTime.fromISO(dates.startDate, { zone: userIana });
   const endDate = DateTime.fromISO(dates.endDate, { zone: userIana });
@@ -38,6 +28,20 @@ const convertUtcToDateRange = (dates, userIana) => {
     endDate: userEndDate
   };
   return dateRange;
+};
+
+const convertUtcToDateTime = (availability, userIana) => {
+  
+};
+
+const convertDateTimeObjToUtc = (obj, userIana) => {
+  let timesList = obj.time;
+  let utcDateTime = timesList.map(time => {
+    let datetime = obj.date + "T" + time;
+    return DateTime.fromISO(datetime, { zone: userIana }).toISO();
+  });
+  console.log(utcDateTime);
+  return utcDateTime;
 };
 
 const createTimeIntevals = (startTime, endTime, inteval) => {
@@ -58,5 +62,6 @@ module.exports = {
   convertDateRangeToUtc,
   convertUtcToDateRange,
   createTimeIntevals,
-  convertDateTimeObjToUtc
+  convertDateTimeObjToUtc,
+  convertUtcToDateTime
 };

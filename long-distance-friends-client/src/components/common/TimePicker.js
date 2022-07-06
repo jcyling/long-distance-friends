@@ -55,25 +55,25 @@ const TimePicker = ({ availableTimesInput, setAvailableTimesInput }) => {
         <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Early Morning</div>
         {timeslotList.map((slot, index) => {
           if (slot < "06:00") {
-            return <TimeSlotButton key={index} slot={slot} index={index} />;
+            return <TimeSlotButton key={slot} slot={slot} index={index} />;
           }
         })}
         <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Morning</div>
         {timeslotList.map((slot, index) => {
           if (slot > "06:00" && slot <= "12:00") {
-            return <TimeSlotButton key={index} slot={slot} index={index} />;
+            return <TimeSlotButton key={slot} slot={slot} index={index} />;
           }
         })}
         <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Afternoon</div>
         {timeslotList.map((slot, index) => {
           if (slot > "12:00" && slot <= "18:00") {
-            return <TimeSlotButton key={index} slot={slot} index={index} />;
+            return <TimeSlotButton key={slot} slot={slot} index={index} />;
           }
         })}
         <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Evening</div>
         {timeslotList.map((slot, index) => {
           if (slot > "18:00" && slot <= "24:00") {
-            return <TimeSlotButton key={index} slot={slot} index={index} />;
+            return <TimeSlotButton key={slot} slot={slot} index={index} />;
           }
         })}
       </div>

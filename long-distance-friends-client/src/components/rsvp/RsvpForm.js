@@ -1,26 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import meetingService from "../../services/meetingService";
+import { convertUtcToDateTime } from "../common/TimeUtils";
 import RsvpAvailabilityPicker from "./RsvpAvailabilityPicker";
 import RsvpFriendCard from "./RsvpFriendCard";
 
 const RsvpForm = () => {
   const [meeting, setMeeting] = useState(null);
+  const [bookings, setBookings] = useState([]);
   const [activeFriend, setActiveFriend] = useState(null);
   const [activeDate, setActiveDate] = useState([]);
   const { id } = useParams();
 
-  // Make a request to retrieve current data of the meeting
-  // and its bookings to display
   useEffect(() => {
     const fetchData = async () => {
-      await meetingService
-        .getMeeting(id)
-        .then(res => {
-          setMeeting(res);
-          // Set date array for every date in range
-        });
+      const res = await meetingService.getMeeting(id)
+      setMeeting(res);
     };
+    
+    const convertBookingsTimezone = () => {
+      const convertedBookings = meeting.bookings.map(booking => {
+        const utcSlots = booking.availability;
+        const userIanaSlots = utcSlots.map(slot => convertUtcToDateTime(slot));
+        
+        let converted = {
+          ...booking,
+          availability: userIanaSlots
+        };
+
+        return converted;
+      });
+      console.log(convertedBookings);
+    };
+
     fetchData();
   }, []);
 
@@ -29,8 +41,10 @@ const RsvpForm = () => {
   };
 
   const handleDatePick = (date) => {
-    console.log(date);
     setActiveDate(date);
+
+    // Select availability on activeDate and set to bookings
+    
   };
 
   if (meeting === undefined) {
@@ -57,11 +71,10 @@ const RsvpForm = () => {
           </div>
           {activeFriend &&
             <div>
-              <h4 className="pb-4">Hi {activeFriend.name}, When are you free to hangout?</h4>
+              <h4 className="pb-4">Hi {activeFriend.name}, when are you free to hangout?</h4>
               <RsvpAvailabilityPicker
                 range={meeting.window}
                 handleDatePick={handleDatePick}
-                bookings={meeting.bookings}
                 activeDate={activeDate}
                 userIana={activeFriend.timezone}
               />
