@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import meetingService from "../../services/meetingService";
 import { convertUtcToDateTimeObj } from "../common/TimeUtils";
 import RsvpAvailabilityPicker from "./RsvpAvailabilityPicker";
+import RsvpAvailabilityDisplay from "./RsvpAvailabilityDisplay";
 import RsvpFriendCard from "./RsvpFriendCard";
+import meetingService from "../../services/meetingService";
 
 const RsvpForm = () => {
   const [meeting, setMeeting] = useState(null);
   const [bookings, setBookings] = useState([]);
+  const [pickerStatus, setPickerStatus] = useState(false);
   const [activeFriend, setActiveFriend] = useState(null);
   const [activeDate, setActiveDate] = useState([]);
   const { id } = useParams();
@@ -40,10 +42,15 @@ const RsvpForm = () => {
 
   const handleFriendPick = (friend) => {
     setActiveFriend(friend);
+    setPickerStatus(true);
   };
 
   const handleDatePick = (date) => {
     setActiveDate(date);
+  };
+
+  const handleSlotSubmit = () => {
+
   };
 
   if (meeting === undefined) {
@@ -68,7 +75,8 @@ const RsvpForm = () => {
               />
             )}
           </div>
-          {activeFriend &&
+          {
+            (pickerStatus && activeFriend) &&
             <div>
               <h4 className="pb-4">Hi {activeFriend.name}, when are you free to hangout?</h4>
               <RsvpAvailabilityPicker
@@ -77,10 +85,17 @@ const RsvpForm = () => {
                 activeDate={activeDate}
                 userIana={activeFriend.timezone}
                 bookings={bookings}
+                setPickerStatus={setPickerStatus}
+                handleSlotSubmit={handleSlotSubmit}
               />
             </div>
           }
-
+          {
+            (!pickerStatus && activeFriend) &&
+            <RsvpAvailabilityDisplay
+              setPickerStatus={setPickerStatus}
+            />
+          }
         </div>
       </main>
     );

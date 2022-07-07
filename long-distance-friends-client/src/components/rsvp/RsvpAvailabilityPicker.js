@@ -3,9 +3,17 @@ import Flatpickr from "react-flatpickr";
 import { convertUtcToDateRange } from "../common/TimeUtils";
 import RsvpTimePicker from "./RsvpTimePicker";
 
-const RsvpAvailabilityPicker = ({ range, handleDatePick, bookings, activeDate, userIana }) => {
+const RsvpAvailabilityPicker = ({
+  range,
+  handleDatePick,
+  bookings,
+  activeDate,
+  userIana,
+  setPickerStatus,
+  handleSlotSubmit
+}) => {
   const [availableTimesInput, setAvailableTimesInput] = useState([]);
-  const friendWindow = convertUtcToDateRange(range, userIana );
+  const friendWindow = convertUtcToDateRange(range, userIana);
 
   return (
     <div>
@@ -32,11 +40,18 @@ const RsvpAvailabilityPicker = ({ range, handleDatePick, bookings, activeDate, u
           />
         </div>
       </div>
-      <button
-        className="btn"
-      >
-        Add Availability
-      </button>
+      <div className="flex mt-6 flex-row justify-center gap-6">
+        <button
+          className="btn"
+          onClick={() => handleSlotSubmit()}>
+          Add Availability
+        </button>
+        <button
+          className="btn bg-gray-200"
+          onClick={() => setPickerStatus(false)}>
+          Chosen Slots
+        </button>
+      </div>
     </div>
 
   );

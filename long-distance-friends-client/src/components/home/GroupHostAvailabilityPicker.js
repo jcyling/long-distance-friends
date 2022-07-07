@@ -66,7 +66,6 @@ const GroupHostAvailabilityPicker = ({ range, setPickerStatus, setAvailableDateT
           onClick={() => setPickerStatus(false)}>
           Chosen Slots
         </button>
-
       </div>
     </div>
 
