@@ -1,19 +1,31 @@
 import React, { useState } from "react";
 import Flatpickr from "react-flatpickr";
-import { convertUtcToDateRange } from "../common/TimeUtils";
 import RsvpTimePicker from "./RsvpTimePicker";
 
 const RsvpAvailabilityPicker = ({
-  range,
-  handleDatePick,
   bookings,
-  activeDate,
-  userIana,
+  friendWindow,
   setPickerStatus,
-  handleSlotSubmit
+  setAvailableDateTime
 }) => {
+  const [availableDateInput, setAvailableDateInput] = useState([]);
   const [availableTimesInput, setAvailableTimesInput] = useState([]);
-  const friendWindow = convertUtcToDateRange(range, userIana);
+
+  const handleDatePick = (date) => {
+    setAvailableDateInput(date);
+  };
+
+  const handleSlotSubmit = () => {
+    if (availableDateInput.length > 0 && availableTimesInput.length > 0) {
+
+      let availabilityArray = {
+        date: availableDateInput,
+        time: [...availableTimesInput.sort()]
+      };
+      setAvailableDateTime(prevInput => prevInput.concat(availabilityArray).sort());
+      setPickerStatus(false);
+    }
+  }
 
   return (
     <div>
@@ -33,9 +45,8 @@ const RsvpAvailabilityPicker = ({
         <div>
           {/* Time picker corresponding to dates picked */}
           <RsvpTimePicker
-            availableTimesInput={availableTimesInput}
             setAvailableTimesInput={setAvailableTimesInput}
-            activeDate={activeDate}
+            availableDateInput={availableDateInput}
             bookings={bookings}
           />
         </div>
@@ -56,5 +67,6 @@ const RsvpAvailabilityPicker = ({
 
   );
 };
+
 
 export default RsvpAvailabilityPicker;

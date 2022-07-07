@@ -1,11 +1,15 @@
 import React from "react";
 import { FiPlus } from "react-icons/fi";
 
-const GroupHostAvailabilityDisplay = ({ setPickerStatus }) => {
+const RsvpAvailabilityDisplay = ({ 
+  setPickerStatus, 
+  availableDateTime, 
+  setAvailableDateTime 
+}) => {
   
   const handleDeleteSlot = (date) => {
     event.preventDefault();
-    // setAvailableDateTime(prevInput => prevInput.filter(slot => slot.date !== date));
+    setAvailableDateTime(prevInput => prevInput.filter(slot => slot.date !== date));
   };
 
   return (
@@ -15,7 +19,7 @@ const GroupHostAvailabilityDisplay = ({ setPickerStatus }) => {
       </h4>
       <div className="flex flex-row">
         <div className="flex flex-row flex-wrap w-full mb-6 gap-3">
-          {/* {availableDateTime.map((item, index) => {
+          {availableDateTime.map((item, index) => {
             return (
               <div className="p-3 w-1/3 bg-white rounded-md border" key={index}>
                 <div>
@@ -40,7 +44,7 @@ const GroupHostAvailabilityDisplay = ({ setPickerStatus }) => {
                 </button>
               </div>
             );
-          })} */}
+          })}
         </div>
       </div>
 
@@ -54,4 +58,4 @@ const GroupHostAvailabilityDisplay = ({ setPickerStatus }) => {
   );
 };
 
-export default GroupHostAvailabilityDisplay;
+export default RsvpAvailabilityDisplay;

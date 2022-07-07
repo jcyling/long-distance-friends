@@ -50,7 +50,6 @@ const GroupHostAvailabilityPicker = ({ range, setPickerStatus, setAvailableDateT
         {/* Time picker corresponding to dates picked */}
         <div>
           <GroupHostTimePicker
-            availableTimesInput={availableTimesInput}
             setAvailableTimesInput={setAvailableTimesInput}
           />
         </div>

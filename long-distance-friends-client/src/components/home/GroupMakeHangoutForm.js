@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import WindowPicker from "../common/WindowPicker";
 import GroupHostAvailabilityPicker from "./GroupHostAvailabilityPicker";
-import GroupHostAvailabilityDisplay from "./GroupHostAvailabilityDisplay";
+import AvailabilityDisplay from "../common/AvailabilityDisplay";
 import meetingService from "../../services/meetingService";
 import bookingService from "../../services/bookingService";
 import "flatpickr/dist/themes/airbnb.css";
@@ -102,7 +102,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
           }
           {
             (rangeSelected && !pickerStatus) &&
-            <GroupHostAvailabilityDisplay
+            <AvailabilityDisplay
               availableDateTime={availableDateTime}
               setAvailableDateTime={setAvailableDateTime}
               setPickerStatus={setPickerStatus}

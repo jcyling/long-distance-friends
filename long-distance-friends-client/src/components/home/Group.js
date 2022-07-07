@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Togglable from "../common/Togglable";
 import GroupCreateFriendForm from "./GroupFriendCreateForm";
 import GroupMeetingsCard from "./GroupMeetingsCard";
-import FriendCard from "../common/FriendCard";
+import GroupFriendCard from "./GroupFriendCard";
 import friendService from "../../services/friendService";
 import meetingService from "../../services/meetingService";
 
@@ -54,7 +54,7 @@ const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
 
       <div className="flex flex-wrap mb-6 gap-3">
         {friends.map(friend =>
-          <FriendCard key={friend.id} friend={friend} />
+          <GroupFriendCard key={friend.id} friend={friend} />
         )}
       </div>
 

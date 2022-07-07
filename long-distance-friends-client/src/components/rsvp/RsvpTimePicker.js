@@ -4,7 +4,7 @@ import { createTimeIntevals } from "../common/TimeUtils";
 
 const RsvpTimePicker = ({
   setAvailableTimesInput,
-  activeDate,
+  availableDateInput,
   bookings
 }) => {
   const [activeButtons, setActiveButtons] = useState([]);
@@ -17,8 +17,8 @@ const RsvpTimePicker = ({
   useEffect(() => {
     // Retrieve booked timeslots in each booking
     bookings.forEach(booking => {
-      if (activeDate in booking.availability) {
-        setBookedTimeslots(booking.availability[activeDate]);
+      if (availableDateInput in booking.availability) {
+        setBookedTimeslots(booking.availability[availableDateInput]);
       }
       else {
         setBookedTimeslots([]);
@@ -26,7 +26,7 @@ const RsvpTimePicker = ({
     });
 
     setActiveButtons([]);
-  }, [activeDate]);
+  }, [availableDateInput]);
 
   const timeslotList = createTimeIntevals(startTime, endTime, inteval);
 
@@ -38,7 +38,7 @@ const RsvpTimePicker = ({
       setAvailableTimesInput(prev => prev.concat(slot));
     }
     else {
-      // Remove index from active buttons
+      // Remove from active buttons
       setActiveButtons(activeButtons.filter(item => item !== slot));
       setAvailableTimesInput(prev => prev.filter(item => item !== slot));
     }
@@ -63,9 +63,6 @@ const RsvpTimePicker = ({
 
   return (
     <div className="flex flex-col px-2">
-      <h4 className="w-full">
-        Select available time on date
-      </h4>
       <div className="flex gap-3 flex-wrap flex-auto">
         <div className="bg-gray-100 p-2 rounded-md shadow-md basis-full">Early Morning</div>
         {timeslotList.map((slot) => {

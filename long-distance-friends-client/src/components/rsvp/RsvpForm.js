@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { convertUtcToDateTimeObj } from "../common/TimeUtils";
+import { convertUtcToDateTimeObj, convertUtcToDateRange } from "../common/TimeUtils";
+import AvailabilityDisplay from "../common/AvailabilityDisplay";
 import RsvpAvailabilityPicker from "./RsvpAvailabilityPicker";
-import RsvpAvailabilityDisplay from "./RsvpAvailabilityDisplay";
 import RsvpFriendCard from "./RsvpFriendCard";
 import meetingService from "../../services/meetingService";
 
 const RsvpForm = () => {
   const [meeting, setMeeting] = useState(null);
   const [bookings, setBookings] = useState([]);
+  const [availableDateTime, setAvailableDateTime] = useState([]);
   const [pickerStatus, setPickerStatus] = useState(false);
   const [activeFriend, setActiveFriend] = useState(null);
-  const [activeDate, setActiveDate] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -43,14 +43,11 @@ const RsvpForm = () => {
   const handleFriendPick = (friend) => {
     setActiveFriend(friend);
     setPickerStatus(true);
+    setAvailableDateTime([]);
   };
 
-  const handleDatePick = (date) => {
-    setActiveDate(date);
-  };
-
-  const handleSlotSubmit = () => {
-
+  const handleHangoutSubmit = () => {
+    
   };
 
   if (meeting === undefined) {
@@ -80,22 +77,29 @@ const RsvpForm = () => {
             <div>
               <h4 className="pb-4">Hi {activeFriend.name}, when are you free to hangout?</h4>
               <RsvpAvailabilityPicker
-                range={meeting.window}
-                handleDatePick={handleDatePick}
-                activeDate={activeDate}
-                userIana={activeFriend.timezone}
+                friendWindow={convertUtcToDateRange(meeting.window, activeFriend.timezone)}
                 bookings={bookings}
                 setPickerStatus={setPickerStatus}
-                handleSlotSubmit={handleSlotSubmit}
+                setAvailableDateTime={setAvailableDateTime}
               />
             </div>
           }
           {
             (!pickerStatus && activeFriend) &&
-            <RsvpAvailabilityDisplay
+            <AvailabilityDisplay
+              availableDateTime={availableDateTime}
+              setAvailableDateTime={setAvailableDateTime}
               setPickerStatus={setPickerStatus}
             />
           }
+        </div>
+        <div>
+          <button
+            className="btn"
+            disabled={(availableDateTime.length > 0 && pickerStatus === false) ? false : true}
+            onClick={() => handleHangoutSubmit(event)}>
+            Make booking
+          </button>
         </div>
       </main>
     );

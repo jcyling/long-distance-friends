@@ -19,7 +19,7 @@ const GroupHostTimePicker = ({ setAvailableTimesInput }) => {
       setAvailableTimesInput(prev => prev.concat(slot));
     }
     else {
-      // Remove index from active buttons
+      // Remove from active buttons
       setActiveButtons(activeButtons.filter(item => item !== slot));
       setAvailableTimesInput(prev => prev.filter(item => item !== slot));
     }

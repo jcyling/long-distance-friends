@@ -1,7 +1,7 @@
 import React from "react";
 import { FiPlus } from "react-icons/fi";
 
-const GroupHostAvailabilityDisplay = ({
+const AvailabilityDisplay = ({
   availableDateTime,
   setAvailableDateTime,
   setPickerStatus
@@ -61,4 +61,4 @@ const GroupHostAvailabilityDisplay = ({
   );
 };
 
-export default GroupHostAvailabilityDisplay;
+export default AvailabilityDisplay;
