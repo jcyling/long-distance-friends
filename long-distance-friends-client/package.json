@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "flatpickr": "^4.6.13",
+    "lodash": "^4.17.21",
     "luxon": "^2.4.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
