@@ -29,18 +29,24 @@ const RsvpAvailabilityPicker = ({
 
   return (
     <div>
-      <div className="flex flex-row">
-        <div>
-          {/* Date picker corresponding to time picked */}
-          <Flatpickr
-            onChange={(browserDates, dateStr) => handleDatePick(dateStr)}
-            className="invisible"
-            options={{
-              inline: true,
-              minDate: friendWindow.startDate,
-              maxDate: friendWindow.endDate,
-            }}
-          />
+      <div className="flex flex-row gap-6">
+        <div className="flex">
+          <div className="flex flex-col gap-6">
+            {/* Date picker corresponding to time picked */}
+            <Flatpickr
+              onChange={(browserDates, dateStr) => handleDatePick(dateStr)}
+              className="invisible"
+              options={{
+                inline: true,
+                minDate: friendWindow.startDate,
+                maxDate: friendWindow.endDate,
+              }}
+            />
+            <div className="border text-left rounded-sm p-3 text-xs">
+              <span className="text-emerald-500">Green</span> at least one friend is available at that date and time.
+            </div>
+          </div>
+
         </div>
         <div>
           {/* Time picker corresponding to dates picked */}

@@ -7,20 +7,27 @@ const GroupMeetingsCard = ({ meeting, user, handleHangoutDelete }) => {
 
   return (
     <div className="p-3 rounded-md text-left border">
-      <div className="flex items-center ">
-        <span className="pr-2">
-          {UtcWindow.startDate}
-        </span>
-        <span>To</span>
-        <span className="pl-2">
-          {UtcWindow.endDate}
-        </span>
-        <button
-          className="ml-auto"
-          onClick={() => handleHangoutDelete(meeting.id)}>
-          Cancel
-        </button>
+      <div className="flex flex-col">
+        <div>
+          <span className="pr-2">
+            {UtcWindow.startDate}
+          </span>
+          <span>To</span>
+          <span className="pl-2">
+            {UtcWindow.endDate}
+          </span>
+        </div>
+        <div>
+          Your Availability:
+          {/* Insert host availability */}
+        </div>
+
       </div>
+      <button
+        className="float-right"
+        onClick={() => handleHangoutDelete(meeting.id)}>
+        Cancel Hangout
+      </button>
       <div>
         <span>Send your friends this link to RSVP</span>
       </div>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import GroupCreateForm from "../home/GroupForm";
-import Group from "../home/Group";
-import GroupButton from "../home/GroupButton";
+import GroupCreateForm from "./GroupForm";
+import Group from "./Group";
+import GroupButton from "./GroupButton";
 import Togglable from "../common/Togglable";
-import GroupMakeHangoutForm from "../home/GroupMakeHangoutForm";
+import GroupMakeHangoutForm from "./GroupMakeHangoutForm";
 
 import usersService from "../../services/usersService";
 import groupService from "../../services/groupService";

@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 
 import Landing from "./components/views/Landing";
-import Home from "./components/views/Home";
+import Home from "./components/home/index";
 import NoRoute from "./components/views/NoRoute";
 import Settings from "./components/views/Settings";
 import AccountLoginForm from "./components/views/LoginAccount";

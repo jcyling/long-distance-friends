@@ -4,11 +4,13 @@ import { convertUtcToDateTimeObj, convertUtcToDateRange } from "../common/TimeUt
 import AvailabilityDisplay from "../common/AvailabilityDisplay";
 import RsvpAvailabilityPicker from "./RsvpAvailabilityPicker";
 import RsvpFriendCard from "./RsvpFriendCard";
+import RsvpContactForm from "./RsvpContactForm";
 import meetingService from "../../services/meetingService";
 
 const RsvpForm = () => {
   const [meeting, setMeeting] = useState(null);
   const [bookings, setBookings] = useState([]);
+  const [email, setEmail] = useState("");
   const [availableDateTime, setAvailableDateTime] = useState([]);
   const [pickerStatus, setPickerStatus] = useState(false);
   const [activeFriend, setActiveFriend] = useState(null);
@@ -47,7 +49,7 @@ const RsvpForm = () => {
   };
 
   const handleHangoutSubmit = () => {
-    
+
   };
 
   if (meeting === undefined) {
@@ -92,11 +94,21 @@ const RsvpForm = () => {
               setPickerStatus={setPickerStatus}
             />
           }
+          {
+            (!pickerStatus && activeFriend && availableDateTime) &&
+
+            <div className="w-1/3 m-auto">
+              <RsvpContactForm
+                email={email}
+                setEmail={setEmail}
+              />
+            </div>
+          }
         </div>
-        <div>
+        <div className="mt-6">
           <button
             className="btn"
-            disabled={(availableDateTime.length > 0 && pickerStatus === false) ? false : true}
+            disabled={(availableDateTime.length > 0 && pickerStatus === false && email) ? false : true}
             onClick={() => handleHangoutSubmit(event)}>
             Make booking
           </button>
