@@ -8,8 +8,6 @@ const GroupCreateFriendForm = ({ addFriend, group }) => {
     event.preventDefault();
 
     addFriend({ name: friendName, city: friendCity, groupId: group.id });
-    
-    // Reset state
     setFriendName("");
     setFriendCity("");
   };

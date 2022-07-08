@@ -19,7 +19,6 @@ const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
   const addFriend = async (friendInfo) => {
     toggleRef.current.toggleVisibility();
 
-    // Send new friend
     try {
       const newFriend = await friendService.addFriend(friendInfo, user.token);
       setFriends(friends.concat(newFriend));
@@ -73,7 +72,7 @@ const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
       </div>
 
       <div className="flex gap-5 justify-start">
-        <button className="btn bg-white font-normal"
+        <button className="btn"
           onClick={() => deleteGroup()}>
           Delete Group
         </button>

@@ -63,7 +63,6 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
       bookerModel: "User"
     };
 
-    // Create host booking on server
     try {
       const bookingCreated = await bookingService.createBooking(newBooking, user.token);
       return bookingCreated;

@@ -6,8 +6,6 @@ const GroupCreateForm = ({ addGroup }) => {
   const handleAddGroup = async (event) => {
     event.preventDefault();
     addGroup({ name: groupName });
-
-    // Reset state
     setGroupName("");
   };
 
