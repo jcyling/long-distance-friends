@@ -9,27 +9,19 @@ const GroupMeetingsCard = ({ meeting, user, handleHangoutDelete }) => {
     <div className="p-3 rounded-md text-left border">
       <div className="flex flex-col">
         <div>
-          <span className="pr-2">
-            {UtcWindow.startDate}
-          </span>
-          <span>To</span>
-          <span className="pl-2">
-            {UtcWindow.endDate}
-          </span>
+          {UtcWindow.startDate} To {UtcWindow.endDate}
         </div>
         <div>
-          Your Availability:
-          {/* Insert host availability */}
+          Edit your availability
         </div>
-
       </div>
       <button
-        className="float-right"
+        className="float-right text-gray-500"
         onClick={() => handleHangoutDelete(meeting.id)}>
         Cancel Hangout
       </button>
       <div>
-        <span>Send your friends this link to RSVP</span>
+        Send your friends this link to RSVP
       </div>
     </div>
   );
