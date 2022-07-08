@@ -15,4 +15,14 @@ const addFriend = async (friendInfo, token) => {
   }
 };
 
-export default { addFriend };
+const editFriend = async (friendInfo, id) => {
+  try {
+    const res = await axios.patch(`${baseUrl}/${id}`, friendInfo);
+    return res.data;
+  }
+  catch (error) {
+    console.log(error);
+  }
+};
+
+export default { addFriend, editFriend };
