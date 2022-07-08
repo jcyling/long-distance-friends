@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { convertUtcToDateTimeObj, convertUtcToDateRange } from "../common/TimeUtils";
+import {
+  convertUtcToDateTimeObj,
+  convertUtcToDateRange,
+  convertDateTimeObjToUtc
+} from "../common/TimeUtils";
 import AvailabilityDisplay from "../common/AvailabilityDisplay";
 import RsvpAvailabilityPicker from "./RsvpAvailabilityPicker";
 import RsvpFriendCard from "./RsvpFriendCard";
 import FieldTextWithLabel from "../common/FieldTextWithLabel";
 import meetingService from "../../services/meetingService";
+import bookingService from "../../services/bookingService";
+import friendService from "../../services/friendService";
 
 const RsvpForm = () => {
   const [meeting, setMeeting] = useState(null);
@@ -48,9 +54,34 @@ const RsvpForm = () => {
     setAvailableDateTime([]);
   };
 
-  const handleHangoutSubmit = () => {
+  const handleHangoutSubmit = async () => {
     event.preventDefault();
-    console.log(email)
+    let userIana = activeFriend.timezone;
+
+    // Format availableDateTime to ISO8061
+    let availabilityArray = [];
+    availableDateTime.forEach(item => {
+      let datetime = convertDateTimeObjToUtc(item, userIana);
+      availabilityArray = availabilityArray.concat(datetime);
+    });
+
+    let newBooking = {
+      groupId: meeting.group.id,
+      meetingId: meeting.id,
+      availability: availabilityArray,
+      booker: activeFriend.id,
+      bookerModel: "Friend"
+    };
+
+    // Create host booking on server
+    try {
+      const bookingCreated = await bookingService.createBooking(newBooking);
+      const updatedFriend = await friendService.editFriend({ email: email }, activeFriend.id);
+
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
   if (meeting === undefined) {

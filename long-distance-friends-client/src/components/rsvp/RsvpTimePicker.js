@@ -15,13 +15,14 @@ const RsvpTimePicker = ({
   const inteval = "00:30";
 
   useEffect(() => {
+
     // Retrieve booked timeslots in each booking
+    setBookedTimeslots([]);
+
     bookings.forEach(booking => {
       if (availableDateInput in booking.availability) {
-        setBookedTimeslots(booking.availability[availableDateInput]);
-      }
-      else {
-        setBookedTimeslots([]);
+        let bookedSlots = booking.availability[availableDateInput];
+        setBookedTimeslots(prev => prev.concat(bookedSlots));
       }
     });
 
