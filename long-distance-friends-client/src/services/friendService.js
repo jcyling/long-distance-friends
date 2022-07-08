@@ -25,4 +25,14 @@ const editFriend = async (friendInfo, id) => {
   }
 };
 
-export default { addFriend, editFriend };
+const deleteFriend = async (id) => {
+  try {
+    const res = await axios.delete(`${baseUrl}/${id}`);
+    return res.data;
+  }
+  catch (error) {
+    console.log(error);
+  }
+};
+
+export default { addFriend, editFriend, deleteFriend };

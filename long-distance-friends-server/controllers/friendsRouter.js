@@ -63,4 +63,17 @@ friendsRouter.patch("/:id", async (req, res, next) => {
   }
 });
 
+friendsRouter.delete("/:id", async (req, res) => {
+  const targetFriend = await Friend.findById(req.params.id);
+
+  if (!targetFriend) {
+    return res.status(404).json({
+      error: "Friend not found"
+    });
+  }
+
+  await Friend.findByIdAndRemove(req.params.id);
+  return res.status(204).end();
+});
+
 module.exports = friendsRouter;

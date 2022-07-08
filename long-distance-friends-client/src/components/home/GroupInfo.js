@@ -28,6 +28,16 @@ const GroupInfo = ({ user, group, deleteGroup, setMakeInvite }) => {
     }
   };
 
+  const handleDeleteFriend = async (friendId) => {
+    try{
+      await friendService.deleteFriend(friendId);
+      setFriends(friends.filter(friend => friend.id !== friendId));
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleHangoutDelete = async (id) => {
     try {
       await meetingService.deleteMeeting(id, user.token);
@@ -53,7 +63,11 @@ const GroupInfo = ({ user, group, deleteGroup, setMakeInvite }) => {
 
       <div className="flex flex-wrap mb-6 gap-3">
         {friends.map(friend =>
-          <GroupFriendCard key={friend.id} friend={friend} />
+          <GroupFriendCard
+            key={friend.id}
+            friend={friend}
+            handleDeleteFriend={handleDeleteFriend}
+          />
         )}
       </div>
 
