@@ -37,20 +37,20 @@ usersRouter.post("/", async (req, res) => {
 
   if (!username || !password || !name) {
     return res.status(401).json({
-      error: "missing username or password or name"
+      error: "Missing username or password or name"
     });
   }
 
   if (username.length < 3 || password.length < 3) {
     return res.status(401).json({
-      error: "username and password must be more than 3 chars long"
+      error: "Username and password must be more than 3 chars long"
     });
   }
 
   const existingUser = await User.findOne({ username });
   if (existingUser) {
     return res.status(400).json({
-      error: "username must be unique"
+      error: "Username must be unique"
     });
   }
 

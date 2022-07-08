@@ -6,12 +6,12 @@ const User = require("../models/user");
 const app = require("../app");
 const api = supertest(app);
 
-describe(("User api tests"), () => {
-  beforeEach(async () => {
+describe(("User API tests"), () => {
+  beforeAll(async () => {
     await User.deleteMany({});
 
     const passwordHash = await bcrypt.hash("psswrd", 10);
-    const user = new User({ username: "admin", name: "admin", passwordHash });
+    const user = new User({ username: "admin", name: "admin", passwordHash, "city": "London" });
 
     await user.save();
   });
@@ -22,7 +22,6 @@ describe(("User api tests"), () => {
       .expect("Content-type", /application\/json/);
   });
 
-  // Does not register user without username/password/name with length > 3
   test("verify new user needs username and password length > 3", async () => {
     const newUser = {
       username: "j",
@@ -36,11 +35,10 @@ describe(("User api tests"), () => {
       .expect(401)
       .expect("Content-Type", /application\/json/);
 
-    expect(result.body.error).toContain("username and password must be more than 3 chars long");
+    expect(result.body.error).toContain("Username and password must be more than 3 chars long");
   });
 });
 
-afterAll(done => {
-  mongoose.connection.close();
-  done();
+afterAll(async () => {
+  await mongoose.connection.close();
 });
