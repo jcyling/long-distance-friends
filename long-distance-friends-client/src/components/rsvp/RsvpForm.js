@@ -39,13 +39,17 @@ const RsvpForm = () => {
       const userIanaSlots = convertUtcToDateTimeObj(utcSlots);
 
       return {
-        name: booking.booker.name,
+        booker: booking.booker,
         timezone: booking.booker.timezone,
         city: booking.booker.city,
         availability: userIanaSlots
       };
     });
     return convertedBookings;
+  };
+
+  const checkFriendExistingBooking = (friendId) => {    
+    return bookings.some(item =>item.booker.id === friendId);
   };
 
   const handleFriendPick = (friend) => {
@@ -102,6 +106,7 @@ const RsvpForm = () => {
               {
                 meeting.group.friends.map(friend =>
                   <RsvpFriendCard
+                    booked={checkFriendExistingBooking(friend.id)}
                     key={friend.id}
                     friend={friend}
                     activeFriend={activeFriend}
