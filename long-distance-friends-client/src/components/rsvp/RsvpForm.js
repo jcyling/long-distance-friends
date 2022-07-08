@@ -49,7 +49,8 @@ const RsvpForm = () => {
   };
 
   const handleHangoutSubmit = () => {
-
+    event.preventDefault();
+    console.log(email)
   };
 
   if (meeting === undefined) {
@@ -62,62 +63,70 @@ const RsvpForm = () => {
   else if (meeting) {
     return (
       <main className="p-10 flex flex-col">
-        <div className="relative p-6 flex flex-col bg-white border rounded-[1rem]">
-          <h3>{meeting.group.name} Friends</h3>
-          <h4>Which friend are you?</h4>
-          <div className="flex justify-center">
+        <form onSubmit={() => handleHangoutSubmit()}>
+          <div className="relative p-6 flex flex-col bg-white border rounded-[1rem]">
+            <h3>{meeting.group.name} Friends</h3>
+            <h4>Which friend are you?</h4>
+            <div className="flex justify-center">
+              {
+                meeting.group.friends.map(friend =>
+                  <RsvpFriendCard
+                    key={friend.id}
+                    friend={friend}
+                    activeFriend={activeFriend}
+                    handleFriendPick={handleFriendPick}
+                  />
+                )
+              }
+            </div>
+
             {
-              meeting.group.friends.map(friend =>
-                <RsvpFriendCard
-                  key={friend.id}
-                  friend={friend}
-                  handleFriendPick={handleFriendPick}
+              (pickerStatus && activeFriend) &&
+              <div>
+                <h4 className="pb-4">Hi {activeFriend.name}, when are you free to hangout?</h4>
+                <RsvpAvailabilityPicker
+                  friendWindow={convertUtcToDateRange(meeting.window, activeFriend.timezone)}
+                  bookings={bookings}
+                  setPickerStatus={setPickerStatus}
+                  setAvailableDateTime={setAvailableDateTime}
                 />
-              )
+              </div>
             }
+            {
+              (!pickerStatus && activeFriend) &&
+              <AvailabilityDisplay
+                availableDateTime={availableDateTime}
+                setAvailableDateTime={setAvailableDateTime}
+                setPickerStatus={setPickerStatus}
+              />
+            }
+
+
           </div>
           {
-            (pickerStatus && activeFriend) &&
-            <div>
-              <h4 className="pb-4">Hi {activeFriend.name}, when are you free to hangout?</h4>
-              <RsvpAvailabilityPicker
-                friendWindow={convertUtcToDateRange(meeting.window, activeFriend.timezone)}
-                bookings={bookings}
-                setPickerStatus={setPickerStatus}
-                setAvailableDateTime={setAvailableDateTime}
-              />
-            </div>
-          }
-          {
-            (!pickerStatus && activeFriend) &&
-            <AvailabilityDisplay
-              availableDateTime={availableDateTime}
-              setAvailableDateTime={setAvailableDateTime}
-              setPickerStatus={setPickerStatus}
-            />
-          }
-          {
             (!pickerStatus && availableDateTime.length > 0) &&
-            <div className="w-1/3 m-auto">
-              <span>One last thing, what&apos;s your email?</span> 
-              <FieldTextWithLabel
-                name={"Email"}
-                variable={email}
-                setFunction={setEmail}
-                text=" "
-              />
+            <div className="flex flex-col w-full mt-6 items-center border rounded-[1rem] p-6">
+              <div>
+                <div className="w-full">
+                  <span>Your email for the meeting?</span>
+                  <FieldTextWithLabel
+                    name={"Email"}
+                    variable={email}
+                    setFunction={setEmail}
+                    text=" "
+                  />
+                </div>
+
+                <button
+                  className="btn"
+                  disabled={(availableDateTime.length > 0 && pickerStatus === false && email) ? false : true}>
+                  Mark your availability
+                </button>
+              </div>
             </div>
           }
-        </div>
-        <div className="mt-6">
-          <button
-            className="btn"
-            disabled={(availableDateTime.length > 0 && pickerStatus === false && email) ? false : true}
-            onClick={() => handleHangoutSubmit(event)}>
-            Make booking
-          </button>
-        </div>
-      </main>
+        </form>
+      </main >
     );
   }
 
