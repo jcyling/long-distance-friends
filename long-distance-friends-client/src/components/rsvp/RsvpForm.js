@@ -4,7 +4,7 @@ import { convertUtcToDateTimeObj, convertUtcToDateRange } from "../common/TimeUt
 import AvailabilityDisplay from "../common/AvailabilityDisplay";
 import RsvpAvailabilityPicker from "./RsvpAvailabilityPicker";
 import RsvpFriendCard from "./RsvpFriendCard";
-import RsvpContactForm from "./RsvpContactForm";
+import FieldTextWithLabel from "../common/FieldTextWithLabel";
 import meetingService from "../../services/meetingService";
 
 const RsvpForm = () => {
@@ -66,13 +66,15 @@ const RsvpForm = () => {
           <h3>{meeting.group.name} Friends</h3>
           <h4>Which friend are you?</h4>
           <div className="flex justify-center">
-            {meeting.group.friends.map(friend =>
-              <RsvpFriendCard
-                key={friend.id}
-                friend={friend}
-                handleFriendPick={handleFriendPick}
-              />
-            )}
+            {
+              meeting.group.friends.map(friend =>
+                <RsvpFriendCard
+                  key={friend.id}
+                  friend={friend}
+                  handleFriendPick={handleFriendPick}
+                />
+              )
+            }
           </div>
           {
             (pickerStatus && activeFriend) &&
@@ -95,12 +97,14 @@ const RsvpForm = () => {
             />
           }
           {
-            (!pickerStatus && activeFriend && availableDateTime) &&
-
+            (!pickerStatus && availableDateTime.length > 0) &&
             <div className="w-1/3 m-auto">
-              <RsvpContactForm
-                email={email}
-                setEmail={setEmail}
+              <span>One last thing, what&apos;s your email?</span> 
+              <FieldTextWithLabel
+                name={"Email"}
+                variable={email}
+                setFunction={setEmail}
+                text=" "
               />
             </div>
           }

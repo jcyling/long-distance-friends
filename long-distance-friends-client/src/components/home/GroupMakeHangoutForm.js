@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import WindowPicker from "../common/WindowPicker";
+import FieldWindowPicker from "../common/FieldWindowPicker";
 import GroupHostAvailabilityPicker from "./GroupHostAvailabilityPicker";
 import AvailabilityDisplay from "../common/AvailabilityDisplay";
 import meetingService from "../../services/meetingService";
@@ -84,7 +84,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
             <span>Your Timezone:</span>
             <span>{user.timezone}</span>
             <span>UTC</span>
-            <WindowPicker
+            <FieldWindowPicker
               user={user}
               setRange={setRange}
               setRangeSelected={setRangeSelected}

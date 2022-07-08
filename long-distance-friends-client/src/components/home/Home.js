@@ -100,9 +100,7 @@ const Home = ({ user }) => {
 
         </div>
       </div>
-      <div>
-        <GroupInterface />
-      </div>
+      <GroupInterface />
 
     </main>
   );

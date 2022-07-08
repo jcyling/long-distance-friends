@@ -1,10 +1,10 @@
 import { React, useState, useEffect } from "react";
 import {
-  Routes, Route, Navigate, useNavigate, Switch
+  Routes, Route, Navigate, useNavigate
 } from "react-router-dom";
 
 import Landing from "./components/views/Landing";
-import Home from "./components/home/index";
+import Home from "./components/home/Home";
 import NoRoute from "./components/views/NoRoute";
 import Settings from "./components/views/Settings";
 import AccountLoginForm from "./components/views/LoginAccount";

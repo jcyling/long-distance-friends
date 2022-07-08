@@ -2,7 +2,7 @@ import React from "react";
 import Flatpickr from "react-flatpickr";
 import { convertDateRangeToUtc } from "./TimeUtils";
 
-const WindowPicker = ({ user, setRange, setRangeSelected }) => {
+const FieldWindowPicker = ({ user, setRange, setRangeSelected }) => {
 
   let userIana = user.timezone;
 
@@ -61,4 +61,4 @@ const WindowPicker = ({ user, setRange, setRangeSelected }) => {
   );
 };
 
-export default WindowPicker;
+export default FieldWindowPicker;

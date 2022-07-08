@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import usersService from "../../services/usersService";
+import FieldTextWithLabel from "../common/FieldTextWithLabel";
 
 const AccountCreateForm = ({ user, setUser, useNav, setErrorMessage }) => {
   const [username, setNewUsername] = useState("");
@@ -46,36 +47,21 @@ const AccountCreateForm = ({ user, setUser, useNav, setErrorMessage }) => {
       <div className="w-2/5 m-auto content-center">
         <form onSubmit={() => handleUserCreation(event, username, password, name)}>
 
-          <div className="mb-6">
-            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
-            <input
-              type="username"
-              id="username"
-              value={username}
-              className="fld-txt"
-              placeholder="Username"
-              onChange={({ target }) => setNewUsername(target.value)} required />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Name</label>
-            <input
-              type="name"
-              id="name"
-              value={name}
-              className="fld-txt"
-              placeholder="Name"
-              onChange={({ target }) => setNewName(target.value)} required />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              className="fld-txt"
-              placeholder="Password"
-              onChange={({ target }) => setNewPassword(target.value)} required />
-          </div>
+          <FieldTextWithLabel
+            name={"Username"}
+            variable={username}
+            setFunction={setNewUsername}
+          />
+          <FieldTextWithLabel
+            name={"Name"}
+            variable={name}
+            setFunction={setNewName}
+          />
+          <FieldTextWithLabel
+            name={"Password"}
+            variable={password}
+            setFunction={setNewPassword}
+          />
           <button href="/createAccount" className="btn">Sign Up</button>
         </form>
       </div>
