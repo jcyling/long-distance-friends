@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const friendSchema = new mongoose.Schema({
   name: {
@@ -15,6 +16,12 @@ const friendSchema = new mongoose.Schema({
   group: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Group"
+  },
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    unique: true
   }
 });
 

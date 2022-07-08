@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const windowSchema = new mongoose.Schema({
   startDate: {
     type: mongoose.Schema.Types.Date,
-    min: Date.now,
     required: true
   },
   endDate: {
