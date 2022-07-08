@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import GroupCreateForm from "./GroupForm";
-import Group from "./Group";
+import GroupInfo from "./GroupInfo";
 import GroupButton from "./GroupButton";
 import Togglable from "../common/Togglable";
 import GroupMakeHangoutForm from "./GroupMakeHangoutForm";
@@ -71,7 +71,7 @@ const Home = ({ user }) => {
     else if (activeGroupId) {
       return (
         <div>
-          <Group user={user} key={activeGroup.id} group={activeGroup} deleteGroup={deleteGroup} setMakeInvite={setMakeInvite} />
+          <GroupInfo user={user} key={activeGroup.id} group={activeGroup} deleteGroup={deleteGroup} setMakeInvite={setMakeInvite} />
         </div>
       );
     }

@@ -6,7 +6,7 @@ import GroupFriendCard from "./GroupFriendCard";
 import friendService from "../../services/friendService";
 import meetingService from "../../services/meetingService";
 
-const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
+const GroupInfo = ({ user, group, deleteGroup, setMakeInvite }) => {
   const [friends, setFriends] = useState([]);
   const [meetings, setMeetings] = useState([]);
   const toggleRef = useRef();
@@ -86,4 +86,4 @@ const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
   );
 };
 
-export default Group;
+export default GroupInfo;
