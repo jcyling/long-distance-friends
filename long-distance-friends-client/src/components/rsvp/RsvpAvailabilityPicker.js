@@ -43,7 +43,10 @@ const RsvpAvailabilityPicker = ({
               }}
             />
             <div className="border text-left rounded-sm p-3 text-xs">
-              <span className="text-emerald-500">Green</span> at least one friend is available at that date and time.
+              <p>Click a date to see when other people are available.</p>
+              <p>
+                <span className="text-emerald-500">Green</span> means at least one friend has chosen that time.
+              </p>
             </div>
           </div>
 

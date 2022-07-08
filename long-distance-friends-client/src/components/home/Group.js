@@ -78,7 +78,7 @@ const Group = ({ user, group, deleteGroup, setMakeInvite }) => {
           Delete Group
         </button>
         <button
-          className="btn bg-purple-300 ml-auto hover:bg-purple-400"
+          className="btn ml-auto"
           onClick={() => setMakeInvite(true)}>
           Schedule Hangout
         </button>

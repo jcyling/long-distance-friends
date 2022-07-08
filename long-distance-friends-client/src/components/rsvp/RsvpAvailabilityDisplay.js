@@ -49,7 +49,7 @@ const RsvpAvailabilityDisplay = ({
       </div>
 
       <div
-        className="btn bg-gray-100 hover:bg-gray-300 flex justify-center"
+        className="btn flex justify-center"
         onClick={() => setPickerStatus(true)}
       >
         <FiPlus /> <span> Add More Availability</span>

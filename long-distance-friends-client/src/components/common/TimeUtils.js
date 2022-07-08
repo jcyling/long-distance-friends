@@ -50,7 +50,6 @@ const convertDateTimeObjToUtc = (obj, userIana) => {
     let datetime = obj.date + "T" + time;
     return DateTime.fromISO(datetime, { zone: userIana }).toISO();
   });
-  console.log(utcDateTime);
   return utcDateTime;
 };
 
