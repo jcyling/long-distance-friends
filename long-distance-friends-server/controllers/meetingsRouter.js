@@ -41,6 +41,9 @@ meetingsRouter.get("/:id", async (req, res, next) => {
       .populate({
         path: "bookings",
         model: "Booking",
+        populate: {
+          path: "booker"
+        }
       })
       .exec();
     return res.json(meetings);

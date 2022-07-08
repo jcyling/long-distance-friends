@@ -43,4 +43,24 @@ friendsRouter.post("/", async (req, res, next) => {
   }
 });
 
+friendsRouter.patch("/:id", async (req, res, next) => {
+  if (!req.body || !req.params.id) {
+    return res.status(400).json({ message: "Incorrect request content" });
+  }
+
+  const body = req.body;
+  try {
+    const friendInfo = {
+      ...body,
+    };
+
+    const updatedFriend = await Friend.findByIdAndUpdate(req.params.id, friendInfo, { new: true });
+
+    return res.status(200).json(updatedFriend);
+  }
+  catch (error) {
+    next(error);
+  }
+});
+
 module.exports = friendsRouter;
