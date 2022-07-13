@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { nanoid } = require("nanoid");
 
 const convertLocationToTimezone = async (city) => {
   const latLng = await convertLocationToLatLong(city);
@@ -41,8 +42,13 @@ const convertLatLongToTimezone = async ({ lat, lng }) => {
   }
 };
 
+const genUID= () => {
+  return nanoid(10);
+};
+
 module.exports = { 
   convertLocationToTimezone,
   convertLocationToLatLong,
-  convertLatLongToTimezone
+  convertLatLongToTimezone,
+  genUID
 };

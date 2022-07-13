@@ -22,11 +22,11 @@ meetingsRouter.get("/", async (req, res, next) => {
   }
 });
 
-// Get meeting by id
+// Get meeting by uid
 meetingsRouter.get("/:id", async (req, res, next) => {
   try {
-    const meetings = await Meeting
-      .findById(req.params.id)
+    const meeting = await Meeting
+      .findOne({ "uid": req.params.id })
       .populate({
         path: "group",
         model: "Group",
@@ -46,7 +46,11 @@ meetingsRouter.get("/:id", async (req, res, next) => {
         }
       })
       .exec();
-    return res.json(meetings);
+
+    if (!meeting) {
+      return res.status(404);
+    }
+    return res.json(meeting);
   }
   catch (error) {
     next(error);

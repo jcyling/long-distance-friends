@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const helpers = require("../utils/helpers.js");
 
 const windowSchema = new mongoose.Schema({
   startDate: {
@@ -32,6 +33,10 @@ const meetingSchema = new mongoose.Schema(
         ref: "Booking"
       }
     ],
+    uid: {
+      type: String,
+      default: helpers.genUID
+    }
   },
   {
     timestamps: true
