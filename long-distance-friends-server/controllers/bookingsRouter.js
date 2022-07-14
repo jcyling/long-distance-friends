@@ -4,7 +4,6 @@ const Group = require("../models/group");
 const Meeting = require("../models/meeting");
 const Friend = require("../models/friend");
 const User = require("../models/user");
-const email = require("./emailsRouter");
 
 // Get all bookings
 bookingsRouter.get("/", async (req, res, next) => {
