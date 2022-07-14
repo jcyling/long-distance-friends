@@ -79,12 +79,16 @@ const RsvpForm = () => {
       bookerModel: "Friend"
     };
 
+    let message = {
+      message: "Thanks for letting us know your availability. We'll update you when everyone filled in theirs!"
+    };
+
     // Create host booking on server
     try {
       const updatedFriend = await friendService.editFriend({ email: email }, activeFriend.id);
       const bookingCreated = await bookingService.createBooking(newBooking);
       await emailService.confirmBooking(updatedFriend.name, updatedFriend.email);
-      useNav("/success");
+      useNav("/success", { state: message });
     }
     catch (error) {
       console.log(error);

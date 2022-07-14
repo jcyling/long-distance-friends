@@ -41,7 +41,6 @@ const RsvpFriendCard = ({ booked, friend, handleFriendPick, activeFriend }) => {
       </div>
     );
   }
-
-}
+};
 
 export default RsvpFriendCard;

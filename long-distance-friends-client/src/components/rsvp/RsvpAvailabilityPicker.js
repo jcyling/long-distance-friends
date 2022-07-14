@@ -25,7 +25,7 @@ const RsvpAvailabilityPicker = ({
       setAvailableDateTime(prevInput => prevInput.concat(availabilityArray).sort());
       setPickerStatus(false);
     }
-  }
+  };
 
   return (
     <div>

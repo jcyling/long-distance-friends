@@ -28,17 +28,14 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
     // Send meeting creation
     try {
       const meetingCreated = await meetingService.createMeeting(newMeeting, user.token);
-      console.log(meetingCreated);
+      const bookingCreated = await handleHostAvailabilitySubmit(meetingCreated);
 
-      const hostBookingCreated = await handleHostAvailabilitySubmit(meetingCreated);
+      let message = {
+        message: "Thanks! Send your friends this link to RSVP.",
+        inviteUrl: `${process.env.REACT_APP_WEBURL}/rsvp/${meetingCreated.uid}`
+      };
 
-      // Notify user of successful hangout creation
-      console.log(`Hangout created between ${range[0]} and ${range[1]}`);
-
-      // Give a link for friends to RSVP
-      // Redirect users to home
-      useNav("/home");
-
+      useNav("/success", { state: message });
     }
     catch (error) {
       console.log(error);
