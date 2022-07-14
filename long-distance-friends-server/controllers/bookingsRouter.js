@@ -2,6 +2,9 @@ const bookingsRouter = require("express").Router();
 const Booking = require("../models/booking");
 const Group = require("../models/group");
 const Meeting = require("../models/meeting");
+const Friend = require("../models/friend");
+const User = require("../models/user");
+const email = require("./emailsRouter");
 
 // Get all bookings
 bookingsRouter.get("/", async (req, res, next) => {
@@ -49,8 +52,21 @@ bookingsRouter.post("/", async (req, res, next) => {
       error: "group not found"
     });
   }
-  // TODO: Validate friend in Friend or Validate user in Users
-
+  
+  // Validate friend in Friend or Validate user in Users
+  let booker;
+  if (body.bookerModel === "Friend") {
+    booker = await Friend.findOne({ "id": body.booker });
+  }
+  else {
+    booker = await User.findOne({ "id": body.booker });
+  }
+  if (!booker) { 
+    return res.status(404).json({
+      error: "friend not found"
+    });
+  }
+  
   // TODO: Validate if booking has already been made by same friend/user
 
   // Validate meeting 

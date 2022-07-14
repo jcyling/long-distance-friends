@@ -12,6 +12,7 @@ const groupsRouter = require("./controllers/groupsRouter");
 const meetingsRouter = require("./controllers/meetingsRouter");
 const bookingsRouter = require("./controllers/bookingsRouter");
 const friendsRouter = require("./controllers/friendsRouter");
+const emailsRouter = require("./controllers/emailsRouter");
 
 // Start express app
 const app = express();
@@ -36,6 +37,7 @@ app.use("/api/groups", groupsRouter);
 app.use("/api/friends", friendsRouter);
 app.use("/api/meetings", meetingsRouter);
 app.use("/api/bookings", bookingsRouter);
+app.use("/api/email", emailsRouter);
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
