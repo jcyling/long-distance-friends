@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   convertUtcToDateTimeObj,
   convertUtcToDateRange,
@@ -12,8 +12,10 @@ import FieldTextWithLabel from "../common/FieldTextWithLabel";
 import meetingService from "../../services/meetingService";
 import bookingService from "../../services/bookingService";
 import friendService from "../../services/friendService";
+import emailService from "../../services/emailService";
 
 const RsvpForm = () => {
+  const useNav = useNavigate();
   const [meeting, setMeeting] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [email, setEmail] = useState("");
@@ -79,9 +81,10 @@ const RsvpForm = () => {
 
     // Create host booking on server
     try {
-      const bookingCreated = await bookingService.createBooking(newBooking);
       const updatedFriend = await friendService.editFriend({ email: email }, activeFriend.id);
-
+      const bookingCreated = await bookingService.createBooking(newBooking);
+      await emailService.confirmBooking(updatedFriend.name, updatedFriend.email);
+      useNav("/success");
     }
     catch (error) {
       console.log(error);

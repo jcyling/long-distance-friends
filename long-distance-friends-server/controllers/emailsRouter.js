@@ -9,8 +9,6 @@ emailsRouter.post("/", async (req, res, next) => {
     from: process.env.GMAIL_USR
   };
 
-  console.log(mailOptions);
-
   let transporter = nodemailer.createTransport({
     service: "gmail",
     secure: false,
@@ -21,8 +19,8 @@ emailsRouter.post("/", async (req, res, next) => {
   });
 
   try {
-    await transporter.sendMail(mailOptions);
-    return res.status(200);
+    const info = await transporter.sendMail(mailOptions);
+    return res.status(200).json(info);
   }
   catch (error) {
     next(error);

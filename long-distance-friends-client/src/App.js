@@ -10,13 +10,14 @@ import Settings from "./components/views/Settings";
 import AccountLoginForm from "./components/views/LoginAccount";
 import AccountCreateForm from "./components/views/CreateAccount";
 import RsvpForm from "./components/rsvp/RsvpForm";
+import Success from "./components/views/Success";
 
 import Navbar from "./components/common/Navbar";
 import Notification from "./components/common/Notification";
 
 const App = () => {
   const useNav = useNavigate();
-  
+
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -79,9 +80,12 @@ const App = () => {
             setErrorMessage={setErrorMessage}
           />}
         />
-        <Route 
-          path="/rsvp/:id" 
+        <Route
+          path="/rsvp/:id"
           element={<RsvpForm />} />
+        <Route
+          path="/success"
+          element={<Success />} />
         <Route
           path="/"
           element={<Landing />} />
