@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const usersRouter = require("express").Router();
 const helpers = require("../utils/helpers");
+const mongoose = require("mongoose");
 
 // List of users
 usersRouter.get("/", async (req, res) => {
@@ -14,6 +15,7 @@ usersRouter.get("/", async (req, res) => {
 
 // Specific user
 usersRouter.get("/:id", async (req, res) => {
+  if( !mongoose.Types.ObjectId.isValid(req.params.id) ) return false;
   const user = await User
     .findById(req.params.id)
     .populate({
@@ -33,11 +35,11 @@ usersRouter.get("/:id", async (req, res) => {
 
 // Account creation
 usersRouter.post("/", async (req, res) => {
-  const { username, password, name } = req.body;
+  const { username, password, name, city } = req.body;
 
-  if (!username || !password || !name) {
+  if (!username || !password || !name || !city) {
     return res.status(401).json({
-      error: "Missing username or password or name"
+      error: "Missing username or password or name or city"
     });
   }
 
@@ -61,12 +63,13 @@ usersRouter.post("/", async (req, res) => {
     username,
     name,
     passwordHash,
+    city
   });
 
   const savedUser = await user.save();
 
   // Return login token
-  const token = jwt.sign(savedUser, process.env.SECRET);
+  const token = jwt.sign(savedUser.toJSON(), process.env.SECRET);
 
   return res
     .status(201)

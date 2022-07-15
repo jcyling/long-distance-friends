@@ -26,7 +26,6 @@ const Success = () => {
     return (
       <div>
         {Object.keys(state).map(key => {
-          { console.log(key) }
           if (key == "inviteUrl") {
             return <div key={state[key]}>
               <a href={state[key]}>{state[key]}</a>

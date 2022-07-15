@@ -40,7 +40,7 @@ const Home = ({ user }) => {
     try {
       const res = await groupService.createGroup(newGroup, user.token);
       setGroups(groups.concat(res));
-      setActiveGroupId(groups[groups.length - 1].id);
+      setActiveGroupId(res.id);
     }
     catch (error) {
       console.log(error);
