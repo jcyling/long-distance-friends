@@ -52,7 +52,7 @@ const Home = ({ user }) => {
       const activeGroup = groups.find(group => group.id == activeGroupId);
       await groupService.deleteGroup(activeGroup.id, user.token);
       setGroups(groups.filter(group => group !== activeGroup));
-      setActiveGroupId(groups[0].id);
+      setActiveGroupId(null);
     }
     catch (error) {
       console.log(error);
