@@ -54,8 +54,8 @@ const RsvpForm = () => {
     return convertedBookings;
   };
 
-  const checkFriendExistingBooking = (friendId) => {    
-    return bookings.some(item =>item.booker.id === friendId);
+  const checkFriendExistingBooking = (friendId) => {
+    return meeting.bookings.some(item =>item.booker.id === friendId);
   };
 
   const handleFriendPick = (friend) => {
