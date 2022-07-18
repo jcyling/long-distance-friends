@@ -51,7 +51,7 @@ bookingsRouter.post("/", async (req, res, next) => {
       error: "group not found"
     });
   }
-  
+
   // Validate friend in Friend or Validate user in Users
   let booker;
   if (body.bookerModel === "Friend") {
@@ -60,25 +60,45 @@ bookingsRouter.post("/", async (req, res, next) => {
   else {
     booker = await User.findOne({ "id": body.booker });
   }
-  if (!booker) { 
+  if (!booker) {
     return res.status(404).json({
       error: "friend not found"
     });
   }
-  
-  // TODO: Validate if booking has already been made by same friend/user
 
   // Validate meeting 
-  const meeting = await Meeting.findById(body.meetingId);
+  const meeting = await Meeting
+    .findById(body.meetingId)
+    .populate({
+      path: "bookings",
+      model: "Booking",
+      populate: {
+        path: "booker"
+      }
+    })
+    .exec();
+
   if (!meeting) {
     return res.status(404).json({
       error: "meeting not found"
     });
   }
 
-  const window = meeting.window;
+  //Validate if booking has already been made by same friend/user
+  const existingBookings = meeting.bookings;
+
+  if (existingBookings) {
+    const slotsBookedByBooker = existingBookings.some(item => item.booker.id === body.booker);
+
+    if (slotsBookedByBooker) {
+      return res.status(400).json({
+        error: "booking has already been made by this person"
+      });
+    }
+  }
 
   // Validate date is within meeting window
+  const window = meeting.window;
   const dateCheck = body.availability.every((item) => {
     // Format date
     let dateToCheck = new Date(item.datetime);
