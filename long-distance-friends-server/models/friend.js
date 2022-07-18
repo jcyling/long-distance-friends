@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Group = require("./group");
 
 const friendSchema = new mongoose.Schema({
   name: {
@@ -25,6 +26,14 @@ const friendSchema = new mongoose.Schema({
       partialFilterExpression: { email: { $type: "string" } }
     }
   }
+});
+
+friendSchema.pre("deleteOne", { document: true, query: false }, function(next) {
+  const friendId = this._id;
+  console.log(friendId);
+  Group.updateMany({
+    $pull: { friends: friendId }
+  }).exec();
 });
 
 friendSchema.set("toJSON", {
