@@ -29,8 +29,12 @@ const convertUtcToDateRange = (dates, userIana) => {
 };
 
 const convertUtcToDateTimeObj = (datetimeArray, userIana) => {
+  if (!userIana) {
+    return null;
+  }
+
   const splitDateTime = datetimeArray.map(item => {
-    let splitArray = DateTime.fromISO(item).setZone(userIana).toFormat("yyyy-MM-dd hh:mm").split(" ");
+    let splitArray = DateTime.fromISO(item).setZone(userIana).toFormat("yyyy-MM-dd HH:mm").split(" ");
     let splitObject = {
       date: splitArray[0],
       time: splitArray[1]

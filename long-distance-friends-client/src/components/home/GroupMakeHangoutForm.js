@@ -44,6 +44,11 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
 
   const handleHostAvailabilitySubmit = async (meetingCreated) => {
     let userIana = user.timezone;
+    
+    if (!userIana) {
+      // TODO: Implement error handling 
+      return null;
+    }
 
     // Format availableDateTime to ISO8061
     let availabilityArray = [];
@@ -51,7 +56,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
       let datetime = convertDateTimeObjToUtc(item, userIana);
       availabilityArray = availabilityArray.concat(datetime);
     });
-
+    
     let newBooking = {
       groupId: group.id,
       meetingId: meetingCreated.id,

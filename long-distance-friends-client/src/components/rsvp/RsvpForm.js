@@ -29,22 +29,26 @@ const RsvpForm = () => {
       .getMeeting(id)
       .then(res => {
         setMeeting(res);
-
-        let convertedBookings = convertBookingsTimezone(res);
-        setBookings(convertedBookings);
       });
   }, []);
+
+  useEffect(() => {
+    if (activeFriend) {
+      let convertedBookings = convertBookingsTimezone(meeting);
+      setBookings(convertedBookings);  
+    }
+  }, [activeFriend]);
 
   const convertBookingsTimezone = (data) => {
     const convertedBookings = data.bookings.map(booking => {
       const utcSlots = booking.availability;
-      const userIanaSlots = convertUtcToDateTimeObj(utcSlots);
+      const friendIanaSlots = convertUtcToDateTimeObj(utcSlots, activeFriend.timezone);
 
       return {
         booker: booking.booker,
         timezone: booking.booker.timezone,
         city: booking.booker.city,
-        availability: userIanaSlots
+        availability: friendIanaSlots
       };
     });
     return convertedBookings;
@@ -83,7 +87,7 @@ const RsvpForm = () => {
       message: "Thanks for letting us know your availability. We'll update you when everyone filled in theirs!"
     };
 
-    // Create host booking on server
+    // Create friend booking on server
     try {
       const updatedFriend = await friendService.editFriend({ email: email }, activeFriend.id);
       const bookingCreated = await bookingService.createBooking(newBooking);

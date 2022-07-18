@@ -27,7 +27,7 @@ const RsvpTimePicker = ({
     });
 
     setActiveButtons([]);
-  }, [availableDateInput]);
+  }, [availableDateInput, bookings]);
 
   const timeslotList = createTimeIntevals(startTime, endTime, inteval);
 
