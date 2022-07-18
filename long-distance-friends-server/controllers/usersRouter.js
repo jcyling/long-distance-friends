@@ -59,11 +59,14 @@ usersRouter.post("/", async (req, res) => {
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
+  const timezone = await helpers.convertLocationToTimezone(city);
+
   const user = new User({
     username,
     name,
     passwordHash,
-    city
+    city,
+    timezone
   });
 
   const savedUser = await user.save();
