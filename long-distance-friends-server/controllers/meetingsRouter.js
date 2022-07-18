@@ -10,7 +10,6 @@ meetingsRouter.get("/", async (req, res, next) => {
   try {
     const meetings = await Meeting
       .find({})
-      .populate("bookings")
       .populate("creator",
         { "username": 1 }
       )
@@ -69,6 +68,10 @@ meetingsRouter.post("/", async (req, res, next) => {
   const decodedToken = jwt.verify(token, process.env.SECRET);
   const user = await User.findById(decodedToken.id);
 
+  if (!user) {
+    return res.status(401).json({ error: "user missing or invalid " });
+  }
+  
   // Validate group
   const group = await Group.findById(body.groupId);
   if (!group) {
@@ -77,15 +80,11 @@ meetingsRouter.post("/", async (req, res, next) => {
     });
   }
 
-  // TODO: Validate if another meeting overlaps the same window
-  // if (another meeting is in the same window) {
-  // return error
-  // }
-
   const meeting = new Meeting({
     group: body.groupId,
     creator: user._id,
     window: body.window,
+    rsvps: 0
   });
 
   try {
@@ -109,7 +108,7 @@ meetingsRouter.delete("/:id", async (req, res) => {
       error: "meeting not found"
     });
   }
-  await Meeting.findByIdAndRemove(req.params.id);
+  targetMeeting.deleteOne();
   return res.status(204).end();
 });
 

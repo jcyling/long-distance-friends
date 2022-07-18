@@ -100,7 +100,7 @@ groupRouter.delete("/:id", async (req, res) => {
   }
 
   // TODO: Constraint to only user's group
-  await Group.findByIdAndRemove(req.params.id);
+  targetGroup.deleteOne();
   return res.status(204).end();
 });
 

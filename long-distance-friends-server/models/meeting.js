@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const helpers = require("../utils/helpers.js");
+const Group = require("./group");
 
 const windowSchema = new mongoose.Schema({
   startDate: {
@@ -33,6 +34,10 @@ const meetingSchema = new mongoose.Schema(
         ref: "Booking"
       }
     ],
+    rsvps: {
+      type: Number,
+      min: 0
+    },
     uid: {
       type: String,
       default: helpers.genUID
@@ -42,6 +47,14 @@ const meetingSchema = new mongoose.Schema(
     timestamps: true
   }
 );
+
+meetingSchema.pre("deleteOne", { document: true, query: false }, function(next) {
+  const meetingId = this._id;
+  Group.updateMany({
+    $pull: { meetings: meetingId }
+  }).exec();
+  next();
+});
 
 meetingSchema.set("toJSON", {
   transform: (document, returnedObject) => {

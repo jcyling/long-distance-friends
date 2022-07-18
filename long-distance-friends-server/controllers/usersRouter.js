@@ -8,8 +8,7 @@ const mongoose = require("mongoose");
 // List of users
 usersRouter.get("/", async (req, res) => {
   const users = await User
-    .find({})
-    .populate("groups");
+    .find({});
   return res.json(users);
 });
 
