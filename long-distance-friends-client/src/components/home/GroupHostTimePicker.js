@@ -13,7 +13,7 @@ const GroupHostTimePicker = ({ setAvailableTimesInput }) => {
 
   const handleSlotPick = (event, slot, index) => {
     event.preventDefault();
-    if (!activeButtons.includes(index)) {
+    if (!activeButtons.includes(slot)) {
       setActiveButtons(activeButtons.concat(slot));
       setAvailableTimesInput(prev => prev.concat(slot));
     }
