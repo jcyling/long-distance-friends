@@ -19,8 +19,11 @@ const friendSchema = new mongoose.Schema({
   email: {
     type: String,
     trim: true,
-    lowercase: true,
-    unique: true
+    sparse: true,
+    index: {
+      unique: true,
+      partialFilterExpression: { email: { $type: "string" } }
+    }
   }
 });
 
@@ -33,3 +36,4 @@ friendSchema.set("toJSON", {
 });
 
 module.exports = mongoose.model("Friend", friendSchema);
+

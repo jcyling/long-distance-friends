@@ -29,7 +29,8 @@ friendsRouter.post("/", async (req, res, next) => {
     name: body.name,
     city: body.city,
     timezone: timezone,
-    group: group._id
+    group: group._id,
+    email: undefined
   });
 
   try {
