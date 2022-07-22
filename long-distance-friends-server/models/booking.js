@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Meeting = require("./meeting");
 
 const bookingSchema = new mongoose.Schema(
   {
@@ -34,8 +33,10 @@ const bookingSchema = new mongoose.Schema(
 );
 
 bookingSchema.pre("deleteOne", { document: true, query: false }, function (next) {
+  const Meeting = require("./meeting");
   const bookingId = this._id;
-  Meeting.updateOne(
+
+  Meeting.findOneAndUpdate( 
     { bookings: bookingId },
     {
       $inc: { rsvps: -1 },

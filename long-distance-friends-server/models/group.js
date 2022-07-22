@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const User = require("./user");
+const Meeting = require("./meeting");
+const Booking = require("./booking");
+const Friend = require("./friend");
 
 const groupSchema = new mongoose.Schema({
   name: {
@@ -25,11 +28,11 @@ const groupSchema = new mongoose.Schema({
 
 groupSchema.pre("deleteOne", { document: true, query: false }, function(next) {
   const groupId = this._id;
-  User.updateMany({
-    $pull: { groups: groupId }
-  }).exec();
+  User.updateMany({ $pull: { groups: groupId } }).exec();
+  Booking.deleteMany({ group: groupId }).exec();
+  Meeting.deleteMany({ group: groupId }).exec();
+  Friend.deleteMany({ group: groupId }).exec();
   next();
-  // TODO: Remove bookings that belong to this group
 });
 
 groupSchema.set("toJSON", {

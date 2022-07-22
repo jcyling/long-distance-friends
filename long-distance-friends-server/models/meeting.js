@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const helpers = require("../utils/helpers.js");
-const Group = require("./group");
 const Booking = require("./booking");
 
 const windowSchema = new mongoose.Schema({
@@ -50,16 +49,16 @@ const meetingSchema = new mongoose.Schema(
 );
 
 meetingSchema.pre("deleteOne", { document: true, query: false }, function (next) {
+  const Group = require("./group");
   const meetingId = this._id;
+
   Group.updateOne(
     { meeting: meetingId },
     {
       $pull: { meetings: meetingId }
     }
   ).exec();
-  Booking.deleteMany(
-    { meeting: meetingId }
-  ).exec();
+  Booking.deleteMany({ meeting: meetingId }).exec();
   next();
 });
 
