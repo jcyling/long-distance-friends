@@ -32,6 +32,20 @@ const bookingSchema = new mongoose.Schema(
   }
 );
 
+bookingSchema.pre("deleteOne", { document: true, query: false }, function (next) {
+  const Meeting = require("./meeting");
+  const bookingId = this._id;
+
+  Meeting.findOneAndUpdate( 
+    { bookings: bookingId },
+    {
+      $inc: { rsvps: -1 },
+      $pull: { bookings: bookingId }
+    }
+  ).exec();
+  next();
+});
+
 bookingSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();

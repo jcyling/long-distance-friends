@@ -73,7 +73,9 @@ friendsRouter.delete("/:id", async (req, res) => {
     });
   }
 
-  await Friend.findByIdAndRemove(req.params.id);
+  targetFriend.deleteOne();
+
+  // await Friend.findByIdAndRemove(req.params.id);
   return res.status(204).end();
 });
 

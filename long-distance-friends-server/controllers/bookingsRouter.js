@@ -122,6 +122,7 @@ bookingsRouter.post("/", async (req, res, next) => {
   try {
     const savedBooking = await booking.save();
     meeting.bookings = meeting.bookings.concat(booking._id);
+    meeting.rsvps += 1;
     await meeting.save();
     return res.status(201).json(savedBooking);
   }
@@ -139,7 +140,7 @@ bookingsRouter.delete("/:id", async (req, res) => {
     });
   }
 
-  await Booking.findByIdAndRemove(req.params.id);
+  targetBooking.deleteOne();
   return res.status(204).end();
 });
 
