@@ -90,8 +90,8 @@ const RsvpForm = () => {
     // Create friend booking on server
     try {
       const updatedFriend = await friendService.editFriend({ email: email }, activeFriend.id);
+      await emailService.confirmBooking(updatedFriend.name, email);
       const bookingCreated = await bookingService.createBooking(newBooking);
-      await emailService.confirmBooking(updatedFriend.name, updatedFriend.email);
       useNav("/success", { state: message });
     }
     catch (error) {
