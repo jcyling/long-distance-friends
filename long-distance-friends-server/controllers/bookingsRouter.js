@@ -121,9 +121,6 @@ bookingsRouter.post("/", async (req, res, next) => {
 
   try {
     const savedBooking = await booking.save();
-    meeting.bookings = meeting.bookings.concat(booking._id);
-    meeting.rsvps += 1;
-    await meeting.save();
     return res.status(201).json(savedBooking);
   }
   catch (error) {

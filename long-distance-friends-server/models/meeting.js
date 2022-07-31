@@ -36,7 +36,8 @@ const meetingSchema = new mongoose.Schema(
     ],
     rsvps: {
       type: Number,
-      min: 0
+      min: 0,
+      required: true
     },
     uid: {
       type: String,
