@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
+const axios = require("axios");
 const helpers = require("../utils/helpers");
 const emailService = require("../services/emailService");
 const zoomService = require("../services/zoomService");
+
+const baseUrl = "http://localhost:3001/api";
 
 const bookingSchema = new mongoose.Schema(
   {
@@ -42,7 +45,6 @@ bookingSchema.pre("deleteOne", { document: true, query: false }, function (next)
   Meeting.findOneAndUpdate(
     { bookings: bookingId },
     {
-      $inc: { rsvps: -1 },
       $pull: { bookings: bookingId }
     }
   ).exec();
@@ -52,55 +54,52 @@ bookingSchema.pre("deleteOne", { document: true, query: false }, function (next)
 bookingSchema.post("save", async function (booking, next) {
   const Group = require("./group");
   const Meeting = require("./meeting");
-  const User = require("./user");
 
   // Update meeting to increment booking count
   const meeting = await Meeting
     .findById(booking.meeting)
     .exec();
   meeting.bookings = meeting.bookings.concat(booking._id);
-  meeting.rsvps += 1;
   await meeting.save();
 
-  // Compare rsvps with number of friends in the group
+  // Compare bookings with number of members
   const group = await Group
     .findById(booking.group)
     .populate("friends")
     .populate("admin", {
-      "username": 1, "name": 1, "timezone": 1
+      "username": 1, "name": 1, "timezone": 1, "email": 1
     })
     .exec();
 
-  if (meeting.rsvps === group.friends.length + 1) {
+  if (meeting.bookings.length === group.friends.length + 1) {
     // Check for overlap
     const bookingsOverlap = await helpers.checkBookingsOverlaps(meeting.uid);
-    
-    // Retrieve all emails
-    const user = await User
-      .findById(group.admin.id)
-      .exec();
 
     const userDetails = {
-      name: user.name,
-      email: user.email,
-      timezone: user.timezone,
-      localMeetingTime: helpers.convertToUserTimezone(bookingsOverlap, user.timezone)
+      name: group.admin.name,
+      email: group.admin.email,
+      timezone: group.admin.timezone,
     };
 
-    console.log(userDetails);
+    if (bookingsOverlap) {
+      userDetails.localMeetingTime = helpers.convertToUserTimezone(bookingsOverlap, group.admin.timezone);
+    }
 
     const friendsDetails = group.friends.map(friend => {
       let details = {
         name: friend.name,
         email: friend.email,
         timezone: friend.timezone,
-        localMeetingTime: helpers.convertToUserTimezone(bookingsOverlap, friend.timezone)
       };
+      if (bookingsOverlap) {
+        details.localMeetingTime = helpers.convertToUserTimezone(bookingsOverlap, friend.timezone);
+      }
       return details;
     });
 
     const groupMembersDetails = friendsDetails.concat(userDetails);
 
+    // If bookings do overlap
     if (bookingsOverlap) {
       // Create zoom link
       const zoomLink = await zoomService.createZoomMeeting(bookingsOverlap);
@@ -119,17 +118,29 @@ bookingSchema.post("save", async function (booking, next) {
       }
     }
     else {
-      // Reset RSVPs to 0
-      meeting.rsvps = 0;
-      await meeting.save();
+      // Delete all bookings for this meeting
+      const bookingIds = meeting.bookings.map(booking => booking.toString());
 
-      // Send email to everyone to rebook
-      await Promise.all(
-        friendsDetails.map(async (friend) => {
-          const res = await emailService.sendMeetingLink(friend.email, friend.timezone, friend.meetingTime);
-          return res;
-        })
-      );
+      try {
+        await Promise.all(
+          bookingIds.map(async (id) => {
+            const res = await axios.delete(`${baseUrl}/bookings/${id}`);
+            return res;
+          })
+        );
+
+        // Send email to everyone to rebook
+        await Promise.all(
+          groupMembersDetails.map(async (friend) => {
+            const res = await emailService.sendRebookLink(friend.email, `http://localhost:3000/rsvp/${meeting.uid}`);
+            return res;
+          })
+        );
+
+      }
+      catch (error) {
+        console.log(error);
+      }
     }
   }
 

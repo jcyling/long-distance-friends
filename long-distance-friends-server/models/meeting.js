@@ -34,11 +34,6 @@ const meetingSchema = new mongoose.Schema(
         ref: "Booking"
       }
     ],
-    rsvps: {
-      type: Number,
-      min: 0,
-      required: true
-    },
     uid: {
       type: String,
       default: helpers.genUID

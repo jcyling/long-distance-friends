@@ -71,7 +71,7 @@ meetingsRouter.post("/", async (req, res, next) => {
   if (!user) {
     return res.status(401).json({ error: "user missing or invalid " });
   }
-  
+
   // Validate group
   const group = await Group.findById(body.groupId);
   if (!group) {
@@ -83,8 +83,7 @@ meetingsRouter.post("/", async (req, res, next) => {
   const meeting = new Meeting({
     group: body.groupId,
     creator: user._id,
-    window: body.window,
-    rsvps: 0
+    window: body.window
   });
 
   try {

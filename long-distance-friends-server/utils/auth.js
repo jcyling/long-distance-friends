@@ -1,5 +1,3 @@
-const axios = require("axios");
-
 const getTokenFrom = req => {
   const authorization = req.get("authorization");
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {

@@ -23,11 +23,11 @@ const sendMeetingLink = async (name, email, timezone, meetingTime, zoomLink) => 
   return res.data;
 };
 
-const sendRebookLink = async (email) => {
+const sendRebookLink = async (email, rebookLink) => {
   let mailOptions = {
     to: email,
     subject: "Rebook your hangout time",
-    text: "The time doesn't work for everyone! Try and rebook here."
+    text: `Sorry, none of the time slots work for everyone in the group. Try and put more availability this time! Choose your availability again here ${rebookLink}.`
   };
 
   const res = await axios.post(baseUrl, mailOptions);

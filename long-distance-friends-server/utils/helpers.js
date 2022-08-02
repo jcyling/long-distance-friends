@@ -30,7 +30,7 @@ const checkBookingsOverlaps = async (uid) => {
   // Find intersection of arrays
   const overlap = _.intersection(...availabilities);
   
-  if (overlap) {
+  if (overlap.length > 0) {
     // Ensure it is the soonest overlapped time
     const firstOverlap = overlap[0];
 
@@ -45,7 +45,6 @@ const checkBookingsOverlaps = async (uid) => {
 const convertToUserTimezone = (datetime, iana) => {
   return datetime.setZone(iana).toFormat("yyyy-MM-dd HH:mma ZZZZ");
 };
-
 
 const convertLocationToTimezone = async (city) => {
   const latLng = await convertLocationToLatLong(city);
