@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TimeSlotButton from "../common/TimeSlotButton";
-import { createTimeIntevals } from "../common/TimeUtils";
+import { createTimeIntevals } from "../../utils/TimeUtils";
 
 const GroupHostTimePicker = ({ setAvailableTimesInput }) => {
   const [activeButtons, setActiveButtons] = useState([]);

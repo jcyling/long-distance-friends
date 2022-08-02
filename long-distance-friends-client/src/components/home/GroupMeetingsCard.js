@@ -1,5 +1,5 @@
 import React from "react";
-import { convertUtcToDateRange } from "../common/TimeUtils";
+import { convertUtcToDateRange } from "../../utils/TimeUtils";
 
 const GroupMeetingsCard = ({ meeting, user, handleHangoutDelete }) => {
 

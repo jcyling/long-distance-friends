@@ -1,6 +1,6 @@
 import React from "react";
 import Flatpickr from "react-flatpickr";
-import { convertDateRangeToUtc } from "./TimeUtils";
+import { convertDateRangeToUtc } from "../../utils/TimeUtils";
 
 const FieldWindowPicker = ({ user, setRange, setRangeSelected }) => {
 

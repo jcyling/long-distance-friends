@@ -6,7 +6,7 @@ import AvailabilityDisplay from "../common/AvailabilityDisplay";
 import meetingService from "../../services/meetingService";
 import bookingService from "../../services/bookingService";
 import "flatpickr/dist/themes/airbnb.css";
-import { convertDateTimeObjToUtc } from "../common/TimeUtils";
+import { convertDateTimeObjToUtc } from "../../utils/TimeUtils";
 
 const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
   const useNav = useNavigate();

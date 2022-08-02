@@ -4,7 +4,7 @@ import {
   convertUtcToDateTimeObj,
   convertUtcToDateRange,
   convertDateTimeObjToUtc
-} from "../common/TimeUtils";
+} from "../../utils/TimeUtils";
 import AvailabilityDisplay from "../common/AvailabilityDisplay";
 import RsvpAvailabilityPicker from "./RsvpAvailabilityPicker";
 import RsvpFriendCard from "./RsvpFriendCard";
