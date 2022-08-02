@@ -14,7 +14,7 @@ usersRouter.get("/", async (req, res) => {
 
 // Specific user
 usersRouter.get("/:id", async (req, res) => {
-  if( !mongoose.Types.ObjectId.isValid(req.params.id) ) return false;
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) return false;
   const user = await User
     .findById(req.params.id)
     .populate({
@@ -33,10 +33,10 @@ usersRouter.get("/:id", async (req, res) => {
 });
 
 // Account creation
-usersRouter.post("/", async (req, res) => {
-  const { username, password, name, city } = req.body;
+usersRouter.post("/", async (req, res, next) => {
+  const { username, email, password, name, city } = req.body;
 
-  if (!username || !password || !name || !city) {
+  if (!username || !email || !password || !name || !city) {
     return res.status(401).json({
       error: "Missing username or password or name or city"
     });
@@ -57,7 +57,6 @@ usersRouter.post("/", async (req, res) => {
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
-
   const timezone = await helpers.convertLocationToTimezone(city);
 
   const user = new User({
@@ -68,14 +67,26 @@ usersRouter.post("/", async (req, res) => {
     timezone
   });
 
-  const savedUser = await user.save();
+  try {
+    const savedUser = await user.save();
+    if (savedUser) {
+      // Return login token
+      const token = jwt.sign(savedUser.toJSON(), process.env.SECRET);
 
-  // Return login token
-  const token = jwt.sign(savedUser.toJSON(), process.env.SECRET);
+      return res
+        .status(201)
+        .send({ token, username: user.username, name: user.name });
+    }
+    else {
+      return res.status(400).json({
+        error: "Account creation failed"
+      });
+    }
+  }
+  catch (error) {
+    next(error);
+  }
 
-  return res
-    .status(201)
-    .send({ token, username: user.username, name: user.name });
 });
 
 usersRouter.patch("/:id", async (req, res, next) => {
