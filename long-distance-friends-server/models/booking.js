@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const helpers = require("../utils/helpers");
 const emailService = require("../services/emailService");
+const zoomService = require("../services/zoomService");
 
 const bookingSchema = new mongoose.Schema(
   {
@@ -73,28 +74,42 @@ bookingSchema.post("save", async function (booking, next) {
   if (meeting.rsvps === group.friends.length + 1) {
     // Check for overlap
     const bookingsOverlap = await helpers.checkBookingsOverlaps(meeting.uid);
+    
+    // Retrieve all emails
+    const user = await User
+      .findById(group.admin.id)
+      .exec();
+
+    const userDetails = {
+      name: user.name,
+      email: user.email,
+      timezone: user.timezone,
+      localMeetingTime: helpers.convertToUserTimezone(bookingsOverlap, user.timezone)
+    };
+
+    console.log(userDetails);
+
+    const friendsDetails = group.friends.map(friend => {
+      let details = {
+        name: friend.name,
+        email: friend.email,
+        timezone: friend.timezone,
+        localMeetingTime: helpers.convertToUserTimezone(bookingsOverlap, friend.timezone)
+      };
+      return details;
+    });
+
+    const groupMembersDetails = friendsDetails.concat(userDetails);
 
     if (bookingsOverlap) {
-      
-      // Retrieve all emails
-      const user = await User
-        .findById(group.admin.id)
-        .exec();
-
-      const friendsDetails = group.friends.map(friend => {
-        let details = {
-          email: friend.email,
-          timezone: friend.timezone,
-          meetingTime: helpers.convertToUserTimezone(bookingsOverlap, friend.timezone)
-        };
-        return details;
-      });
+      // Create zoom link
+      const zoomLink = await zoomService.createZoomMeeting(bookingsOverlap);
 
       // Send out emails to everyone with meeting link
       try {
         await Promise.all(
-          friendsDetails.map(async (friend) => {
-            const res = await emailService.sendMeetingLink(friend.email, friend.timezone, friend.meetingTime);
+          groupMembersDetails.map(async (friend) => {
+            const res = await emailService.sendMeetingLink(friend.name, friend.email, friend.timezone, friend.localMeetingTime, zoomLink);
             return res;
           })
         );
@@ -104,12 +119,17 @@ bookingSchema.post("save", async function (booking, next) {
       }
     }
     else {
-      // Let everyone know nothing is overlapping
       // Reset RSVPs to 0
       meeting.rsvps = 0;
       await meeting.save();
 
       // Send email to everyone to rebook
+      await Promise.all(
+        friendsDetails.map(async (friend) => {
+          const res = await emailService.sendMeetingLink(friend.email, friend.timezone, friend.meetingTime);
+          return res;
+        })
+      );
     }
   }
 

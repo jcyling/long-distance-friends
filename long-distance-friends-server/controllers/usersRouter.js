@@ -83,7 +83,9 @@ usersRouter.patch("/:id", async (req, res, next) => {
   // TODO: Restrict changes to user only
   const body = req.body;
 
-  body.timezone = await helpers.convertLocationToTimezone(body.city);
+  if (body.timezone) {
+    body.timezone = await helpers.convertLocationToTimezone(body.city);
+  }
 
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, body, { new: true });
