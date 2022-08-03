@@ -20,11 +20,6 @@ A scheduling web app to make hanging out with family and friends in different ti
 - Database: MongoDB, Mongoose
 - Other: Luxon (for datetime and timezone management)
 
-### Design
-
-Diagram for datetime conversion logic between client and server-side architecture
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FeZQ9GLDdLqu5q526wM3C9U%2FLongDistanceFriends-DateTimeConversionDiagram%3Fnode-id%3D0%253A1" allowfullscreen></iframe>
-
 ### :gear: Setup
 Long Distance Friends works with the following services:
 - MongoDB
