@@ -1,7 +1,7 @@
 *This app is a work-in-progress (Dated: 06/07/2022).*
 
 # :earth_asia: Long Distance Friends
-A scheduling web app to make hanging out with family and friends in different timezones easier. This app originated from the idea of wanting to improve the coordination of hanging out with friends in different timezones online.
+A scheduling web app to make hanging out with family and friends in different timezones easier. Coordinating online hangouts with friends in different timezones can be difficult - Long Distance Friends make it better!
 
 ![Homepage](/images/ldf-homepage-01.png)
 
