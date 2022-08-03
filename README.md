@@ -3,6 +3,8 @@
 # :earth_asia: Long Distance Friends
 A scheduling web app to make hanging out with family and friends in different timezones easier. This app originated from the idea of wanting to improve the coordination of hanging out with friends in different timezones online.
 
+![Homepage](/images/ldf-homepage-01.png)
+
 ### :memo: What It Does
 - Keep track of what timezones and time differences everyone in your friend group are in.
 - Generates a link for all your friends to tell us when they are free to hangout.
@@ -10,7 +12,7 @@ A scheduling web app to make hanging out with family and friends in different ti
 - Answer to your friend's invite to hangout by inputting your availability - and LDF will sort out the rest!
 - Once everyone has put in their availability, if there is a working timeslot for all friends in the group, LDF will send out a zoom link to everyone's email.
 
-![Homepage](/images/ldf-homepage-01.png)
+![RSVP](/images/ldf-friend-rsvp-hangout-01.png)
 
 ### :hammer: How It Works
 - Back-end: Node.js, Express
