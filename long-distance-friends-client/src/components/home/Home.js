@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import GroupCreateForm from "./GroupForm";
+import GroupNav from "./GroupNav";
 import GroupInfo from "./GroupInfo";
-import GroupButton from "./GroupButton";
-import Togglable from "../common/Togglable";
+
 import GroupMakeHangoutForm from "./GroupMakeHangoutForm";
 
 import usersService from "../../services/usersService";
@@ -86,20 +85,12 @@ const Home = ({ user }) => {
 
   return (
     <main className="px-10">
-      <div className="relative py-3 px-6 flex flex-col bg-white border rounded-[1rem]">
-        <div className="w-full flex flex-wrap flex-start items-center gap-5">
-          <span className="text-xl font-bold">Groups</span>
-          {groups.map(group =>
-            <GroupButton key={group.id} group={group} setActiveGroupId={setActiveGroupId} />
-          )}
-          <div className="ml-auto">
-            <Togglable buttonLabel='Make A Group' ref={toggleRef}>
-              <GroupCreateForm addGroup={addGroup} />
-            </Togglable>
-          </div>
-
-        </div>
-      </div>
+      <GroupNav
+        groups={groups}
+        setActiveGroupId={setActiveGroupId}
+        addGroup={addGroup}
+        toggleRef={toggleRef}
+      />
       <GroupInterface />
 
     </main>
