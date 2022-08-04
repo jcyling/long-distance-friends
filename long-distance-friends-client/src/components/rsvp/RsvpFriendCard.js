@@ -20,9 +20,10 @@ const RsvpFriendCard = ({ booked, friend, handleFriendPick, activeFriend }) => {
   if (disabled) {
     return (
       <div
-        className="bg-gradient-to-r from-cyan-500 to-blue-500 m-6 flex flex-col items-center">
-        <div className={" w-24 h-24 rounded-full"}></div>
-        <div>{friend.name}</div>
+        className="m-6 flex flex-col items-center">
+        <div className={"bg-gradient-to-r from-gray-400 to-blue-900 w-24 h-24 rounded-full flex flex-col justify-center"}>
+          <div className="text-gray-800 text-lg">{friend.name}</div>
+        </div>
         <div className="flex flex-col text-sm">
           <span>{friend.timezone}</span>
           <span>Slots booked</span>

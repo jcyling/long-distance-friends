@@ -31,16 +31,16 @@ const Index = () => {
           />
         </div>
       </section>
-      <section className="my-5 py-20 bg-gray-100 flex flex-col rounded-[3rem] items-center">
+      <section className="my-5 py-20 px-10 bg-gray-100 flex flex-col rounded-[3rem] items-center">
         <h2>
           Make plans easily for multiple people.
         </h2>
-        <div className="py-10 flex flex-nowrap flex-row justify-evenly text-4xl tracking-tighter w-1/2">
-          <span className="bg-amber-300 px-5 py-2 rounded-full">Get a Link</span>
-          <span className="">➔</span>
-          <span className="bg-amber-300 px-5 py-2 rounded-full">Find Time</span>
-          <span className="">➔</span>
-          <span className="bg-amber-300 px-5 py-2 rounded-full">Hangout</span>
+        <div className="py-10 flex flex-wrap flex-row justify-evenly text-4xl tracking-tighter w-1/2 md:flex-nowrap sm:flex-wrap">
+          <span className="bg-amber-300 px-5 py-2 rounded-full shrink-0">Get a Link</span>
+          <span className="p-3 sm:w-full">➔</span>
+          <span className="bg-amber-300 px-5 py-2 rounded-full shrink-0">Find Time</span>
+          <span className="p-3 sm:w-full">➔</span>
+          <span className="bg-amber-300 px-5 py-2 rounded-full shrink-0">Hangout</span>
         </div>
         <img
           src={require("../../static/images/illustrations/024.png")}

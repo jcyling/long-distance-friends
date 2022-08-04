@@ -29,7 +29,7 @@ const GroupInfo = ({ user, group, deleteGroup, setMakeInvite }) => {
   };
 
   const handleDeleteFriend = async (friendId) => {
-    try{
+    try {
       await friendService.deleteFriend(friendId);
       setFriends(friends.filter(friend => friend.id !== friendId));
     }
@@ -49,7 +49,7 @@ const GroupInfo = ({ user, group, deleteGroup, setMakeInvite }) => {
   };
 
   return (
-    <div className="relative py-5 px-10 rounded-[1rem]">
+    <div className="relative py-5 px-5 sm:px-0 rounded-[1rem]">
       <div className="flex flex-row flex-auto">
         <h3 className="pb-5 font-bold text-left">
           {group.name}
@@ -75,14 +75,17 @@ const GroupInfo = ({ user, group, deleteGroup, setMakeInvite }) => {
         <h4 className="pb-5 font-bold text-left">
           Upcoming Hangouts
         </h4>
-        {meetings.map(meeting =>
-          <GroupMeetingsCard
-            user={user}
-            key={meeting.id}
-            meeting={meeting}
-            handleHangoutDelete={handleHangoutDelete}
-          />
-        )}
+        <div className="flex gap-2 flex-wrap">
+
+          {meetings.map(meeting =>
+            <GroupMeetingsCard
+              user={user}
+              key={meeting.id}
+              meeting={meeting}
+              handleHangoutDelete={handleHangoutDelete}
+            />
+          )}
+        </div>
       </div>
 
       <div className="flex gap-5 justify-start">

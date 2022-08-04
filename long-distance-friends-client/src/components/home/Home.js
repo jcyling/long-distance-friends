@@ -84,7 +84,7 @@ const Home = ({ user }) => {
   };
 
   return (
-    <main className="px-10">
+    <main className="px-10 flex flex-col">
       <GroupNav
         groups={groups}
         setActiveGroupId={setActiveGroupId}

@@ -7,14 +7,10 @@ const GroupMeetingsCard = ({ meeting, user, handleHangoutDelete }) => {
   const UtcWindow = convertUtcToDateRange(meeting.window, user.timezone);
 
   return (
-    <div className="p-3 rounded-md text-left border">
+    <div className="p-3 rounded-md text-left border w-full basis-80 shrink-0">
       <div className="flex flex-col">
-
-        <div>
+        <div className="font-bold">
           {UtcWindow.startDate} To {UtcWindow.endDate}
-        </div>
-        <div>
-          Edit your availability
         </div>
       </div>
       <div>
@@ -24,7 +20,7 @@ const GroupMeetingsCard = ({ meeting, user, handleHangoutDelete }) => {
         </div>
       </div>
       <button
-        className="text-gray-500"
+        className="text-gray-400"
         onClick={() => handleHangoutDelete(meeting.id)}>
         Cancel Hangout
       </button>
