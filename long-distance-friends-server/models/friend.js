@@ -9,6 +9,10 @@ const friendSchema = new mongoose.Schema({
   timezone: {
     type: String
   },
+  latlng: {
+    type: [Number],
+    index: "2dsphere"
+  },
   city: {
     type: String,
     required: true
@@ -28,7 +32,7 @@ const friendSchema = new mongoose.Schema({
   }
 });
 
-friendSchema.pre("deleteOne", { document: true, query: false }, function(next) {
+friendSchema.pre("deleteOne", { document: true, query: false }, function (next) {
   const Group = require("./group");
   const friendId = this._id;
   Group.updateMany({

@@ -94,8 +94,9 @@ usersRouter.patch("/:id", async (req, res, next) => {
   // TODO: Restrict changes to user only
   const body = req.body;
 
-  if (body.timezone) {
+  if (body.city) {
     body.timezone = await helpers.convertLocationToTimezone(body.city);
+    body.latlng = await helpers.convertLocationToLatLong(body.city);
   }
 
   try {

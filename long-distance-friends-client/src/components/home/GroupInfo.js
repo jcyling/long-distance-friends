@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+
 import Togglable from "../common/Togglable";
 import GroupCreateFriendForm from "./GroupFriendCreateForm";
 import GroupMeetingsCard from "./GroupMeetingsCard";
 import GroupFriendCard from "./GroupFriendCard";
+
 import friendService from "../../services/friendService";
 import meetingService from "../../services/meetingService";
 
@@ -70,6 +73,21 @@ const GroupInfo = ({ user, group, deleteGroup, setMakeInvite }) => {
           />
         )}
       </div>
+
+      <MapContainer id="map" center={[51.505, -0.09]} zoom={2} scrollWheelZoom={true}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+
+        {friends.map(friend => 
+          <Marker key={friend.id} position={friend.latlng}>
+            <Popup>
+              {friend.name}<br />{friend.city}<br />{friend.timezone}
+            </Popup>
+          </Marker>
+        )}
+      </MapContainer>
 
       <div className="py-3">
         <h4 className="pb-5 font-bold text-left">

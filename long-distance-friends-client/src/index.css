@@ -60,3 +60,10 @@
 }
 
 @tailwind utilities;
+
+@layer utilities {
+  #map {
+    height: 500px;
+    z-index: 1;
+  }
+}
