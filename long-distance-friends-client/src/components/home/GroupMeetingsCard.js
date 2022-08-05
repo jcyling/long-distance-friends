@@ -9,13 +9,13 @@ const GroupMeetingsCard = ({ meeting, user, handleHangoutDelete }) => {
   return (
     <div className="p-3 rounded-md text-left border w-full basis-80 shrink-0">
       <div className="flex flex-col">
-        <div className="font-bold">
-          {UtcWindow.startDate} To {UtcWindow.endDate}
+        <div className="font-semibold">
+          Hangout Window: <br /> {UtcWindow.startDate} To {UtcWindow.endDate}
         </div>
       </div>
       <div>
         Send your friends this link to RSVP:
-        <div>
+        <div className="text-blue-500">
           <a href={invitationUrl}>{invitationUrl}</a>
         </div>
       </div>

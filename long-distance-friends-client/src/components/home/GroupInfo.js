@@ -52,7 +52,7 @@ const GroupInfo = ({ user, group, deleteGroup, setMakeInvite }) => {
   };
 
   return (
-    <div className="relative py-5 px-5 sm:px-0 rounded-[1rem]">
+    <div className="relative py-5 sm:px-0 rounded-[1rem]">
       <div className="flex flex-row flex-auto">
         <h3 className="pb-5 font-bold text-left">
           {group.name}
@@ -74,14 +74,14 @@ const GroupInfo = ({ user, group, deleteGroup, setMakeInvite }) => {
         )}
       </div>
 
-      <MapContainer id="map" center={[51.505, -0.09]} zoom={2} scrollWheelZoom={true}>
+      <MapContainer id="map" center={[ 51.0, 9.0 ]} zoom={2} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         {friends.map(friend => 
-          <Marker key={friend.id} position={friend.latlng}>
+          <Marker key={friend.id} position={[friend.latlng[1], friend.latlng[0]]}>
             <Popup>
               {friend.name}<br />{friend.city}<br />{friend.timezone}
             </Popup>
