@@ -23,19 +23,19 @@ friendsRouter.post("/", async (req, res, next) => {
     return res.status(401).json({ error: "group not found" });
   }
 
-  const latlng = await helpers.convertLocationToLatLong(body.city);
-  const timezone = await helpers.convertLatLongToTimezone(latlng);
-
-  const friend = new Friend({
-    name: body.name,
-    city: body.city,
-    timezone: timezone,
-    latlng: [latlng.lat, latlng.lng],
-    group: group._id,
-    email: undefined
-  });
-
   try {
+    const latlng = await helpers.convertLocationToLatLong(body.city);
+    const timezone = await helpers.convertLatLongToTimezone(latlng);  
+
+    const friend = new Friend({
+      name: body.name,
+      city: body.city,
+      timezone: timezone,
+      latlng: [latlng.lng, latlng.lat],
+      group: group._id,
+      email: undefined
+    });
+  
     const savedFriend = await friend.save();
     group.friends = group.friends.concat(savedFriend._id);
     await group.save();
@@ -44,6 +44,7 @@ friendsRouter.post("/", async (req, res, next) => {
   catch (error) {
     next(error);
   }
+
 });
 
 friendsRouter.patch("/:id", async (req, res, next) => {
