@@ -63,7 +63,7 @@
 
 @layer utilities {
   #map {
-    height: 500px;
+    height: 450px;
     z-index: 1;
     border-radius: 1rem;
   }

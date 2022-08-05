@@ -11,7 +11,7 @@ const GroupFriendCard = ({ friend, handleDeleteFriend }) => {
       </div>
       <div className="flex flex-col flex-1">
         <span className="block">City: {friend.city} </span>
-        <span className="block">Zone: {friend.timezone}</span>
+        <span className="block">{friend.timezone}</span>
       </div>
       <FiX
         className="ml-auto cursor-pointer"
