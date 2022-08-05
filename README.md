@@ -6,6 +6,7 @@ A scheduling web app to make hanging out with family and friends in different ti
 ![Homepage](/images/ldf-homepage-01.png)
 
 ### :memo: What It Does
+![Group](/images/ldf-group-home-01.png)
 - Keep track of what timezones and time differences everyone in your friend group are in.
 - Generates a link for all your friends to tell us when they are free to hangout.
 - See what times your friends are free to hangout at a glance.
