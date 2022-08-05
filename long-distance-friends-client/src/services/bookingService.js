@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001/api/bookings";
+const baseUrl = `${process.env.REACT_APP_SERVER}/api/bookings`;
 
 const createBooking = async (bookingInfo) => {
   const res = await axios.post(baseUrl, bookingInfo);

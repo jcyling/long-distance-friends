@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001/api/friends";
+const baseUrl = `${process.env.REACT_APP_SERVER}/api/friends`;
 
 const addFriend = async (friendInfo, token) => {
   const config = {

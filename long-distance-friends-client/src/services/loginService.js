@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001/api/login";
+const baseUrl = `${process.env.REACT_APP_SERVER}/api/login`;
 
 const login = async (credentials) => {
   const res = await axios.post(baseUrl, credentials);

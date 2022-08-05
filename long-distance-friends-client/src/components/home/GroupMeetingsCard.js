@@ -3,7 +3,7 @@ import { convertUtcToDateRange } from "../../utils/TimeUtils";
 
 const GroupMeetingsCard = ({ meeting, user, handleHangoutDelete }) => {
 
-  const invitationUrl = `localhost:3000/rsvp/${meeting.uid}`;
+  const invitationUrl = `${process.env.REACT_APP_WEBURL}/rsvp/${meeting.uid}`;
   const UtcWindow = convertUtcToDateRange(meeting.window, user.timezone);
 
   return (
