@@ -29,7 +29,7 @@ const GroupHostAvailabilityPicker = ({ range, setPickerStatus, setAvailableDateT
 
   return (
     <div className="w-full p-6 mb-6 border rounded-[1rem]">
-      <div className="flex text-left gap-3">
+      <div className="flex text-left gap-3 sm:flex-wrap md:nowrap">
         <div>
           <h4>
             Select dates

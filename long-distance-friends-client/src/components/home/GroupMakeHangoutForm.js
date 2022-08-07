@@ -75,7 +75,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
   };
 
   return (
-    <div className="rounded-[1rem] p-6">
+    <div className="rounded-[1rem]">
       <form className="flex flex-col" onSubmit={handleHangoutSubmit}>
         <div className="flex flex-col justify-items-center items-center">
           <div className="flex flex-col p-6">

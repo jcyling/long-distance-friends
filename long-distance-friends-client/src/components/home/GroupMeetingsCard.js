@@ -7,7 +7,7 @@ const GroupMeetingsCard = ({ meeting, user, handleHangoutDelete }) => {
   const UtcWindow = convertUtcToDateRange(meeting.window, user.timezone);
 
   return (
-    <div className="p-3 rounded-md text-left border w-full basis-80 shrink-0">
+    <div className="p-3 rounded-md text-left border w-full basis-full shrink-0">
       <div className="flex flex-col">
         <div className="font-semibold">
           Hangout Window: <br /> {UtcWindow.startDate} To {UtcWindow.endDate}

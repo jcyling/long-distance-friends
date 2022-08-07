@@ -113,7 +113,7 @@ const RsvpForm = () => {
           <div className="relative p-6 flex flex-col bg-white border rounded-[1rem]">
             <h3>{meeting.group.name} Friends</h3>
             <h4>Which friend are you?</h4>
-            <div className="flex justify-center">
+            <div className="flex justify-center flex-wrap">
               {
                 meeting.group.friends.map(friend =>
                   <RsvpFriendCard

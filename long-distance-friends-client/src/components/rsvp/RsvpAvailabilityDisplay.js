@@ -13,7 +13,7 @@ const RsvpAvailabilityDisplay = ({
   };
 
   return (
-    <div className="rounded-[1rem] w-full p-6 text-left">
+    <div className="rounded-[1rem] text-left">
       <h4>
         Your Availability
       </h4>

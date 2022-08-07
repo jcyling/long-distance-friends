@@ -29,7 +29,7 @@ const RsvpAvailabilityPicker = ({
 
   return (
     <div>
-      <div className="flex flex-row gap-6">
+      <div className="flex flex-row gap-6 sm:flex-wrap md:nowrap">
         <div className="flex">
           <div className="flex flex-col gap-6">
             {/* Date picker corresponding to time picked */}
