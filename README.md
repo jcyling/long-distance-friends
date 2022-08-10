@@ -1,27 +1,31 @@
-*This app is a work-in-progress (Dated: 06/07/2022).*
+*This app is a work-in-progress (Dated: 05/08/2022).*
 
 # :earth_asia: Long Distance Friends
 A scheduling web app to make hanging out with family and friends in different timezones easier. Coordinating online hangouts with friends in different timezones can be difficult - Long Distance Friends make it better!
 
 ![Homepage](/images/ldf-homepage-01.png)
 
-### :memo: What It Does
+## :memo: What It Does
 ![Group](/images/ldf-group-home-01.png)
 - Keep track of what timezones and time differences everyone in your friend group are in.
 - Generates a link for all your friends to tell us when they are free to hangout.
 - See what times your friends are free to hangout at a glance.
 - Answer to your friend's invite to hangout by inputting your availability - and LDF will sort out the rest!
-- Once everyone has put in their availability, if there is a working timeslot for all friends in the group, LDF will send out a zoom link to everyone's email.
+- Once everyone has put in their availability, if there is a working timeslot for all friends in the group, LDF will send out a Zoom meeting link to everyone's email.
 
 ![RSVP](/images/ldf-friend-rsvp-hangout-01.png)
 
-### :hammer: How It Works
+## :hammer: How It Works
 - Back-end: Node.js, Express
 - Front-end: React, TailwindCSS
 - Database: MongoDB, Mongoose
-- Other: Luxon (for datetime and timezone management)
+- Other: Luxon (datetime and timezone management), nodemailer (email integration)
 
-### :gear: Setup
+## 📌 APIs 
+- Google Maps API - for location and timezone handling
+- Zoom API - for creating meeting invites
+
+## :gear: Setup
 Long Distance Friends works with the following services:
 - MongoDB
 - Gmail
