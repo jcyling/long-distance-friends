@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 import GroupNav from "./GroupNav";
 import GroupInfo from "./GroupInfo";
-
 import GroupMakeHangoutForm from "./GroupMakeHangoutForm";
-
 import usersService from "../../services/usersService";
 import groupService from "../../services/groupService";
 
@@ -13,32 +12,26 @@ const Home = ({ user }) => {
   const [activeGroupId, setActiveGroupId] = useState(null);
   const toggleRef = useRef();
 
-  let didInit = false;
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await usersService
-        .getInfo(user.id)
-        .then(res => {
-          if (res.groups.length > 0) {
-            setGroups(res.groups);
-            setActiveGroupId(res.groups[0].id);
-          }
-        });
-    };
-
-    if (!didInit) {
-      fetchData();
-      didInit = true;
+  // Fetch initial data
+  const { 
+    data, 
+    isLoading, 
+    isError, 
+    error 
+  } = useQuery(["user"], () => usersService.getInfo(user.id), {
+    // Initialize the first group as activeGroup
+    onSuccess: (data) => {
+      setGroups(data.groups);
+      setActiveGroupId(data.groups[0].id);
     }
-  }, [user]);
+  });
 
   const addGroup = async (newGroup) => {
     toggleRef.current.toggleVisibility();
 
     try {
       const res = await groupService.createGroup(newGroup, user.token);
-      setGroups(groups.concat(res));
+      setGroups(data.groups.concat(res));
       setActiveGroupId(res.id);
     }
     catch (error) {
@@ -47,8 +40,11 @@ const Home = ({ user }) => {
   };
 
   const deleteGroup = async () => {
+    // Bug: replace activeGroup with mutation so that it works when request is submitted to server
+
+    const activeGroup = groups.find(group => group.id == activeGroupId);
+
     try {
-      const activeGroup = groups.find(group => group.id == activeGroupId);
       await groupService.deleteGroup(activeGroup.id, user.token);
       setGroups(groups.filter(group => group !== activeGroup));
       setActiveGroupId(null);
@@ -59,7 +55,10 @@ const Home = ({ user }) => {
   };
 
   const GroupInterface = () => {
+
+    // Bug: replace activeGroup with mutation so that it works when request is submitted to server
     const activeGroup = groups.find(group => group.id == activeGroupId);
+    
     if (makeInvite) {
       return (
         <div>
@@ -82,6 +81,14 @@ const Home = ({ user }) => {
       );
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>{error}</div>;
+  }
 
   return (
     <main className="xl:px-80 md:px-24 sm:px-6 flex flex-col">
