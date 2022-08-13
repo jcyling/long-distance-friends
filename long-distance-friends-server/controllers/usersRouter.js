@@ -38,7 +38,7 @@ usersRouter.post("/", async (req, res, next) => {
 
   if (!username || !email || !password || !name || !city) {
     return res.status(401).json({
-      error: "Missing username or password or name or city"
+      error: "Missing username or password or name or city or email"
     });
   }
 
@@ -64,7 +64,8 @@ usersRouter.post("/", async (req, res, next) => {
     name,
     passwordHash,
     city,
-    timezone
+    timezone,
+    email
   });
 
   try {

@@ -42,8 +42,10 @@ app.use("/api/email", emailsRouter);
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });  
+}
 
 module.exports = app;
