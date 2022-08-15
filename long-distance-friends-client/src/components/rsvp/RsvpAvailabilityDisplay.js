@@ -52,7 +52,7 @@ const RsvpAvailabilityDisplay = ({
         className="btn flex justify-center"
         onClick={() => setPickerStatus(true)}
       >
-        <FiPlus /> <span> Add More Availability</span>
+        <FiPlus /> <span className="text-gray-900">Add More Availability</span>
       </div>
     </div>
   );

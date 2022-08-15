@@ -76,8 +76,8 @@ const Home = ({ user }) => {
     }
     else {
       return (
-        <div>
-          Looks like you need to select a group.
+        <div className="mt-6">
+          Select a group to get started.
         </div>
       );
     }

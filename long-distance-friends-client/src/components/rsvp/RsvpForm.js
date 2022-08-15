@@ -108,7 +108,7 @@ const RsvpForm = () => {
   }
   else if (meeting) {
     return (
-      <main className="p-10 flex flex-col">
+      <main className="p-10 xl:px-80 md:px-24 sm:px-6 flex flex-col">
         <form onSubmit={() => handleHangoutSubmit()}>
           <div className="relative p-6 flex flex-col bg-white border rounded-[1rem]">
             <h3>{meeting.group.name} Friends</h3>

@@ -61,7 +61,7 @@ const GroupHostAvailabilityPicker = ({ range, setPickerStatus, setAvailableDateT
           Add Availability
         </button>
         <button
-          className="btn bg-gray-200"
+          className="btn bg-gray-200 text-gray-900 hover:bg-gray-300"
           onClick={() => setPickerStatus(false)}>
           Chosen Slots
         </button>

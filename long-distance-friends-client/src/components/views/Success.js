@@ -28,7 +28,7 @@ const Success = () => {
         {Object.keys(state).map(key => {
           if (key == "inviteUrl") {
             return <div key={state[key]}>
-              <a href={state[key]}>{state[key]}</a>
+              <a href={state[key]} className="text-blue-500">{state[key]}</a>
             </div>;
           }
           else {

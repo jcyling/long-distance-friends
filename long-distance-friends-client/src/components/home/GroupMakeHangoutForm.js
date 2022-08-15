@@ -113,7 +113,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
         </div>
         <div>
           <button
-            className="btn"
+            className="btn mr-3"
             disabled={(availableDateTime.length > 0 && pickerStatus === false) ? false : true}>
             Make Hangout
           </button>

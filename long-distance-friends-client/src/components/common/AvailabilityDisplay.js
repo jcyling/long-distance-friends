@@ -21,14 +21,14 @@ const AvailabilityDisplay = ({
         <div className="flex flex-row flex-wrap w-full mb-6 gap-3">
           {availableDateTime.map((item, index) => {
             return (
-              <div className="p-3 w-1/3 bg-white rounded-md border" key={index}>
+              <div className="p-3 bg-white rounded-md border md:w-full sm:w-full" key={index}>
                 <div>
                   <div>
-                    <span className="pr-2">Date</span>
+                    <span className="pr-2 font-bold">Date</span>
                     <span className="py-1 px-1 font-light text-sm">{item.date}</span>
                   </div>
                   <div className="flex flex-wrap">
-                    <span className="pr-2">Times</span>
+                    <span className="pr-2 font-bold">Times</span>
                     {item.time.map(time =>
                       <span
                         key={time}
@@ -40,7 +40,7 @@ const AvailabilityDisplay = ({
 
                 </div>
                 <button
-                  className="float-right text-sm"
+                  className="float-right text-sm text-gray-400"
                   onClick={() => handleDeleteSlot(item.date)}
                 >
                   Remove
@@ -55,7 +55,7 @@ const AvailabilityDisplay = ({
         className="btn bg-gray-100 hover:bg-gray-300 flex justify-center"
         onClick={() => setPickerStatus(true)}
       >
-        <FiPlus /> <span> Add More Availability</span>
+        <FiPlus /> <span className="text-gray-900">Add More Availability</span>
       </div>
     </div>
   );
