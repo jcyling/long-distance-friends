@@ -76,8 +76,8 @@ const Home = ({ user }) => {
     }
     else {
       return (
-        <div className="mt-6">
-          Select a group to get started.
+        <div className="mt-6 m-auto">
+          <div className="loader"></div>
         </div>
       );
     }

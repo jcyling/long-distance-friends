@@ -67,4 +67,22 @@
     z-index: 1;
     border-radius: 1rem;
   }
+
+  .loader {
+    border: 5px solid #f4F4F4;
+    border-top: 5px solid #3B82F6;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 
 }
