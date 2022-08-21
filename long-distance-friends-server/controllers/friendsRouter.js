@@ -25,12 +25,13 @@ friendsRouter.post("/", async (req, res, next) => {
 
   try {
     const latlng = await helpers.convertLocationToLatLong(body.city);
-    const timezone = await helpers.convertLatLongToTimezone(latlng);  
+    const timezone = await helpers.convertLatLongToTimezone(latlng);
 
     const friend = new Friend({
       name: body.name,
       city: body.city,
-      timezone: timezone,
+      timezone: timezone.iana,
+      offset: timezone.offset,
       latlng: [latlng.lng, latlng.lat],
       group: group._id,
       email: undefined
@@ -57,7 +58,9 @@ friendsRouter.patch("/:id", async (req, res, next) => {
   if (body.city) {
     const latlng = await helpers.convertLocationToLatLong(body.city);
     body.latlng = [latlng.lat, latlng.lng];
-    body.timezone = await helpers.convertLatLongToTimezone(latlng);
+    const timezone = await helpers.convertLatLongToTimezone(latlng);
+    body.timezone = timezone.iana;
+    body.offset = timezone.offset;
   }
 
   try {

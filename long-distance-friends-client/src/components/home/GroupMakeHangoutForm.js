@@ -10,6 +10,7 @@ import { convertDateTimeObjToUtc } from "../../utils/TimeUtils";
 
 const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
   const useNav = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [range, setRange] = useState({});
   const [rangeSelected, setRangeSelected] = useState(false);
   const [pickerStatus, setPickerStatus] = useState(true);
@@ -17,6 +18,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
 
   const handleHangoutSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     // Construct meeting object
     let newMeeting = {
@@ -44,7 +46,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
 
   const handleHostAvailabilitySubmit = async (meetingCreated) => {
     let userIana = user.timezone;
-    
+
     if (!userIana) {
       // TODO: Implement error handling 
       return null;
@@ -56,7 +58,7 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
       let datetime = convertDateTimeObjToUtc(item, userIana);
       availabilityArray = availabilityArray.concat(datetime);
     });
-    
+
     let newBooking = {
       groupId: group.id,
       meetingId: meetingCreated.id,
@@ -74,59 +76,68 @@ const GroupMakeHangoutForm = ({ user, group, setMakeInvite }) => {
     }
   };
 
-  return (
-    <div className="rounded-[1rem]">
-      <form className="flex flex-col" onSubmit={handleHangoutSubmit}>
-        <div className="flex flex-col justify-items-center items-center">
-          <div className="flex flex-col p-6">
-            <h4>
-              Choose hangout window:
-            </h4>
-            <span>Your Timezone:</span>
-            <span>{user.timezone}</span>
-            <span>UTC</span>
-            <FieldWindowPicker
-              user={user}
-              setRange={setRange}
-              setRangeSelected={setRangeSelected}
-            />
+  if (isLoading) {
+    return (
+      <div className="flex mt-6">
+        <div className="loader m-auto"></div>
+      </div>
+    );
+  }
+  else {
+    return (
+      <div className="rounded-[1rem]">
+        <form className="flex flex-col" onSubmit={handleHangoutSubmit}>
+          <div className="flex flex-col justify-items-center items-center">
+            <div className="flex flex-col p-6">
+              <h4>
+                Choose hangout window:
+              </h4>
+              <span>Your Timezone:</span>
+              <span>{user.timezone}</span>
+              <span>UTC</span>
+              <FieldWindowPicker
+                user={user}
+                setRange={setRange}
+                setRangeSelected={setRangeSelected}
+              />
+            </div>
+
+            {
+              (rangeSelected && pickerStatus) &&
+              <GroupHostAvailabilityPicker
+                range={range}
+                availableDateTime={availableDateTime}
+                setAvailableDateTime={setAvailableDateTime}
+                setPickerStatus={setPickerStatus}
+              />
+            }
+            {
+              (rangeSelected && !pickerStatus) &&
+              <AvailabilityDisplay
+                availableDateTime={availableDateTime}
+                setAvailableDateTime={setAvailableDateTime}
+                setPickerStatus={setPickerStatus}
+              />
+            }
+
           </div>
-
-          {
-            (rangeSelected && pickerStatus) &&
-            <GroupHostAvailabilityPicker
-              range={range}
-              availableDateTime={availableDateTime}
-              setAvailableDateTime={setAvailableDateTime}
-              setPickerStatus={setPickerStatus}
-            />
-          }
-          {
-            (rangeSelected && !pickerStatus) &&
-            <AvailabilityDisplay
-              availableDateTime={availableDateTime}
-              setAvailableDateTime={setAvailableDateTime}
-              setPickerStatus={setPickerStatus}
-            />
-          }
-
-        </div>
-        <div>
-          <button
-            className="btn mr-3"
-            disabled={(availableDateTime.length > 0 && pickerStatus === false) ? false : true}>
-            Make Hangout
-          </button>
-          <button
-            className="btn ml-auto"
-            type="button"
-            onClick={() => setMakeInvite(false)}>
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+          <div>
+            <button
+              className="btn mr-3"
+              disabled={(availableDateTime.length > 0 && pickerStatus === false) ? false : true}>
+              Make Hangout
+            </button>
+            <button
+              className="btn ml-auto"
+              type="button"
+              onClick={() => setMakeInvite(false)}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 };
 
 export default GroupMakeHangoutForm;

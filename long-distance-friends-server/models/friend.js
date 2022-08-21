@@ -9,6 +9,9 @@ const friendSchema = new mongoose.Schema({
   timezone: {
     type: String
   },
+  offset: {
+    type: String
+  },
   latlng: {
     type: [Number],
     index: "2dsphere"

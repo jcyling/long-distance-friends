@@ -76,11 +76,10 @@ const convertLatLongToTimezone = async ({ lat, lng }) => {
   try {
     const res = await axios.get(timezoneAPI);
     const timezoneIANA = res.data.timeZoneId;
-    const timezoneName = res.data.timeZoneName;
     const dstHour = res.data.dstOffset / 3600;
     const hours = res.data.rawOffset / 3600;
     const total = hours + dstHour;
-    return timezoneIANA;
+    return { iana: timezoneIANA, offset: total };
   }
   catch (error) {
     console.log(error);

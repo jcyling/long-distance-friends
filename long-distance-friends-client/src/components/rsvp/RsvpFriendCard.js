@@ -26,6 +26,7 @@ const RsvpFriendCard = ({ booked, friend, handleFriendPick, activeFriend }) => {
         </div>
         <div className="flex flex-col text-sm">
           <span>{friend.timezone}</span>
+          <span>GMT +{friend.offset}</span>
           <span>Slots booked</span>
         </div>
       </div>
@@ -39,7 +40,10 @@ const RsvpFriendCard = ({ booked, friend, handleFriendPick, activeFriend }) => {
         <div className={`flex flex-col justify-center bg-gradient-to-r from-blue-200 to-gray-200 w-24 h-24 rounded-full ${active ? "border-2 border-blue-500" : ""}`}>
           <div className="text-gray-700 text-lg">{friend.name}</div>
         </div>
-        <span className="text-sm mt-2">{friend.timezone}</span>
+        <div className="flex flex-col text-sm">
+          <span className="text-sm mt-2">{friend.timezone}</span>
+          <span>GMT +{friend.offset}</span>
+        </div>
       </div>
     );
   }
