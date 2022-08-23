@@ -15,12 +15,17 @@ friendsRouter.post("/", async (req, res, next) => {
   if (!token) {
     return res.status(401).json({ error: "token missing or invalid" });
   }
+
   const decodedToken = jwt.verify(token, process.env.SECRET);
   const user = await User.findById(decodedToken.id);
   const group = await Group.findById(body.groupId);
 
+  // Validate group and user exists
   if (!group) {
     return res.status(401).json({ error: "group not found" });
+  }
+  else if (!user) {
+    return res.status(401).json({ error: "user not found" });
   }
 
   try {
